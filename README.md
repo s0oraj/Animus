@@ -19,18 +19,9 @@ It uses users phone number for user authentication
 
  ## Libraries used
 
- * [Volley] (https://github.com/google/volley)
- * [Picasso] (https://github.com/square/picasso)
+ * [Firebase] (https://github.com/firebase/quickstart-android)
 
 
- ## Features
-
- -  Users can set the number of recent news they want to see. For example, if a user sets his preference to three posts then the user is only shown three recent posts from the ScienceGlass blog
- - Users can tap on navigation menu at left and will see list of popular countries to fetch news from.
- -  Swapping and Deleting of Data: Users can tap on a news and swipe right or left to remove it from screen. Users can also tap on a post hold on it and change its location by moving it up or down the list of available posts. Refresh button will restore all data back to its original configuration.
- -  Change layout: Users can customize what layout they want to see their posts in. Two layouts are provided: LinearLayout and GridLayout.
- 
- 
 
 
 
