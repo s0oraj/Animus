@@ -1,6 +1,6 @@
 # Animus
 A simple chat android app which uses firebase to store user data.
-
+It uses users phone number for user authentication
 # Nuzap
 A simple news android app which shows top headline news of countries around the globe.
 
