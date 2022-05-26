@@ -21,12 +21,12 @@ A simple news android app which shows top headline news of countries around the 
  <a href="(https://user-images.githubusercontent.com/42529024/170065885-20281c84-a36c-4b6c-8bd0-7f7a14eff27e.png" target="_blank">
   <img src="https://user-images.githubusercontent.com/42529024/170065885-20281c84-a36c-4b6c-8bd0-7f7a14eff27e.png" width="22%" />
  <span>&nbsp;</span>
- <a href="https://user-images.githubusercontent.com/42529024/170066321-a2bab16a-fd96-46fa-a0d0-62610bbc5495.png" target="_blank">
-  <img src="https://user-images.githubusercontent.com/42529024/170066321-a2bab16a-fd96-46fa-a0d0-62610bbc5495.png" width="22%" />
+ <a href="https://user-images.githubusercontent.com/42529024/170443272-291fed4c-2713-407a-a41a-87d8ead1bb94.png" target="_blank">
+  <img src="https://user-images.githubusercontent.com/42529024/170443272-291fed4c-2713-407a-a41a-87d8ead1bb94.png" width="22%" />
 </a>
 <span>&nbsp;</span>
-<a href="https://user-images.githubusercontent.com/42529024/170066822-112942e5-a1de-4bc4-9c45-9ac4f8c6b4fa.png" target="_blank">
-  <img src="https://user-images.githubusercontent.com/42529024/170066822-112942e5-a1de-4bc4-9c45-9ac4f8c6b4fa.png" width="22%" />
+<a href="https://user-images.githubusercontent.com/42529024/170443298-7a81cada-e406-4289-9aa7-7c28e6dd8eec.png" target="_blank">
+  <img src="https://user-images.githubusercontent.com/42529024/170443298-7a81cada-e406-4289-9aa7-7c28e6dd8eec.png" width="22%" />
 </a>
 
 
