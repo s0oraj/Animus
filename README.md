@@ -1,25 +1,12 @@
 # Animus
 A simple chat android app which uses firebase to store user data.
 It uses users phone number for user authentication
-# Nuzap
-A simple news android app which shows top headline news of countries around the globe.
-
-
- Install & try the app: [Download APK](https://drive.google.com/file/d/1s7CO-fvN0xJu7_m6CdFzFmjn84k6BwQF/view?usp=sharing)
-
- 
-
- * This app displays recent news  in its main ui screen.
- * It fetches JSON Data by using [newsapi](https://newsapi.org/).
- * The JSON received is then extracted into relevant information and shown in the main user-interface of the app.
 
 
  ## Screenshots
 
 
-  
-
-
+ 
 
 <a href="https://user-images.githubusercontent.com/42529024/170443298-7a81cada-e406-4289-9aa7-7c28e6dd8eec.png" target="_blank">
   <img src="https://user-images.githubusercontent.com/42529024/170443298-7a81cada-e406-4289-9aa7-7c28e6dd8eec.png" width="22%" />
@@ -30,14 +17,6 @@ A simple news android app which shows top headline news of countries around the 
 </a>
 
 
- ## How this app works
-
- - This android app displays recent news around the globe.
- - It fetches JSON Data from  [news api](https://newsapi.org/) by using [Volley](https://github.com/google/volley) library. Volley helps in fetching JSON data in a seperate background thread.
- - After this, the recieved JSON data is being parsed in the main ui thread. After JSON parsing the data is shown to the main user-interface of the app.
- - For displaying featured image of a post, [Picasso](https://github.com/square/picasso) library is used which takes image from url and loads it to the screen.
- - And finally, Androids [WebView](https://developer.android.com/reference/android/webkit/WebView) library is used to convert html content into relevant data to be loaded on the screen.
- 
  ## Libraries used
 
  * [Volley] (https://github.com/google/volley)
