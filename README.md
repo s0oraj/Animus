@@ -18,9 +18,7 @@ A simple news android app which shows top headline news of countries around the 
 
 
   
- <a href="(https://user-images.githubusercontent.com/42529024/170065885-20281c84-a36c-4b6c-8bd0-7f7a14eff27e.png" target="_blank">
-  <img src="https://user-images.githubusercontent.com/42529024/170065885-20281c84-a36c-4b6c-8bd0-7f7a14eff27e.png" width="22%" />
- <span>&nbsp;</span>
+
  <a href="https://user-images.githubusercontent.com/42529024/170443272-291fed4c-2713-407a-a41a-87d8ead1bb94.png" target="_blank">
   <img src="https://user-images.githubusercontent.com/42529024/170443272-291fed4c-2713-407a-a41a-87d8ead1bb94.png" width="22%" />
 </a>
