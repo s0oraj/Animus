@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "742507733397",
+    "project_id": "animus-84785",
+    "storage_bucket": "animus-84785.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742507733397:android:85b4e9cdb6eb550667569c",
+        "android_client_info": {
+          "package_name": "blog.cosmos.home.animus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742507733397-rpt9m96i0njaaftqhs1ifmcn4hpj6uvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "blog.cosmos.home.animus",
+            "certificate_hash": "4290b61f112aea96226d90876c4da3a0e4b50ec8"
+          }
+        },
+        {
+          "client_id": "742507733397-916t74vlq486l4r9fokh8jjs38tn8vsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhrWlGokfO-FzLQ1q4EoikqpFWVOadqHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742507733397-916t74vlq486l4r9fokh8jjs38tn8vsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
