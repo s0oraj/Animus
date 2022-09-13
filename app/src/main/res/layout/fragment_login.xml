@@ -72,14 +72,13 @@
         android:id="@+id/googleSignInBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:background="@drawable/btn_bg"
+        android:layout_above="@id/signUpTV"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:textColor="#fff"
-        android:layout_above="@id/signUpTV"
         android:layout_marginBottom="18dp"
-        />
+        android:background="@drawable/btn_bg"
+        android:text="Sign In with Google"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/signUpTV"
