@@ -6,6 +6,40 @@
     android:background="@drawable/ic_background"
     tools:context=".fragments.CreateAccountFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:text = "Create \nAccount"
+        android:textColor="@color/colorGreen"
+        android:layout_marginTop="78dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/text_box"
+            android:hint="Name"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/text_box"
+            android:hint="Name"/>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
