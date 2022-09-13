@@ -24,10 +24,13 @@
         <color name="colorGreyDark">#7B7B7B</color>
         <color name="colorLightBlue">#FAFAFC</color>
 
-
-
-        <color name="colorDarkPurple">#1c2120</color>
+        <color name="colorPrimary2">#fff</color>
+        <color name="colorPrimaryDark2">#fff</color>
         <color name="colorAccent2">#2a364e</color>
+        <color name="colorDarkPurple">#1c2120</color>
+        <color name="colorNewTextBoxBackground">#8f8e8e</color>
+        <color name="colorNewTextBoxBackgroundDark">#4d4c4c</color>
+
 
 
 
