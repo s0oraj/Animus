@@ -3,25 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_background"
-    tools:context=".fragments.CreateAccountFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    tools:context=".fragments.CreateAccountFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/background_login"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="78dp"
-        android:text="Login"
-        android:textColor="@color/colorGreen"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:background="@drawable/ic_login_cropped_background" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="78dp"
+            android:fontFamily="@font/aileron_heavy"
+            android:text="Login"
+            android:textColor="@color/colorDarkPurple"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@id/background_login"
+        android:layout_marginTop="10dp">
 
 
         <EditText
@@ -29,16 +45,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/text_box"
+            android:background="@drawable/text_box2"
             android:hint="Email"
-            android:padding="12dp" />
+                 android:padding="12dp" />
 
         <EditText
             android:id="@+id/passwordET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/text_box"
+            android:background="@drawable/text_box2"
             android:hint="Password"
             android:padding="12dp" />
 
@@ -46,10 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot Password"
-            android:textColor="@color/colorGreen"
+            android:textColor="@color/colorDarkPurple"
             android:layout_gravity="end"
             android:textStyle="bold"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
             android:id="@+id/forgotTV"
             android:layout_marginRight="16dp"/>
 
@@ -63,7 +80,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/btn_bg"
+        android:background="@drawable/btn_bg2"
         android:text="Sign up"
         android:textColor="#fff" />
 
@@ -75,7 +92,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/btn_bg"
+        android:background="@drawable/btn_bg2"
         android:text="Sign In with Google"
         android:textColor="#fff" />
 
@@ -83,11 +100,11 @@
         android:id="@+id/signUpTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
         android:text="Create Account, Sign Up"
-        android:textStyle="bold"
-        android:textColor="@color/colorGreen"/>
+        android:textColor="@color/colorDarkPurple"
+        android:textStyle="bold" />
 
 </RelativeLayout>
