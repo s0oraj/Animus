@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".fragments.CreateAccountFragment">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,7 +10,7 @@
         android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/loginImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_login_cropped_background" />
@@ -19,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/imageView"
+            android:layout_alignBottom="@id/loginImageView"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
