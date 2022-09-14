@@ -36,7 +36,7 @@
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:layout_below="@id/background_login"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="24dp">
 
 
         <EditText
