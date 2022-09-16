@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import blog.cosmos.home.animus.FragmentReplacerActivity;
@@ -103,12 +107,39 @@ public class CreateAccountFragment extends Fragment {
                     return;
 
                 }
+                if(!password.equals(confirmPassword)){
+                    nameEt.setError("Passwords not matched");
+                    return;
+
+                }
+
+                createAccount(name,email,password);
 
             }
         });
 
     }
 
+    private void createAccount(String name, String email, String password){
+
+        auth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+
+
+
+                        }else{
+
+                            String exception = task.getException().getMessage();
+                            Toast.makeText(getContext(),"Error "+ exception,Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                })
+
+    }
 
 
 
