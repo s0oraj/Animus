@@ -44,6 +44,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import blog.cosmos.home.animus.FragmentReplacerActivity;
 import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 
@@ -174,6 +175,13 @@ public class LoginFragment extends Fragment {
                 signIn();
 
 
+            }
+        });
+
+        signUpTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((FragmentReplacerActivity) getActivity()).setFragment(new CreateAccountFragment());
             }
         });
 
