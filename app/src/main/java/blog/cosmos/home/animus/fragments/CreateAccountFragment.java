@@ -98,8 +98,8 @@ public class CreateAccountFragment extends Fragment {
                     return;
 
                 }
-                if(name.isEmpty() || name.equals(" ")){
-                    nameEt.setError("Please input valid name");
+                if(password.isEmpty() || password.length()<6){
+                    nameEt.setError("Please input valid password");
                     return;
 
                 }
