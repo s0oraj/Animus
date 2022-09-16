@@ -138,6 +138,7 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
+                progressBar.setVisibility(View.VISIBLE);
                 mAuth.signInWithEmailAndPassword(email,password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -155,6 +156,7 @@ public class LoginFragment extends Fragment {
                                 }else{
                                     String exception = "Error "+ task.getException().getMessage();
                                     Toast.makeText(getContext(), exception , Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
 
 
                                 }
@@ -181,6 +183,8 @@ public class LoginFragment extends Fragment {
 
         if(getActivity() == null)
             return;
+
+        progressBar.setVisibility(View.GONE);
 
         startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
 
