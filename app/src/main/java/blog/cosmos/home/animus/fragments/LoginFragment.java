@@ -2,6 +2,7 @@ package blog.cosmos.home.animus.fragments;
 
 import static blog.cosmos.home.animus.fragments.CreateAccountFragment.EMAIL_REGEX;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 
 
@@ -125,9 +127,25 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        googleSignUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+            }
+        });
+
     }
 
     private void  sendUserToMainActivity(){
+
+        if(getActivity() == null)
+            return;
+
+        startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
+
+        getActivity().finish();
 
     }
 
