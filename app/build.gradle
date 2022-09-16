@@ -10,6 +10,7 @@ android {
         applicationId "blog.cosmos.home.animus"
         minSdk 21
         targetSdk 32
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
