@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +19,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import blog.cosmos.home.animus.FragmentReplacerActivity;
+import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 
 
@@ -128,6 +135,9 @@ public class CreateAccountFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
 
+                            FirebaseUser user = auth.getCurrentUser();
+                            uploadUser(user, name, email);
+
 
 
                         }else{
@@ -138,6 +148,38 @@ public class CreateAccountFragment extends Fragment {
                         }
                     }
                 });
+
+    }
+
+    private void uploadUser(FirebaseUser user, String name, String email){
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("name", name);
+        map.put("email", email);
+        map.put("profileImage", " ");
+        map.put("uid", user.getUid());
+
+
+        FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
+                .set(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        assert getContext()!=null;
+
+                        if(task.isSuccessful()){
+                            startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
+
+                        }else{
+                            Toast.makeText(getContext(), "Error "+task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
 
     }
 
