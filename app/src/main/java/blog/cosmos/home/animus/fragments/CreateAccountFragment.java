@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -46,8 +47,10 @@ public class CreateAccountFragment extends Fragment {
 
     public static final String EMAIL_REGEX ="^(.+)@(.+)$";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rlnotif)
     RelativeLayout rlnotif;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.textnotif)
     TextView textnotif;
 
