@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import blog.cosmos.home.animus.R;
 public class CreateAccountFragment extends Fragment {
 
     private EditText nameEt, emailEt, passwordEt, confirmPasswordEt;
+    private ProgressBar progressBar;
     private TextView loginTv;
     private Button signUpBtn;
     private FirebaseAuth auth;
@@ -74,6 +76,7 @@ public class CreateAccountFragment extends Fragment {
         confirmPasswordEt = view.findViewById(R.id.confirmPassET);
         loginTv = view.findViewById(R.id.loginTV);
         signUpBtn = view.findViewById(R.id.signUpBtn);
+        progressBar = view.findViewById(R.id.progressBar);
 
         auth = FirebaseAuth.getInstance();
 
@@ -120,6 +123,8 @@ public class CreateAccountFragment extends Fragment {
 
                 }
 
+                progressBar.setVisibility(View.VISIBLE);
+
                 createAccount(name,email,password);
 
             }
@@ -142,6 +147,7 @@ public class CreateAccountFragment extends Fragment {
 
                         }else{
 
+                            progressBar.setVisibility(View.GONE);
                             String exception = task.getException().getMessage();
                             Toast.makeText(getContext(),"Error "+ exception,Toast.LENGTH_SHORT).show();
 
@@ -166,12 +172,16 @@ public class CreateAccountFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        assert getContext()!=null;
+
 
                         if(task.isSuccessful()){
-                            startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
+                            assert getActivity()!=null;
+                            progressBar.setVisibility(View.GONE);
+                            startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
+                            getActivity().finish();
 
                         }else{
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(getContext(), "Error "+task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
