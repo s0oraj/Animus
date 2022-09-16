@@ -109,4 +109,24 @@
         android:textStyle="bold"
         android:textColor="@color/colorDarkPurple"/>
 
+
+    <RelativeLayout
+        android:id="@+id/rlnotif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#39455E"
+        android:visibility="visible">
+
+        <customfonts.TextViewSFProDisplayRegular
+            android:id="@+id/textnotif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

@@ -291,7 +291,8 @@ public class LoginFragment extends Fragment {
 
         Map<String,Object> map = new HashMap<>();
 
-        map.put("name", account.getDisplayName());
+        if(account.getDisplayName()!=null){
+        map.put("name", account.getDisplayName());}
         map.put("email", account.getEmail());
         map.put("profileImage", String.valueOf(account.getPhotoUrl()));
         map.put("uid", user.getUid());
@@ -325,8 +326,9 @@ public class LoginFragment extends Fragment {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        if (mAuth.getCurrentUser()!=null){
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        updateUI(currentUser);}
     }
 }
 

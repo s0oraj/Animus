@@ -7,12 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,9 @@ import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 
 
+import butterknife.BindView;
+
+
 public class CreateAccountFragment extends Fragment {
 
     private EditText nameEt, emailEt, passwordEt, confirmPasswordEt;
@@ -41,7 +46,10 @@ public class CreateAccountFragment extends Fragment {
 
     public static final String EMAIL_REGEX ="^(.+)@(.+)$";
 
-
+    @BindView(R.id.rlnotif)
+    RelativeLayout rlnotif;
+    @BindView(R.id.textnotif)
+    TextView textnotif;
 
 
     public CreateAccountFragment() {
@@ -104,21 +112,25 @@ public class CreateAccountFragment extends Fragment {
 
                 if(name.isEmpty() || name.equals(" ")){
                     nameEt.setError("Please input valid name");
+                    notif("Please input valid name");
                     return;
 
                 }
                 if(email.isEmpty() || !email.matches(EMAIL_REGEX)){
-                    nameEt.setError("Please input valid name");
+                    emailEt.setError("Please input valid email");
+                    notif("Please input valid email");
                     return;
 
                 }
                 if(password.isEmpty() || password.length()<6){
-                    nameEt.setError("Please input valid password");
+                    passwordEt.setError("Please input valid password");
+                    notif("Please input valid password");
                     return;
 
                 }
                 if(!password.equals(confirmPassword)){
-                    nameEt.setError("Passwords not matched");
+                    passwordEt.setError("Passwords not matched");
+                    notif("Passwords don't match");
                     return;
 
                 }
@@ -200,6 +212,13 @@ public class CreateAccountFragment extends Fragment {
 
 
 
+    }
+
+    public void notif(String text) {
+        rlnotif.setVisibility(View.VISIBLE);
+        textnotif.setText(text);
+
+        new Handler().postDelayed(() -> rlnotif.setVisibility(View.GONE), 3000);
     }
 
 
