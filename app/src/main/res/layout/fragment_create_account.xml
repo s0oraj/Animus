@@ -38,7 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:layout_below="@id/background_login"
+        android:layout_marginTop="48dp"
+        >
 
         <EditText
             android:id="@+id/nameET"
