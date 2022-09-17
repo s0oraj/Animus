@@ -6,6 +6,7 @@
     <item
         android:drawable="@drawable/bg_gradient"/>
 
+
     <item
 
         android:drawable="@drawable/ic_launcher"
@@ -14,12 +15,6 @@
         android:height="100dp"/>
 
 
-    <item android:bottom="24dp"
-            android:gravity="bottom"
-            android:drawable="@drawable/icon_text"
-        android:width="100dp"
-        android:height="100dp"
-    />
 
 
 </layer-list>
