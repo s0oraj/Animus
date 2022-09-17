@@ -14,8 +14,9 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_background_image2.xml" value="0.5" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_launcher.xml" value="0.2325" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1845" />
-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_login_background.xml" value="0.25" />
-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_login_cropped_background.xml" value="0.2" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_login_background.xml" value="0.33" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_login_cropped_background.xml" value="0.18" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vector.xml" value="0.14" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vector__9_.xml" value="0.1845" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vectorpaint.xml" value="0.75" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vectorpaint__1_.xml" value="0.75" />
@@ -30,7 +31,7 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_main.xml" value="0.13069908814589665" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_create_account.xml" value="0.22" />
-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_login.xml" value="0.18" />
       </map>
     </option>
   </component>
