@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CreateAccountFragment">
 
     <RelativeLayout
@@ -46,7 +47,9 @@
             android:padding="12dp"
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
+            android:inputType="textPersonName"
             android:hint="Name"/>
+
 
         <EditText
             android:id="@+id/emailET"
@@ -55,7 +58,16 @@
             android:padding="12dp"
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
+            android:inputType="textEmailAddress"
             android:hint="Email"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            app:boxBackgroundMode="none"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent2"
+            android:textColorHint="?android:textColorHint" >
 
         <EditText
             android:id="@+id/passwordET"
@@ -64,7 +76,20 @@
             android:padding="12dp"
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
+            android:textSize="17.8sp"
+            android:inputType="textPassword"
             android:hint="Password"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            app:boxBackgroundMode="none"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent2"
+            android:textColorHint="?android:textColorHint"  >
 
         <EditText
             android:id="@+id/confirmPassET"
@@ -73,7 +98,11 @@
             android:padding="12dp"
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
+            android:inputType="textPassword"
+            android:textSize="17.8sp"
             android:hint="Confirm Password"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
 
@@ -116,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="#39455E"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <customfonts.TextViewSFProDisplayRegular
             android:id="@+id/textnotif"

@@ -47,12 +47,8 @@ public class CreateAccountFragment extends Fragment {
 
     public static final String EMAIL_REGEX ="^(.+)@(.+)$";
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rlnotif)
-    RelativeLayout rlnotif;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.textnotif)
-    TextView textnotif;
+    private RelativeLayout rlnotif;
+    private TextView textnotif;
 
 
     public CreateAccountFragment() {
@@ -89,6 +85,11 @@ public class CreateAccountFragment extends Fragment {
         signUpBtn = view.findViewById(R.id.signUpBtn);
         progressBar = view.findViewById(R.id.progressBar);
 
+        rlnotif = view.findViewById(R.id.rlnotif);
+        textnotif = view.findViewById(R.id.textnotif);
+
+
+
         auth = FirebaseAuth.getInstance();
 
 
@@ -107,10 +108,10 @@ public class CreateAccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String name = nameEt.getText().toString();
-                String email = emailEt.getText().toString();
-                String password = passwordEt.getText().toString();
-                String confirmPassword = confirmPasswordEt.getText().toString();
+                String name = nameEt.getText().toString().trim();
+                String email = emailEt.getText().toString().trim();
+                String password = passwordEt.getText().toString().trim();
+                String confirmPassword = confirmPasswordEt.getText().toString().trim();
 
 
                 if(name.isEmpty() || name.equals(" ")){
@@ -223,7 +224,6 @@ public class CreateAccountFragment extends Fragment {
 
         new Handler().postDelayed(() -> rlnotif.setVisibility(View.GONE), 3000);
     }
-
 
 
 }
