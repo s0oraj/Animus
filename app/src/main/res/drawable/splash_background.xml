@@ -9,7 +9,7 @@
 
     <item
 
-        android:drawable="@drawable/ic_vecto4"
+        android:drawable="@drawable/splash_background_image"
         android:gravity="fill_horizontal|fill_vertical"
        />
 
