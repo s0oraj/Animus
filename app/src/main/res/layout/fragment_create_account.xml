@@ -9,102 +9,102 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/background_login"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp">
 
         <ImageView
             android:id="@+id/createAccountImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="26dp"
             android:background="@drawable/ic_background_image" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:layout_centerHorizontal="true"
-            android:layout_marginStart="16dp"
+            android:layout_alignBottom="@id/createAccountImageView"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="-32dp"
             android:fontFamily="@font/aileron_heavy"
             android:text="Create new\n Account"
             android:textAlignment="center"
             android:textColor="@color/colorDarkPurple"
             android:textSize="28.2sp"
-            android:textStyle="bold"
-            android:layout_below="@id/createAccountImageView"/>
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/background_login"
-        android:layout_marginTop="48dp"
-        >
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/nameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
+            android:hint="Name"
             android:inputType="textPersonName"
-            android:hint="Name"/>
+            android:padding="12dp" />
 
 
         <EditText
             android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
+            android:hint="Email"
             android:inputType="textEmailAddress"
-            android:hint="Email"/>
+            android:padding="12dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="?android:textColorHint"
             app:boxBackgroundMode="none"
-            android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorAccent2"
-            android:textColorHint="?android:textColorHint" >
+            app:passwordToggleTint="@color/colorAccent2">
 
-        <EditText
-            android:id="@+id/passwordET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/text_box2"
-            android:textSize="17.8sp"
-            android:inputType="textPassword"
-            android:hint="Password"/>
+            <EditText
+                android:id="@+id/passwordET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/text_box2"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textSize="17.8sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            app:boxBackgroundMode="none"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorAccent2"
             android:textColorHint="?android:textColorHint"
-            >
+            app:boxBackgroundMode="none"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorAccent2">
 
-        <EditText
-            android:textCursorDrawable= "@null"
-            android:id="@+id/confirmPassET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/text_box2"
-            android:inputType="textPassword"
-            android:textSize="17.8sp"
-            android:hint="Confirm Password"/>
+            <EditText
+                android:id="@+id/confirmPassET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/text_box2"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textCursorDrawable="@null"
+                android:textSize="17.8sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -132,15 +132,15 @@
         android:textColor="#fff" />
 
     <TextView
+        android:id="@+id/loginTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/loginTV"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="26dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
         android:text="Back to, Login"
-        android:textStyle="bold"
-        android:textColor="@color/colorDarkPurple"/>
+        android:textColor="@color/colorDarkPurple"
+        android:textStyle="bold" />
 
 
     <RelativeLayout

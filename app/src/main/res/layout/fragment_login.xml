@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.CreateAccountFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreateAccountFragment">
+ >
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/background_login"
@@ -13,7 +19,7 @@
             android:id="@+id/loginImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_background2" />
+            android:background="@drawable/ic_background4" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +28,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="78dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="18dp"
             android:fontFamily="@font/aileron_heavy"
             android:text="Login"
             android:textColor="@color/colorDarkPurple"
@@ -34,10 +41,9 @@
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
         android:layout_below="@id/background_login"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
 
 
         <EditText
@@ -47,7 +53,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/text_box2"
             android:hint="Email"
-                 android:padding="12dp" />
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/passwordET"
@@ -59,16 +65,16 @@
             android:padding="12dp" />
 
         <TextView
+            android:id="@+id/forgotTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:text="Forgot Password"
             android:textColor="@color/colorDarkPurple"
-            android:layout_gravity="end"
-            android:textStyle="bold"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="4dp"
-            android:id="@+id/forgotTV"
-            android:layout_marginRight="16dp"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -112,10 +118,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="18dp"
         android:text="Create Account, Sign Up"
         android:textColor="@color/colorDarkPurple"
         android:textStyle="bold" />
+
+
 
 
     <RelativeLayout
