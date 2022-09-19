@@ -91,7 +91,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="18dp"
         android:background="@drawable/btn_bg2"
-        android:text="Sign up"
+        android:text="Sign in"
         android:textColor="#fff" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -116,5 +116,26 @@
         android:text="Create Account, Sign Up"
         android:textColor="@color/colorDarkPurple"
         android:textStyle="bold" />
+
+
+    <RelativeLayout
+        android:id="@+id/rlnotif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#39455E"
+        android:visibility="gone">
+
+        <customfonts.TextViewSFProDisplayRegular
+            android:id="@+id/textnotif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

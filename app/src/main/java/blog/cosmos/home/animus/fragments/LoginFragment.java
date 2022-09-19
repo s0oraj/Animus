@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,6 +55,9 @@ import blog.cosmos.home.animus.R;
 
 public class LoginFragment extends Fragment {
 
+    private RelativeLayout rlnotif;
+    private TextView textnotif;
+
 
     private EditText emailEt, passwordEt;
     private TextView signUpTv, forgotPasswordTv;
@@ -66,6 +73,11 @@ public class LoginFragment extends Fragment {
     private BeginSignInRequest signInRequest;
 
 
+    private Bundle mSavedInstanceState;
+
+
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -74,6 +86,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mSavedInstanceState = savedInstanceState;
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -103,9 +116,9 @@ public class LoginFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
 
-        oneTapClient = Identity.getSignInClient(getContext());
+        oneTapClient = Identity.getSignInClient(getActivity());
 
-        signInRequest = BeginSignInRequest.builder()
+       /* signInRequest = BeginSignInRequest.builder()
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         // Your server's client ID, not your Android client ID.
@@ -114,8 +127,25 @@ public class LoginFragment extends Fragment {
                         .setFilterByAuthorizedAccounts(true)
                         .build())
                 .build();
+*/
 
+        signInRequest = BeginSignInRequest.builder()
+                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                        .setSupported(true)
+                        .build())
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(true)
+                        .build())
+                // Automatically sign in when exactly one credential is retrieved.
+                .setAutoSelectEnabled(true)
+                .build();
 
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(getActivity(),gso);
 
     }
 
@@ -128,7 +158,8 @@ public class LoginFragment extends Fragment {
 
                 if (email.isEmpty() || email.matches(EMAIL_REGEX)){
 
-                    emailEt.setError("Input valid email");
+                    emailEt.setError("Invalid email");
+                    notif("Please input a valid email");
                     return;
 
                 }
@@ -136,6 +167,8 @@ public class LoginFragment extends Fragment {
                 if(password.isEmpty() || password.length() < 6){
 
                     passwordEt.setError("Input 6 digit valid password ");
+                    notif("Please input a 6 digit valid password");
+
                     return;
                 }
 
@@ -202,87 +235,29 @@ public class LoginFragment extends Fragment {
 
 
     private void signIn() {
-        oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(getActivity(), new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult result) {
-                        try {
-                            startIntentSenderForResult(result.getPendingIntent().getIntentSender(),REQ_ONE_TAP,null,0,0,0,null);
-                        } catch (IntentSender.SendIntentException e) {
-                            Log.e(TAG, "Couldn't start One Tap UI: " + e.getLocalizedMessage());
-                        }
-                    }
-                })
-                .addOnFailureListener(getActivity(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // No Google Accounts found. Just continue presenting the signed-out UI.
-                        Log.d(TAG, e.getLocalizedMessage());
-                    }
-                });
+       Intent signInIntent = gsc.getSignInIntent();
+       startActivityForResult(signInIntent,1000);
+
     }
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode,  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case REQ_ONE_TAP:
-                try {
-                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(data);
-                    String idToken = credential.getGoogleIdToken();
-                    if (idToken !=  null) {
-                        // Got an ID token from Google. Use it to authenticate
-                        // with Firebase.
-                        Log.d(TAG, "Got ID token.");
-
-
-                        AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
-                        mAuth.signInWithCredential(firebaseCredential)
-                                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Log.d(TAG, "signInWithCredential:success");
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            updateUI(user);
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                                            updateUI(null);
-                                        }
-                                    }
-                                });
-
-                    }
-                } catch (ApiException e) {
-                    // ...
-                    e.printStackTrace();
-
-                    switch (e.getStatusCode()) {
-                        case CommonStatusCodes.CANCELED:
-                            Log.d(TAG, "One-tap dialog was closed.");
-                            // Don't re-prompt the user.
-                            showOneTapUI = false;
-                            break;
-                        case CommonStatusCodes.NETWORK_ERROR:
-                            Log.d(TAG, "One-tap encountered a network error.");
-                            // Try again or just ignore.
-                            break;
-                        default:
-                            Log.d(TAG, "Couldn't get credential from result."
-                                    + e.getLocalizedMessage());
-                            break;
-                    }
-
-
-
-                }
-                break;
+        if(requestCode == 1000){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                sendUserToMainActivity();
+                Log.d("TAG","Inside try block onActivityResult");
+            } catch (ApiException e) {
+                Toast.makeText(getContext(), "Not logged in, something went wrong", Toast.LENGTH_SHORT).show();
+            }
         }
+
+
     }
+
 
     private void updateUI(FirebaseUser user){
 
@@ -330,6 +305,15 @@ public class LoginFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);}
     }
+
+
+    public void notif(String text) {
+        rlnotif.setVisibility(View.VISIBLE);
+        textnotif.setText(text);
+
+        new Handler().postDelayed(() -> rlnotif.setVisibility(View.GONE), 3000);
+    }
+
 }
 
 

@@ -51,6 +51,8 @@ public class CreateAccountFragment extends Fragment {
     private TextView textnotif;
 
 
+
+
     public CreateAccountFragment() {
         // Required empty public constructor
     }
