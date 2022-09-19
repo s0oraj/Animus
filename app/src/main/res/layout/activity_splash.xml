@@ -14,6 +14,10 @@
         android:background="@drawable/ic_launcher_background"
         android:src="@drawable/ic_launcher" />
 
+
+
+
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +28,6 @@
         android:textColor="@color/colorDarkPurple"
         android:textSize="30dp"
         android:textStyle="bold" />
-
     <TextView
         android:id="@+id/makeFriendsTextView"
         android:layout_width="wrap_content"
@@ -41,6 +44,8 @@
         android:layout_below="@id/makeFriendsTextView"
         android:layout_height="wrap_content"
         android:text="hi"/>
+
+    -->
 
 
 
