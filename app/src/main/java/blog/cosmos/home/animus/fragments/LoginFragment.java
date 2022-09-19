@@ -236,7 +236,7 @@ public class LoginFragment extends Fragment {
 
     private void signIn() {
        Intent signInIntent = gsc.getSignInIntent();
-       startActivityForResult(signInIntent,1000);
+       startActivityForResult(signInIntent,100);
 
     }
 
