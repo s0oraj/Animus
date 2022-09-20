@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_heart_fill));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
