@@ -141,8 +141,6 @@
         android:textStyle="bold" />
 
 
-
-
     <RelativeLayout
         android:id="@+id/rlnotif"
         android:layout_width="match_parent"
@@ -160,7 +158,5 @@
             android:textColor="@color/white" />
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>
