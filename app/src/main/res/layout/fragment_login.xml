@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CreateAccountFragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
- >
+    tools:context=".fragments.CreateAccountFragment">
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/background_login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -34,8 +32,7 @@
             android:fontFamily="@font/aileron_heavy"
             android:text="Login"
             android:textColor="@color/colorDarkPurple"
-            android:textSize="32sp"
-            />
+            android:textSize="32sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -101,7 +98,7 @@
         android:layout_above="@id/loginBtn"
         android:layout_below="@id/ll1"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
     <androidx.appcompat.widget.AppCompatButton
