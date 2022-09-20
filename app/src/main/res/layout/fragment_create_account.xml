@@ -81,6 +81,8 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="12dp"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:theme="@style/MyEditText"
                 android:textSize="17.8sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -103,7 +105,8 @@
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:padding="12dp"
-                android:textCursorDrawable="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:theme="@style/MyEditText"
                 android:textSize="17.8sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

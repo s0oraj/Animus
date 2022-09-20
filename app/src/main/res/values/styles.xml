@@ -10,5 +10,10 @@
     </style>
 
 
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorDarkPurple</item>
+        <item name="colorControlActivated">@color/colorDarkPurple</item>
+    </style>
+
 
 </resources>
