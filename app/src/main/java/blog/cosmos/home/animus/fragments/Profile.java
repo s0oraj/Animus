@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 import blog.cosmos.home.animus.R;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,6 +53,10 @@ public class Profile extends Fragment {
     }
 
     private void init(View view){
+
+      Toolbar toolbar = view.findViewById(R.id.toolbar);
+      assert getActivity() != null;
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
      nameTv = view.findViewById(R.id.nameTv);
      statusTv = view.findViewById(R.id.statusTV);

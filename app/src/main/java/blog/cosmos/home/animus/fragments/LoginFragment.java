@@ -262,6 +262,8 @@ public class LoginFragment extends Fragment {
         map.put("email", account.getEmail());
         map.put("profileImage", String.valueOf(account.getPhotoUrl()));
         map.put("uid", user.getUid());
+        map.put("following",0);
+        map.put("followers", 0);
 
 
         FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
