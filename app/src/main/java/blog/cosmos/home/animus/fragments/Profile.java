@@ -51,6 +51,15 @@ public class Profile extends Fragment {
 
     private void init(View view){
 
+     nameTv = view.findViewById(R.id.nameTv);
+     statusTv = view.findViewById(R.id.statusTV);
+     toolbarNameTv = view.findViewById(R.id.toolbarNameTV);
+     followersCountTv = view.findViewById(R.id.followersCountTv);
+     followingCountTv = view.findViewById(R.id.followingCountTv);
+     postCountTv = view.findViewById(R.id.postCountTv);
+     profileImage = view.findViewById(R.id.profileImage);
+     followBtn = view.findViewById(R.id.followBtn);
+     recyclerView = view.findViewById(R.id.recyclerView);
 
 
     }
