@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -98,9 +99,24 @@ public class Profile extends Fragment {
                 if(value.exists()){
 
                     String name = value.getString("name");
-                    String state = value.getString("status");
-                    int followers = value.getLong("name").intValue();
-                    int following = value.getLong("name").intValue();
+                    String status = value.getString("status");
+                    int followers = value.getLong("followers").intValue();
+                    int following = value.getLong("following").intValue();
+
+                    String profileURL = value.getString("profileImage");
+
+                    nameTv.setText(name);
+                    toolbarNameTv.setText(name);
+                    statusTv.setText(status);
+                    followersCountTv.setText(String.valueOf(followers));
+                    followingCountTv.setText(String.valueOf(following));
+
+                    Glide.with(getContext().getApplicationContext())
+                            .load(profileURL)
+                            .placeholder(R.drawable.ic_person)
+                            .timeout(6500)
+                            .into(profileImage);
+
 
 
                 }

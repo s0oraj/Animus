@@ -194,6 +194,7 @@ public class CreateAccountFragment extends Fragment {
         map.put("uid", user.getUid());
         map.put("following",0);
         map.put("followers", 0);
+        map.put("status"," ");
 
 
         FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
