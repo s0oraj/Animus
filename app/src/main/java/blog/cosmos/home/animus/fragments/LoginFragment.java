@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -102,7 +101,7 @@ public class LoginFragment extends Fragment {
 
         emailEt = view.findViewById(R.id.emailET);
         passwordEt = view.findViewById(R.id.passwordET);
-        loginBtn = view.findViewById(R.id.loginBtn);
+        loginBtn = view.findViewById(R.id.recoverBtn);
         googleSignUpBtn = view.findViewById(R.id.googleSignInBtn);
         signUpTv = view.findViewById(R.id.signUpTV);
         forgotPasswordTv = view.findViewById(R.id.forgotTV);
