@@ -1,6 +1,5 @@
 package blog.cosmos.home.animus.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -29,12 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import blog.cosmos.home.animus.FragmentReplacerActivity;
 import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
-
-
-import butterknife.BindView;
+import blog.cosmos.home.animus.ReplacerActivity;
 
 
 public class CreateAccountFragment extends Fragment {
@@ -102,7 +98,7 @@ public class CreateAccountFragment extends Fragment {
         loginTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FragmentReplacerActivity)getActivity()).setFragment( new LoginFragment());
+                ((ReplacerActivity)getActivity()).setFragment( new LoginFragment());
             }
         });
 

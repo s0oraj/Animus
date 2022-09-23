@@ -40,9 +40,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import blog.cosmos.home.animus.FragmentReplacerActivity;
 import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.ReplacerActivity;
 
 
 public class LoginFragment extends Fragment {
@@ -120,6 +120,12 @@ public class LoginFragment extends Fragment {
 
     private void clickListener(){
 
+        forgotPasswordTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ReplacerActivity) getActivity()).setFragment(new ForgotPassword());
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +189,7 @@ public class LoginFragment extends Fragment {
         signUpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FragmentReplacerActivity) getActivity()).setFragment(new CreateAccountFragment());
+                ((ReplacerActivity) getActivity()).setFragment(new CreateAccountFragment());
             }
         });
 

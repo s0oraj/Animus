@@ -22,8 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-import blog.cosmos.home.animus.FragmentReplacerActivity;
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.ReplacerActivity;
 
 
 public class ForgotPassword extends Fragment {
@@ -80,7 +80,7 @@ public class ForgotPassword extends Fragment {
         loginTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FragmentReplacerActivity)getActivity()).setFragment( new LoginFragment());
+                ((ReplacerActivity)getActivity()).setFragment( new LoginFragment());
             }
         });
 
