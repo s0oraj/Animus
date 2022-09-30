@@ -69,16 +69,16 @@ public class MainActivity extends AppCompatActivity {
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill);
                         break;
                     case 1:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_search);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search);
                         break;
                     case 2:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_add);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add);
                         break;
                     case 3:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_heart_fill);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill);
                         break;
                     case 4:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_launcher);
+                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher);
                         break;
 
                 }
@@ -95,16 +95,16 @@ public class MainActivity extends AppCompatActivity {
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
                         break;
                     case 1:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_search);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search);
                         break;
                     case 2:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_add);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add);
                         break;
                     case 3:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_heart);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart);
                         break;
                     case 4:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_heart_fill);
+                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_heart_fill);
                         break;
 
                 }
@@ -118,16 +118,16 @@ public class MainActivity extends AppCompatActivity {
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill);
                         break;
                     case 1:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_search);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search);
                         break;
                     case 2:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_add);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add);
                         break;
                     case 3:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_heart_fill);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill);
                         break;
                     case 4:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_launcher);
+                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher);
                         break;
 
                 }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class ForgotPassword extends Fragment {
 
 
     private FirebaseAuth auth;
+
+    private ProgressBar progressBar;
 
 
     public ForgotPassword() {
@@ -68,6 +71,7 @@ public class ForgotPassword extends Fragment {
         loginTv = view.findViewById(R.id.loginTv);
         emailEt = view.findViewById(R.id.emailET);
         recoverBtn = view.findViewById(R.id.recoverBtn);
+        progressBar = view.findViewById(R.id.progressBar);
 
 
         auth = FirebaseAuth.getInstance();
@@ -96,6 +100,7 @@ public class ForgotPassword extends Fragment {
 
                 }
 
+                progressBar.setVisibility(View.VISIBLE);
                 auth.sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -112,6 +117,9 @@ public class ForgotPassword extends Fragment {
 
 
                                 }
+
+                                progressBar.setVisibility(View.GONE);
+
                             }
                         });
 

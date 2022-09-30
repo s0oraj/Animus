@@ -3,17 +3,12 @@
     android:opacity="opaque">
 
 
-
+    <item
+        android:drawable="@drawable/bg_gradient"/>
 
     <item
 
-        android:drawable="@drawable/splash_background_image"
-        android:gravity="fill_horizontal|fill_vertical"
+        android:drawable="@drawable/splash_background_image2"
        />
-
-
-
-
-
 
 </layer-list>

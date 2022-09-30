@@ -32,6 +32,7 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_login_background.xml" value="0.9" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_login_cropped_background.xml" value="0.18" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_share.xml" value="0.2175" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_splash_screen_image2.xml" value="0.2175" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vecto.xml" value="0.75" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vecto2.xml" value="0.25" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vecto3.xml" value="0.25" />
@@ -45,6 +46,7 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vectorpaint__7_.xml" value="0.1845" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_vectorpaint__8_.xml" value="0.1845" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/splash_background.xml" value="0.22" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/splash_background_2.xml" value="0.2175" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/splash_background_image.xml" value="0.2735" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/text_box.xml" value="0.1845" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/text_box2.xml" value="0.1845" />
@@ -59,7 +61,7 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_home.xml" value="0.16973684210526316" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_login.xml" value="0.17116013071895425" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_profile.xml" value="0.12" />
-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/home_items.xml" value="0.5" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/home_items.xml" value="0.1" />
       </map>
     </option>
   </component>
