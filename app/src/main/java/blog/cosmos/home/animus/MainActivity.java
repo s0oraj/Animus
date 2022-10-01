@@ -1,22 +1,43 @@
 package blog.cosmos.home.animus;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TableLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
+    private BottomNavigationView tabLayout;
     private ViewPager viewPager;
 
+
     ViewPagerAdapter pagerAdapter;
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            return false;
+        }
+    };
+    private BottomNavigationView.OnNavigationItemReselectedListener onNavigationItemReselectedListener = new BottomNavigationView.OnNavigationItemReselectedListener() {
+        @Override
+        public void onNavigationItemReselected(@NonNull MenuItem item) {
+
+        }
+    };
 
 
     @Override
@@ -43,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
     private void addTabs(){
 
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
+                .getIcon().setColorFilter(
+                        ContextCompat.getColor(this, R.color.black),
+                        PorterDuff.Mode.SRC_IN);
+
+
+
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_search));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_add));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_heart));
@@ -62,26 +90,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
-                switch (tab.getPosition()){
+                Context context = MainActivity.this;
+                switch (tab.getPosition()) {
 
                     case 0:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
+                                .getIcon().setColorFilter(
+                                        ContextCompat.getColor(context, R.color.black),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 1:
-                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search)
+                                .getIcon().setColorFilter(
+                                        ContextCompat.getColor(context, R.color.black),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
-                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add)
+                                .getIcon().setColorFilter(
+                                        ContextCompat.getColor(context, R.color.black),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
-                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill)
+                                .getIcon().setColorFilter(
+                                        ContextCompat.getColor(context, R.color.black),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 4:
-                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher);
+                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
+                                .getIcon().setColorFilter(
+                                        ContextCompat.getColor(context, R.color.black),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
-
                 }
+
 
 
             }
@@ -112,22 +155,39 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
+                Context context = MainActivity.this;
                 switch (tab.getPosition()){
 
                     case 0:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
+                                .getIcon().setColorFilter(
+                                        ContextCompat.getColor(context,R.color.black),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 1:
-                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search)
+                                .getIcon().setColorFilter(
+                                ContextCompat.getColor(context,R.color.black),
+                                PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
-                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add)
+                                .getIcon().setColorFilter(
+                                ContextCompat.getColor(context,R.color.black),
+                                PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
-                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill)
+                                .getIcon().setColorFilter(
+                                ContextCompat.getColor(context,R.color.black),
+                                PorterDuff.Mode.SRC_IN);
                         break;
                     case 4:
-                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher);
+                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
+                                .getIcon().setColorFilter(
+                                ContextCompat.getColor(context,R.color.black),
+                                PorterDuff.Mode.SRC_IN);
                         break;
 
                 }
