@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -49,6 +50,8 @@ public class Profile extends Fragment {
     private LinearLayout countLayout;
 
     boolean isMyProfile = true;
+    String uid;
+    FirestoreRecyclerAdapter<PostImageModel, PostImageHolder> adapter;
 
 
     public Profile() {
@@ -78,7 +81,13 @@ public class Profile extends Fragment {
         }
 
         loadBasicData();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
 
+
+        loadPostImages();
+
+        recyclerView.setAdapter(adapter);
     }
 
     private void init(View view) {
@@ -151,7 +160,12 @@ public class Profile extends Fragment {
     private void loadPostImages()
     {
 
-        String uid = user.getUid();
+        if(isMyProfile) {
+            uid = user.getUid();
+        }
+        else{
+
+        }
         DocumentReference reference = FirebaseFirestore.getInstance().collection("Users").document(uid);
 
         Query query = reference.collection("Images");
@@ -160,7 +174,7 @@ public class Profile extends Fragment {
                 .setQuery(query, PostImageModel.class)
                 .build();
 
-        FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<PostImageModel, PostImageHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<PostImageModel, PostImageHolder>(options) {
             @NonNull
             @Override
             public PostImageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -197,4 +211,15 @@ public class Profile extends Fragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 }
