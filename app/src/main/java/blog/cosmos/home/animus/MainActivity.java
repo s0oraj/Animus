@@ -1,6 +1,5 @@
 package blog.cosmos.home.animus;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -9,35 +8,19 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TableLayout;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView tabLayout;
+    private TabLayout tabLayout;
     private ViewPager viewPager;
 
 
     ViewPagerAdapter pagerAdapter;
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            return false;
-        }
-    };
-    private BottomNavigationView.OnNavigationItemReselectedListener onNavigationItemReselectedListener = new BottomNavigationView.OnNavigationItemReselectedListener() {
-        @Override
-        public void onNavigationItemReselected(@NonNull MenuItem item) {
-
-        }
-    };
 
 
     @Override
