@@ -76,4 +76,6 @@ dependencies {
     // FirebaseUI for Cloud Firestore
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
 
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
 }
