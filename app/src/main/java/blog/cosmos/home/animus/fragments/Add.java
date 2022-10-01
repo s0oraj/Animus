@@ -1,5 +1,7 @@
 package blog.cosmos.home.animus.fragments;
 
+import static blog.cosmos.home.animus.utils.ImageContent.loadSavedImages;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,5 +74,19 @@ public class Add extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadSavedImages(getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+    }
 }

@@ -2,6 +2,7 @@ package blog.cosmos.home.animus.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +34,22 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GalleryHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GalleryHolder holder, final int position) {
 
         holder.imageView.setImageURI(list.get(position).getPicUri());
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage(list.get(position).getPicUri());
+            }
+        });
+
+    }
+
+    private void chooseImage(Uri picUri) {
+
+
 
     }
 
