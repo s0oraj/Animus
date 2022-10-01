@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_1"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -195,25 +195,19 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/followLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/followBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/btn_bg2"
-                android:minWidth="160dp"
-                android:text="Follow"
-                android:textColor="@android:color/white"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/followBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_bg2"
+            android:minWidth="160dp"
+            android:visibility="gone"
+            android:text="Follow"
+            android:textColor="@android:color/white"
 
-                />
-
-        </RelativeLayout>
-
+            />
     </RelativeLayout>
 
     <View

@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -39,6 +41,11 @@ public class Profile extends Fragment {
     private FirebaseUser user;
 
 
+    private LinearLayout countLayout;
+
+    boolean isMyProfile = true;
+
+
     public Profile() {
         // Required empty public constructor
     }
@@ -56,6 +63,14 @@ public class Profile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init(view);
+
+        if(isMyProfile){
+            followBtn.setVisibility(View.GONE);
+            countLayout.setVisibility(View.VISIBLE);
+        } else{
+            followBtn.setVisibility(View.VISIBLE);
+            countLayout.setVisibility(View.GONE);
+        }
 
         loadBasicData();
 
@@ -76,6 +91,7 @@ public class Profile extends Fragment {
         profileImage = view.findViewById(R.id.profileImage);
         followBtn = view.findViewById(R.id.followBtn);
         recyclerView = view.findViewById(R.id.recyclerView);
+        countLayout = view.findViewById(R.id.countLayout);
 
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -127,5 +143,14 @@ public class Profile extends Fragment {
 
     }
 
+    private void loadPostImages()
+    {
 
+        String uid = user.getUid();
+        DocumentReference reference = FirebaseFirestore.getInstance().collection("Users").document(uid);
+
+
+
+
+    }
 }
