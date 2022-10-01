@@ -51,18 +51,13 @@
         android:layout_above="@id/tabLayout"
      />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
 
-        app:itemBackground="@color/white"
-        app:itemTextColor="@color/selector"
-        app:labelVisibilityMode="selected"
-        app:menu="@menu/navigation"
-
-
         />
+
 
 </RelativeLayout>

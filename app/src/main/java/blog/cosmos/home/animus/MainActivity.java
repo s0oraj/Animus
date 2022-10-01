@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
@@ -47,13 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private void addTabs(){
 
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
-                .getIcon().setColorFilter(
-                        ContextCompat.getColor(this, R.color.black),
-                        PorterDuff.Mode.SRC_IN);
-
-
-
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_search));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_add));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_heart));
@@ -67,13 +61,20 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
+                .getIcon().setColorFilter(
+                        ContextCompat.getColor(this, R.color.black),
+                        PorterDuff.Mode.SRC_IN);
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 Context context = MainActivity.this;
+
+
+
                 switch (tab.getPosition()) {
 
                     case 0:
