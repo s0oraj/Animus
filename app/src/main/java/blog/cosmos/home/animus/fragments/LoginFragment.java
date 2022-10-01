@@ -47,28 +47,18 @@ import blog.cosmos.home.animus.ReplacerActivity;
 
 public class LoginFragment extends Fragment {
 
+    private static final int RC_SIGN_IN = 1;
     private RelativeLayout rlnotif;
     private TextView textnotif;
-
-
     private EditText emailEt, passwordEt;
     private TextView signUpTv, forgotPasswordTv;
     private Button loginBtn, googleSignUpBtn;
     private ProgressBar progressBar;
-
     private FirebaseAuth auth;
-
-  
     private boolean showOneTapUI = true;
-
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
-
-
     private Bundle mSavedInstanceState;
-
-
-    private static final int RC_SIGN_IN = 1;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -127,6 +117,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        signUpTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ReplacerActivity) getActivity()).setFragment(new CreateAccountFragment());
+            }
+        });
+
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,42 +180,31 @@ public class LoginFragment extends Fragment {
         googleSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signIn();
+                googleSignIn();
+
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
 
-        signUpTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ReplacerActivity) getActivity()).setFragment(new CreateAccountFragment());
-            }
-        });
-
-    }
-
-    private void  sendUserToMainActivity(){
-
-        if(getActivity() == null)
-            return;
-
-        progressBar.setVisibility(View.GONE);
-
-        startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
-
-        getActivity().finish();
 
     }
 
 
-    private void signIn() {
+
+    private void googleSignIn() {
        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
+
+
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -257,6 +244,7 @@ public class LoginFragment extends Fragment {
 
     private void updateUi(FirebaseUser user){
 
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
 
 
@@ -293,6 +281,18 @@ public class LoginFragment extends Fragment {
                     }
                 });
 
+
+    }
+    private void  sendUserToMainActivity(){
+
+        if(getActivity() == null)
+            return;
+
+        progressBar.setVisibility(View.GONE);
+
+        startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
+
+        getActivity().finish();
 
     }
 
