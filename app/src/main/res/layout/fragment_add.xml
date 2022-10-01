@@ -24,7 +24,6 @@
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-
             android:id="@+id/nextBtn"/>
 
 
