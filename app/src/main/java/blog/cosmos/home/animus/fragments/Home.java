@@ -91,7 +91,7 @@ public class Home extends Fragment {
                 .collection("Post Images");
 
 
-        reference.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+        reference.addSnapshotListener( new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
