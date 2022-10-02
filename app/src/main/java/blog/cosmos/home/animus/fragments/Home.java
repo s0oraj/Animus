@@ -103,30 +103,36 @@ public class Home extends Fragment {
                     Log.e("Error: ", error.getMessage());
                     return;
                 }
-                assert value != null;
+
+                if(value==null){
+                    return;
+                }
+
                 for(QueryDocumentSnapshot snapshot : value){
 
 
+                    if(!snapshot.exists()){
+                        return;
+                    }
+                    HomeModel model = snapshot.toObject(HomeModel.class);
 
-                    list.add(new HomeModel(snapshot.get("userName").toString(),
-                            snapshot.get("timestamp").toString(),
-                            snapshot.get("profileImage").toString(),
-                            snapshot.get("postImage").toString(),
-                            snapshot.get("uid").toString(),
-                            snapshot.get("comments").toString(),
-                            snapshot.get("description").toString(),
-                            snapshot.get("id").toString(),
-                            Integer.parseInt(snapshot.get("likeCount").toString())
+                    list.add(new HomeModel(
+                            model.getUserName(),
+                            model.getProfileImage(),
+                            model.getImageUrl(),
+                            model.getUid(),
+                            model.getComments(),
+                            model.getDescription(),
+                            model.getId(),
+                            model.getTimestamp(),
+                            model.getLikeCount()
                             ));
 
-                    adapter.notifyDataSetChanged();
+
                 }
+                adapter.notifyDataSetChanged();
             }
         });
-
-
-        adapter.notifyDataSetChanged();
-
 
 
     }
