@@ -20,8 +20,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -30,7 +39,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.GalleryAdapter;
@@ -48,9 +59,10 @@ public class Add extends Fragment {
     private List<GalleryImages> list;
     private GalleryAdapter adapter;
 
+    private FirebaseUser user;
 
     Uri imageUri;
-    String imageURL;
+
 
     public Add() {
         // Required empty public constructor
@@ -90,6 +102,8 @@ public class Add extends Fragment {
         backBtn = view.findViewById(R.id.backBtn);
         nextBtn = view.findViewById(R.id.nextBtn);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
     }
 
     private void clickListener(){
@@ -113,7 +127,30 @@ public class Add extends Fragment {
             @Override
             public void onClick(View view) {
 
-                uploadData();
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReference().child("Post Images/"+System.currentTimeMillis());
+
+
+                storageReference.putFile(imageUri)
+                        .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                                if(task.isSuccessful()){
+                                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+
+
+
+                                            uploadData(uri.toString());
+
+                                        }
+                                    });
+                                }
+
+                            }
+                        });
 
 
             }
@@ -122,9 +159,22 @@ public class Add extends Fragment {
     }
 
 
-    private void uploadData(){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference().child("");
+    private void uploadData(String imageURL){
+
+        CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
+                .document(user.getUid()).collection("Post Images");
+
+        String id = reference.document().getId();
+
+        String description = descET.getText().toString();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id",id);
+        map.put("description", description);
+        map.put("imageUrl",imageURL);
+        map.put("timestamp", FieldValue.serverTimestamp());
+
+
     }
 
     @Override
