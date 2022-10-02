@@ -49,9 +49,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:scaleType="centerCrop"
         android:layout_below="@id/profileImage"
-       />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

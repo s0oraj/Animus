@@ -102,7 +102,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder>{
             
             
             profileImage = itemView.findViewById(R.id.profileImage);
-            imageView = itemView.findViewById(R.id.profileImage);
+            imageView = itemView.findViewById(R.id.imageView);
             userNameTv = itemView.findViewById(R.id.nameTv);
             timeTv = itemView.findViewById(R.id.timeTv);
             likeCountTv = itemView.findViewById(R.id.likeCountTv);
