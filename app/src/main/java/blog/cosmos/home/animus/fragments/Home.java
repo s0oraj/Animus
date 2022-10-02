@@ -106,6 +106,19 @@ public class Home extends Fragment {
                 assert value != null;
                 for(QueryDocumentSnapshot snapshot : value){
 
+
+
+                    list.add(new HomeModel(snapshot.get("userName").toString(),
+                            snapshot.get("timestamp").toString(),
+                            snapshot.get("profileImage").toString(),
+                            snapshot.get("postImage").toString(),
+                            snapshot.get("uid").toString(),
+                            snapshot.get("comments").toString(),
+                            snapshot.get("description").toString(),
+                            snapshot.get("id").toString(),
+                            Integer.parseInt(snapshot.get("likeCount").toString())
+                            ));
+
                 }
             }
         });
