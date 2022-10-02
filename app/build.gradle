@@ -79,8 +79,11 @@ dependencies {
 
 
     implementation 'com.github.CanHub:Android-Image-Cropper:4.3.2'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
     implementation 'com.karumi:dexter:6.2.3'
+
+
 
 
 }

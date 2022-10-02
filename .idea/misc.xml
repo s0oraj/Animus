@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_circle.xml" value="0.2175" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_splash.xml" value="0.1" />
-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_add.xml" value="0.18" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_add.xml" value="0.22" />
       </map>
     </option>
   </component>

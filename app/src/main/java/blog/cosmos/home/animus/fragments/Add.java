@@ -1,7 +1,10 @@
 package blog.cosmos.home.animus.fragments;
 
 
+import static android.app.Activity.RESULT_OK;
+
 import android.Manifest;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +41,8 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -115,13 +121,14 @@ public class Add extends Fragment {
 
                 imageUri = picUri;
 
-                Glide.with(getContext())
-                                .load(picUri)
-                                        .into(imageView);
 
-                imageView.setVisibility(View.VISIBLE);
 
-                nextBtn.setVisibility(View.VISIBLE);
+                CropImage.activity(picUri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(4,3)
+                        .start(getContext(),Add.this);
+
+
             }
         });
 
@@ -234,6 +241,30 @@ public class Add extends Fragment {
             }
         });
 
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if(resultCode == RESULT_OK){
+
+                Uri image = result.getUri();
+
+                Glide.with(getContext())
+                        .load(image)
+                        .into(imageView);
+
+                imageView.setVisibility(View.VISIBLE);
+
+                nextBtn.setVisibility(View.VISIBLE);
+            }
+
+        }
 
     }
 }
