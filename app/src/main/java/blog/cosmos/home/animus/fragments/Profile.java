@@ -3,6 +3,7 @@ package blog.cosmos.home.animus.fragments;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -244,10 +247,23 @@ public class Profile extends Fragment {
 
         if(requestCode== CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
 
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            Uri uri = result.getUri();
+
+            uploadImage(uri);
 
 
 
         }
 
     }
+
+    public void uploadImage(Uri uri){
+        StorageReference reference = FirebaseStorage.getInstance().getReference().child("Profile Images");
+
+
+    }
+
+
 }
