@@ -23,13 +23,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -38,8 +43,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.PostImageModel;
@@ -262,6 +271,54 @@ public class Profile extends Fragment {
     public void uploadImage(Uri uri){
         StorageReference reference = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
+        reference.putFile(uri)
+                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if(task.isSuccessful()){
+                            reference.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            String imageURL = uri.toString();
+
+                                            UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
+                                            request.setPhotoUri(uri);
+
+                                            user.updateProfile(request.build());
+
+                                            Map<String, Object> map = new HashMap<>();
+                                            map.put("profileImage",imageURL);
+
+                                            FirebaseFirestore.getInstance().collection("Users")
+                                                    .document(user.getUid())
+                                                    .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                            if(task.isSuccessful()){
+                                                                Toast.makeText(getContext(),"Updated Successfully",Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),
+                                                                        Toast.LENGTH_SHORT).show();
+
+                                                            }
+
+                                                        }
+                                                    });
+
+
+                                        }
+                                    });
+                        }else{
+                            Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    }
+                });
 
     }
 
