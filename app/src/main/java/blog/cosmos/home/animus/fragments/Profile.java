@@ -1,5 +1,8 @@
 package blog.cosmos.home.animus.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +35,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.PostImageModel;
@@ -47,7 +52,6 @@ public class Profile extends Fragment {
     private FirebaseUser user;
     private LinearLayout countLayout;
     private ImageButton editProfileBtn;
-
 
 
     boolean isMyProfile = true;
@@ -89,6 +93,19 @@ public class Profile extends Fragment {
         loadPostImages();
 
         recyclerView.setAdapter(adapter);
+
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1, 1)
+                        .start(getContext(), Profile.this);
+
+            }
+        });
+
     }
 
     private void init(View view) {
@@ -219,5 +236,18 @@ public class Profile extends Fragment {
     public void onStart() {
         super.onStart();
         adapter.startListening();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode== CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+
+
+
+
+        }
+
     }
 }
