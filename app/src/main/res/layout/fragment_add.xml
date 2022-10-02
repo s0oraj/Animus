@@ -70,7 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_below="@id/descriptionET"
-                android:layout_margin="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
                 android:background="#000" />
 
             <ImageView
