@@ -72,17 +72,17 @@ public class Profile extends Fragment {
 
         init(view);
 
-        if(isMyProfile){
+        if (isMyProfile) {
             followBtn.setVisibility(View.GONE);
             countLayout.setVisibility(View.VISIBLE);
-        } else{
+        } else {
             followBtn.setVisibility(View.VISIBLE);
             countLayout.setVisibility(View.GONE);
         }
 
         loadBasicData();
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
 
         loadPostImages();
@@ -126,7 +126,7 @@ public class Profile extends Fragment {
                     return;
 
                 assert value != null;
-                if(value.exists()){
+                if (value.exists()) {
 
                     String name = value.getString("name");
                     String status = value.getString("status");
@@ -148,7 +148,6 @@ public class Profile extends Fragment {
                             .into(profileImage);
 
 
-
                 }
 
             }
@@ -157,13 +156,11 @@ public class Profile extends Fragment {
 
     }
 
-    private void loadPostImages()
-    {
+    private void loadPostImages() {
 
-        if(isMyProfile) {
+        if (isMyProfile) {
             uid = user.getUid();
-        }
-        else{
+        } else {
 
         }
         DocumentReference reference = FirebaseFirestore.getInstance().collection("Users").document(uid);
@@ -199,7 +196,7 @@ public class Profile extends Fragment {
 
     }
 
-    private static class PostImageHolder extends RecyclerView.ViewHolder{
+    private static class PostImageHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
 

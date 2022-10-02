@@ -51,15 +51,33 @@
         android:layout_below="@+id/toolbar"
         android:orientation="horizontal">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="14dp"
-            android:src="@drawable/ic_person"
-            app:civ_border_color="#88C3F8"
-            app:civ_border_width="1dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="14dp"
+                android:src="@drawable/ic_person"
+                app:civ_border_color="#88C3F8"
+                app:civ_border_width="1dp" />
+
+            <ImageButton
+                android:id="@+id/edit_profileImage"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_alignEnd="@id/profileImage"
+                android:layout_alignBottom="@id/profileImage"
+                android:layout_alignRight="@id/profileImage"
+                android:background="@drawable/ic_circle"
+                android:elevation="3dp"
+                android:src="@drawable/ic_edit"
+              />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -203,9 +221,9 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/btn_bg2"
             android:minWidth="160dp"
-            android:visibility="gone"
             android:text="Follow"
             android:textColor="@android:color/white"
+            android:visibility="gone"
 
             />
     </RelativeLayout>
@@ -220,9 +238,9 @@
         android:background="#C8C8C8" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView"
         android:layout_below="@id/view" />
 
 
