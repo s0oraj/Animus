@@ -2,6 +2,8 @@ package blog.cosmos.home.animus.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import static blog.cosmos.home.animus.fragments.Home.LIST_SIZE;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -182,6 +184,8 @@ public class Profile extends Fragment {
 
             }
         });
+
+        postCountTv.setText(""+LIST_SIZE);
 
 
     }
