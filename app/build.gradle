@@ -80,6 +80,7 @@ dependencies {
 
     implementation 'com.github.CanHub:Android-Image-Cropper:4.3.2'
 
+    implementation 'com.karumi:dexter:6.2.3'
 
 
 }

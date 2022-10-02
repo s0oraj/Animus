@@ -9,53 +9,59 @@
 
     <RelativeLayout
         android:id="@+id/layout"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical">
 
         <ImageButton
+            android:id="@+id/backBtn"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:background="@drawable/ic_back"
-            android:id="@+id/backBtn"/>
+            android:background="@drawable/ic_back" />
+
         <ImageButton
-            android:background="@drawable/ic_next"
+            android:id="@+id/nextBtn"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:id="@+id/nextBtn"/>
+            android:background="@drawable/ic_next"
+            android:visibility="gone" />
 
 
     </RelativeLayout>
 
     <EditText
+        android:id="@+id/descriptionET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
-        android:id="@+id/descriptionET"
         android:background="@android:color/transparent"
         android:hint="Add something about this post."
-        android:minLines="12"/>
+        android:minLines="12" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@id/descriptionET"
+        android:layout_margin="6dp"
+        android:background="#000" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:id="@+id/imageView"
-        android:visibility="gone"
+        android:layout_below="@id/view"
+        android:background="@color/colorAccent2"
         android:contentDescription="@null"
-        android:layout_below="@id/descriptionET"
-        android:background="@color/colorAccent2"/>
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:id="@+id/recyclerView"/>
-
-
-
-
+        android:layout_below="@+id/imageView" />
 
 
 </RelativeLayout>

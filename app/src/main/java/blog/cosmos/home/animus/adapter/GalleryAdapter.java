@@ -11,14 +11,19 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.GalleryImages;
 
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryHolder>{
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryHolder> {
 
     private List<GalleryImages> list;
+
+
+    SendImage onSendImage;
 
     public GalleryAdapter(List<GalleryImages> list) {
         this.list = list;
@@ -29,14 +34,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
     @Override
     public GalleryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.image_items,parent,false);
+                .inflate(R.layout.image_items, parent, false);
         return new GalleryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GalleryHolder holder, final int position) {
 
-        holder.imageView.setImageURI(list.get(position).getPicUri());
+        // holder.imageView.setImageURI(list.get(position).getPicUri());
+
+        Glide.with(holder.itemView.getContext().getApplicationContext())
+                .load(list.get(position).getPicUri())
+                .into(holder.imageView);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +59,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
     private void chooseImage(Uri picUri) {
 
 
+        onSendImage.onSend(picUri);
 
     }
 
@@ -58,7 +68,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
         return list.size();
     }
 
-    class GalleryHolder extends RecyclerView.ViewHolder{
+    class GalleryHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
 
@@ -67,6 +77,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
             imageView = itemView.findViewById(R.id.imageView);
 
         }
+    }
+
+
+    public interface SendImage {
+        void onSend(Uri picUri);
+    }
+
+    public void SendImage(SendImage sendImage) {
+        this.onSendImage = sendImage;
     }
 
 
