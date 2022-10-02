@@ -121,6 +121,7 @@ public class Add extends Fragment {
 
                 imageView.setVisibility(View.VISIBLE);
 
+                nextBtn.setVisibility(View.VISIBLE);
             }
         });
 
