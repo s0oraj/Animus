@@ -207,10 +207,12 @@ public class Add extends Fragment {
 
                         if (task.isSuccessful()) {
                             System.out.println();
+                            Toast.makeText(getContext(),"Uploaded", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getContext(), "Error: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
+                        dialog.dismiss();
 
                     }
                 });
