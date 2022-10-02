@@ -119,6 +119,7 @@ public class Home extends Fragment {
                             Integer.parseInt(snapshot.get("likeCount").toString())
                             ));
 
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
