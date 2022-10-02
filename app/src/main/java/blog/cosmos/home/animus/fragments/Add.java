@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -174,6 +175,20 @@ public class Add extends Fragment {
         map.put("imageUrl",imageURL);
         map.put("timestamp", FieldValue.serverTimestamp());
 
+        reference.document(id).set(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if(task.isSuccessful()){
+                            System.out.println();
+                        } else{
+                            Toast.makeText(getContext(),"Error: "+ task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
 
     }
 
