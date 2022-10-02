@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -43,11 +44,11 @@ public class Profile extends Fragment {
     private CircleImageView profileImage;
     private Button followBtn;
     private RecyclerView recyclerView;
-
     private FirebaseUser user;
-
-
     private LinearLayout countLayout;
+    private ImageButton editProfileBtn;
+
+
 
     boolean isMyProfile = true;
     String uid;
@@ -106,7 +107,7 @@ public class Profile extends Fragment {
         followBtn = view.findViewById(R.id.followBtn);
         recyclerView = view.findViewById(R.id.recyclerView);
         countLayout = view.findViewById(R.id.countLayout);
-
+        editProfileBtn = view.findViewById(R.id.edit_profileImage);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
