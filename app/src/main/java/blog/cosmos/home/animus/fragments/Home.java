@@ -40,10 +40,6 @@ public class Home extends Fragment {
     private List<HomeModel> list;
     private FirebaseUser user;
 
-    DocumentReference reference;
-
-
-
     public Home() {
         // Required empty public constructor
     }
@@ -63,7 +59,7 @@ public class Home extends Fragment {
 
         init(view);
 
-      //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
+        //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
         list = new ArrayList<>();
         adapter = new HomeAdapter(list, getContext());
@@ -73,11 +69,11 @@ public class Home extends Fragment {
 
     }
 
-    public void init(View view){
+    public void init(View view) {
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        if(getActivity() != null)
-           ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        if (getActivity() != null)
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -88,30 +84,30 @@ public class Home extends Fragment {
 
     }
 
-    private void loadDataFromFireStore(){
+    private void loadDataFromFireStore() {
 
         CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
-                        .document(user.getUid())
-                                .collection("Post Images");
+                .document(user.getUid())
+                .collection("Post Images");
 
 
         reference.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if(error != null){
+                if (error != null) {
                     Log.e("Error: ", error.getMessage());
                     return;
                 }
 
-                if(value==null){
+                if (value == null) {
                     return;
                 }
 
-                for(QueryDocumentSnapshot snapshot : value){
+                for (QueryDocumentSnapshot snapshot : value) {
 
 
-                    if(!snapshot.exists()){
+                    if (!snapshot.exists()) {
                         return;
                     }
                     HomeModel model = snapshot.toObject(HomeModel.class);
@@ -126,7 +122,7 @@ public class Home extends Fragment {
                             model.getId(),
                             model.getTimestamp(),
                             model.getLikeCount()
-                            ));
+                    ));
 
 
                 }

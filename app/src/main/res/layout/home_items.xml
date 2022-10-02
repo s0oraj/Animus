@@ -8,7 +8,10 @@
         android:id="@+id/profileImage"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/ic_person"
         app:civ_border_color="#434343"
         app:civ_border_width="1dp" />
@@ -46,8 +49,9 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="220dp"
+        android:scaleType="centerCrop"
         android:layout_below="@id/profileImage"
-        android:background="#ff0000" />
+       />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -81,10 +85,20 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/likeCountTv"
+        android:id="@+id/descTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayout"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Description"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/likeCountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descTv"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="100 Likes"
