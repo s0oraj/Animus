@@ -77,7 +77,7 @@ public class Search extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                reference.orderBy("search").startAt(query).endAt(query+"\uf8ff")
+                reference.orderBy("name").startAt(query).endAt(query+"\uf8ff")
                         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
