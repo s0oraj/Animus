@@ -13,8 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
+
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.UserAdapter;
+import blog.cosmos.home.animus.model.Users;
 
 
 public class Search extends Fragment {
@@ -24,6 +34,7 @@ public class Search extends Fragment {
     RecyclerView recyclerView;
 
     UserAdapter adapter;
+    private List<Users> list;
 
     public Search() {
         // Required empty public constructor
@@ -44,6 +55,8 @@ public class Search extends Fragment {
 
         init(view);
 
+        loadUserData();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -59,6 +72,32 @@ public class Search extends Fragment {
 
     }
 
+    private void loadUserData(){
+        CollectionReference reference = FirebaseFirestore.getInstance().collection("Users");
+
+        reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if(error !=null){
+                    return;
+                }
+
+                if(value == null){
+                    return;
+                }
+
+                list.clear();
+                for(DocumentSnapshot snapshot : value){
+                    Users users = snapshot.toObject(Users.class);
+                    list.add(users);
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
+    }
 
     private void init(View view){
         searchView = view.findViewById(R.id.searchView);
