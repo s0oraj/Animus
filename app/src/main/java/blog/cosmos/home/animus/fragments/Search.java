@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.adapter.UserAdapter;
 
 
 public class Search extends Fragment {
@@ -20,6 +22,8 @@ public class Search extends Fragment {
 
     SearchView searchView;
     RecyclerView recyclerView;
+
+    UserAdapter adapter;
 
     public Search() {
         // Required empty public constructor
@@ -59,6 +63,12 @@ public class Search extends Fragment {
     private void init(View view){
         searchView = view.findViewById(R.id.searchView);
         recyclerView = view.findViewById(R.id.recyclerView);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
     }
 
 
