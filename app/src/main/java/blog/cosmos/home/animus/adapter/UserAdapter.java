@@ -3,14 +3,18 @@ package blog.cosmos.home.animus.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.Users;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
@@ -34,6 +38,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     @Override
     public void onBindViewHolder(@NonNull UserHolder holder, int position) {
 
+        holder.nameTV.setText(list.get(position).getName());
+        holder.statusTV.setText(list.get(position).getStatus());
+
+        Glide.with(holder.itemView.getContext().getApplicationContext())
+                .load(list.get(position).getProfileImage())
+                .timeout(6500)
+                .placeholder(R.drawable.ic_person)
+                .into(holder.profileImage);
+
+
+
     }
 
     @Override
@@ -43,9 +58,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     class UserHolder extends RecyclerView.ViewHolder{
 
+        private CircleImageView profileImage;
+        private TextView nameTV, statusTV;
         public UserHolder(@NonNull View itemView) {
             super(itemView);
+            profileImage = itemView.findViewById(R.id.profileImage);
+            nameTV = itemView.findViewById(R.id.nameTv);
+            statusTV = itemView.findViewById(R.id.statusTV);
+
         }
+
+
+
+
     }
 
 
