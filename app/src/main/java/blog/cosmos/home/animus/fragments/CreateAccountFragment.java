@@ -27,6 +27,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import blog.cosmos.home.animus.MainActivity;
@@ -200,6 +201,8 @@ public class CreateAccountFragment extends Fragment {
         map.put("following",0);
         map.put("followers", 0);
         map.put("status"," ");
+        map.put("search",name.toLowerCase(Locale.ROOT));
+
 
 
         FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
