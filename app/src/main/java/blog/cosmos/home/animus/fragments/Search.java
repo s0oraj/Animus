@@ -108,6 +108,12 @@ public class Search extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                if(newText.equals("")){
+                    loadUserData();
+                }
+
+
                 return false;
             }
         });
