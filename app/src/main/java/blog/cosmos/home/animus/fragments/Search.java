@@ -59,6 +59,14 @@ public class Search extends Fragment {
 
         loadUserData();
 
+        searchUser();
+
+
+
+
+    }
+
+    private void searchUser() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -70,7 +78,6 @@ public class Search extends Fragment {
                 return false;
             }
         });
-
 
     }
 
