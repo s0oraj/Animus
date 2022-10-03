@@ -173,11 +173,17 @@ public class Profile extends Fragment {
                     followersCountTv.setText(String.valueOf(followers));
                     followingCountTv.setText(String.valueOf(following));
 
-                    Glide.with(getContext().getApplicationContext())
-                            .load(profileURL)
-                            .placeholder(R.drawable.ic_person)
-                            .timeout(6500)
-                            .into(profileImage);
+                    try {
+
+                        Glide.with(getContext().getApplicationContext())
+                                .load(profileURL)
+                                .placeholder(R.drawable.ic_person)
+                                .timeout(6500)
+                                .into(profileImage);
+                    } catch (Exception e){
+                        e.printStackTrace();
+
+                    }
 
 
                 }
