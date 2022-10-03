@@ -43,11 +43,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     public void onBindViewHolder(@NonNull UserHolder holder, int position) {
 
 
-        String uid = user.getUid();;
-        if(list.get(position).getUid().equals(uid)){
-            holder.layout.setVisibility(View.GONE);
-        }
-
         holder.nameTV.setText(list.get(position).getName());
         holder.statusTV.setText(list.get(position).getStatus());
 
@@ -56,6 +51,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 .timeout(6500)
                 .placeholder(R.drawable.ic_person)
                 .into(holder.profileImage);
+
+
+        if(list.get(position).getUid().equals(user.getUid())){
+            holder.layout.setVisibility(View.GONE);
+        }
+
 
 
 

@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -38,6 +40,8 @@ public class Search extends Fragment {
     UserAdapter adapter;
     private List<Users> list;
 
+    CollectionReference reference ;
+
     public Search() {
         // Required empty public constructor
     }
@@ -57,6 +61,8 @@ public class Search extends Fragment {
 
         init(view);
 
+        reference = FirebaseFirestore.getInstance().collection("Users");
+
         loadUserData();
 
         searchUser();
@@ -70,6 +76,33 @@ public class Search extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                reference.orderBy("name").startAt(query).endAt(query+"\uf8ff")
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+
+                                    list.clear();
+
+
+                                    for(DocumentSnapshot snapshot : task.getResult()){
+                                        if(!snapshot.exists()){
+                                            return;
+                                        }
+
+
+                                        Users users = snapshot.toObject(Users.class);
+                                        list.add(users);
+
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                            }
+                        });
+
+
                 return false;
             }
 
@@ -82,7 +115,7 @@ public class Search extends Fragment {
     }
 
     private void loadUserData(){
-        CollectionReference reference = FirebaseFirestore.getInstance().collection("Users");
+
 
         reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
