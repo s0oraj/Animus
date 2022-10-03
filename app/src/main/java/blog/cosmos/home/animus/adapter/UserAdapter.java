@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -8,17 +9,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.Users;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     private List<Users> list;
 
-
+    public UserAdapter(List<Users> list) {
+        this.list = list;
+    }
 
     @NonNull
     @Override
     public UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_items, parent, false);
+
+
         return null;
     }
 
@@ -29,7 +37,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     class UserHolder extends RecyclerView.ViewHolder{
