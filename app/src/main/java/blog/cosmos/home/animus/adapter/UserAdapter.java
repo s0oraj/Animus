@@ -95,7 +95,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
         }
 
-        private void clickListener(final int position, String uid){
+        private void clickListener(final int position, final String uid){
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
