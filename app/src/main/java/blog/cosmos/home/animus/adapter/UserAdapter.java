@@ -22,6 +22,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     private List<Users> list;
+
+    OnUserClicked onUserClicked;
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public UserAdapter(List<Users> list) {
@@ -59,6 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 .timeout(6500)
                 .placeholder(R.drawable.ic_person)
                 .into(holder.profileImage);
+        holder.clickListener(position, list.get(position).getUid());
 
 
 
@@ -72,7 +76,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         return list.size();
     }
 
-  static class UserHolder extends RecyclerView.ViewHolder{
+   class UserHolder extends RecyclerView.ViewHolder{
 
         private CircleImageView profileImage;
         private TextView nameTV, statusTV;
@@ -91,10 +95,26 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
         }
 
+        private void clickListener(final int position, String uid){
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onUserClicked.onClicked(position, uid);
+                }
+            });
+        }
 
 
 
     }
 
+    public void OnUserClicked (OnUserClicked onUserClicked){
+        this.onUserClicked = onUserClicked;
+    }
+
+    public interface OnUserClicked {
+        void onClicked(int position, String uid);
+    }
 
 }
