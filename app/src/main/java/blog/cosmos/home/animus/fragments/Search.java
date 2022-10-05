@@ -1,6 +1,10 @@
 package blog.cosmos.home.animus.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,10 +12,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,14 +38,22 @@ public class Search extends Fragment {
     RecyclerView recyclerView;
 
     UserAdapter adapter;
+    OndataPass ondataPass;
+    CollectionReference reference;
     private List<Users> list;
-
-    CollectionReference reference ;
 
     public Search() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        ondataPass = (OndataPass) context;
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +61,6 @@ public class Search extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -67,8 +74,20 @@ public class Search extends Fragment {
 
         searchUser();
 
+        clickListener();
 
 
+    }
+
+    private void clickListener() {
+
+        adapter.OnUserClicked(new UserAdapter.OnUserClicked() {
+            @Override
+            public void onClicked(int position, String uid) {
+
+                ondataPass.onChange(4);
+            }
+        });
 
     }
 
@@ -77,17 +96,17 @@ public class Search extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                reference.orderBy("name").startAt(query).endAt(query+"\uf8ff")
+                reference.orderBy("name").startAt(query).endAt(query + "\uf8ff")
                         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
 
                                     list.clear();
 
 
-                                    for(DocumentSnapshot snapshot : task.getResult()){
-                                        if(!snapshot.exists()){
+                                    for (DocumentSnapshot snapshot : task.getResult()) {
+                                        if (!snapshot.exists()) {
                                             return;
                                         }
 
@@ -109,7 +128,7 @@ public class Search extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if(newText.equals("")){
+                if (newText.equals("")) {
                     loadUserData();
                 }
 
@@ -120,23 +139,23 @@ public class Search extends Fragment {
 
     }
 
-    private void loadUserData(){
+    private void loadUserData() {
 
 
         reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if(error !=null){
+                if (error != null) {
                     return;
                 }
 
-                if(value == null){
+                if (value == null) {
                     return;
                 }
 
                 list.clear();
-                for(QueryDocumentSnapshot snapshot : value){
+                for (QueryDocumentSnapshot snapshot : value) {
                     Users users = snapshot.toObject(Users.class);
                     list.add(users);
                 }
@@ -147,7 +166,7 @@ public class Search extends Fragment {
 
     }
 
-    private void init(View view){
+    private void init(View view) {
         searchView = view.findViewById(R.id.searchView);
         recyclerView = view.findViewById(R.id.recyclerView);
 
@@ -159,10 +178,11 @@ public class Search extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-
     }
 
-
+    public interface OndataPass {
+        void onChange(int position);
+    }
 
 
 }

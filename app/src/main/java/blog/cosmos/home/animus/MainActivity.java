@@ -14,8 +14,9 @@ import android.widget.TableLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
+import blog.cosmos.home.animus.fragments.Search;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Search.OndataPass {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -182,4 +183,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onChange(int position) {
+        viewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(viewPager.getCurrentItem()==4){
+            viewPager.setCurrentItem(0);
+        }else{
+            super.onBackPressed();
+        }
+
+
+    }
 }
