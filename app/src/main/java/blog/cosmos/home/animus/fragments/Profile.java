@@ -1,12 +1,22 @@
 package blog.cosmos.home.animus.fragments;
 
 import static android.app.Activity.RESULT_OK;
-
+import static blog.cosmos.home.animus.MainActivity.IS_SEARCHED_USER;
+import static blog.cosmos.home.animus.MainActivity.USER_ID;
 import static blog.cosmos.home.animus.fragments.Home.LIST_SIZE;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,18 +25,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -59,6 +57,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends Fragment {
 
+    boolean isMyProfile = true;
+    String userUID;
+    FirestoreRecyclerAdapter<PostImageModel, PostImageHolder> adapter;
     private TextView nameTv, toolbarNameTv, statusTv, followingCountTv, followersCountTv, postCountTv;
     private CircleImageView profileImage;
     private Button followBtn;
@@ -68,15 +69,9 @@ public class Profile extends Fragment {
     private ImageButton editProfileBtn;
 
 
-    boolean isMyProfile = true;
-    String uid;
-    FirestoreRecyclerAdapter<PostImageModel, PostImageHolder> adapter;
-
-
     public Profile() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,10 +86,22 @@ public class Profile extends Fragment {
 
         init(view);
 
+
+        if (IS_SEARCHED_USER) {
+            isMyProfile = false;
+            userUID = USER_ID;
+        } else {
+            isMyProfile = true;
+            userUID = user.getUid();
+        }
+
+
         if (isMyProfile) {
+            editProfileBtn.setVisibility(View.VISIBLE);
             followBtn.setVisibility(View.GONE);
             countLayout.setVisibility(View.VISIBLE);
         } else {
+            editProfileBtn.setVisibility(View.GONE);
             followBtn.setVisibility(View.VISIBLE);
             countLayout.setVisibility(View.GONE);
         }
@@ -148,7 +155,7 @@ public class Profile extends Fragment {
 
     private void loadBasicData() {
         DocumentReference userRef = FirebaseFirestore.getInstance().collection("Users")
-                .document(user.getUid());
+                .document(userUID);
 
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -180,7 +187,7 @@ public class Profile extends Fragment {
                                 .placeholder(R.drawable.ic_person)
                                 .timeout(6500)
                                 .into(profileImage);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
 
                     }
@@ -191,19 +198,15 @@ public class Profile extends Fragment {
             }
         });
 
-        postCountTv.setText(""+LIST_SIZE);
+        postCountTv.setText("" + LIST_SIZE);
 
 
     }
 
     private void loadPostImages() {
 
-        if (isMyProfile) {
-            uid = user.getUid();
-        } else {
 
-        }
-        DocumentReference reference = FirebaseFirestore.getInstance().collection("Users").document(uid);
+        DocumentReference reference = FirebaseFirestore.getInstance().collection("Users").document(userUID);
 
         Query query = reference.collection("Post Images");
 
@@ -236,17 +239,6 @@ public class Profile extends Fragment {
 
     }
 
-    private static class PostImageHolder extends RecyclerView.ViewHolder {
-
-        private ImageView imageView;
-
-        public PostImageHolder(@NonNull View itemView) {
-            super(itemView);
-
-            imageView = itemView.findViewById(R.id.imageView);
-
-        }
-    }
 
     @Override
     public void onStop() {
@@ -264,7 +256,7 @@ public class Profile extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode== CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
@@ -273,19 +265,18 @@ public class Profile extends Fragment {
             uploadImage(uri);
 
 
-
         }
 
     }
 
-    public void uploadImage(Uri uri){
+    public void uploadImage(Uri uri) {
         StorageReference reference = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
         reference.putFile(uri)
                 .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             reference.getDownloadUrl()
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
@@ -298,7 +289,7 @@ public class Profile extends Fragment {
                                             user.updateProfile(request.build());
 
                                             Map<String, Object> map = new HashMap<>();
-                                            map.put("profileImage",imageURL);
+                                            map.put("profileImage", imageURL);
 
                                             FirebaseFirestore.getInstance().collection("Users")
                                                     .document(user.getUid())
@@ -307,10 +298,10 @@ public class Profile extends Fragment {
                                                         public void onComplete(@NonNull Task<Void> task) {
 
 
-                                                            if(task.isSuccessful()){
-                                                                Toast.makeText(getContext(),"Updated Successfully",Toast.LENGTH_SHORT).show();
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(getContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
                                                             } else {
-                                                                Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),
+                                                                Toast.makeText(getContext(), "Error: " + task.getException().getMessage(),
                                                                         Toast.LENGTH_SHORT).show();
 
                                                             }
@@ -321,8 +312,8 @@ public class Profile extends Fragment {
 
                                         }
                                     });
-                        }else{
-                            Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),
+                        } else {
+                            Toast.makeText(getContext(), "Error: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
 
 
@@ -330,6 +321,18 @@ public class Profile extends Fragment {
                     }
                 });
 
+    }
+
+    private static class PostImageHolder extends RecyclerView.ViewHolder {
+
+        private ImageView imageView;
+
+        public PostImageHolder(@NonNull View itemView) {
+            super(itemView);
+
+            imageView = itemView.findViewById(R.id.imageView);
+
+        }
     }
 
 

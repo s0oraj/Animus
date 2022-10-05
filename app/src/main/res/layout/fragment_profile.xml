@@ -52,7 +52,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="100dp">
 
 
@@ -66,16 +66,16 @@
                 app:civ_border_width="1dp" />
 
             <ImageButton
+                android:visibility="gone"
                 android:id="@+id/edit_profileImage"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_alignEnd="@id/profileImage"
-                android:layout_alignBottom="@id/profileImage"
                 android:layout_alignRight="@id/profileImage"
+                android:layout_alignBottom="@id/profileImage"
                 android:background="@drawable/ic_circle"
                 android:elevation="3dp"
-                android:src="@drawable/ic_edit"
-              />
+                android:src="@drawable/ic_edit" />
 
         </RelativeLayout>
 
