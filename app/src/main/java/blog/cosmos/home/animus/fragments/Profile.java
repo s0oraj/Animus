@@ -8,6 +8,7 @@ import static blog.cosmos.home.animus.fragments.Home.LIST_SIZE;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import blog.cosmos.home.animus.R;
@@ -67,6 +69,11 @@ public class Profile extends Fragment {
     private FirebaseUser user;
     private LinearLayout countLayout;
     private ImageButton editProfileBtn;
+
+    boolean isFollowed;
+    DocumentReference userRef;
+
+    List<Object> followersList, followingList;
 
 
     public Profile() {
@@ -106,6 +113,8 @@ public class Profile extends Fragment {
             countLayout.setVisibility(View.GONE);
         }
 
+        userRef = FirebaseFirestore.getInstance().collection("Users")
+                .document(userUID);
         loadBasicData();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -114,6 +123,58 @@ public class Profile extends Fragment {
         loadPostImages();
 
         recyclerView.setAdapter(adapter);
+
+
+
+
+        clickListener();
+
+    }
+
+    private void clickListener() {
+
+        followBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isFollowed){
+                    followingList.remove(userUID);
+
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("following", followingList);
+
+                    userRef.update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                followBtn.setText("Follow");
+
+                            } else {
+                                Log.e("Tag", ""+task.getException().getMessage());
+                            }
+                        }
+                    });
+
+                }else{
+                    followingList.add(userUID);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("following", followingList);
+
+                    userRef.update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                followBtn.setText("Unfollow");
+
+                            } else {
+                                Log.e("Tag", ""+task.getException().getMessage());
+                            }
+                        }
+                    });
+
+
+                }
+            }
+        });
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +187,7 @@ public class Profile extends Fragment {
 
             }
         });
+
 
     }
 
@@ -154,8 +216,7 @@ public class Profile extends Fragment {
     }
 
     private void loadBasicData() {
-        DocumentReference userRef = FirebaseFirestore.getInstance().collection("Users")
-                .document(userUID);
+
 
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -169,16 +230,18 @@ public class Profile extends Fragment {
 
                     String name = value.getString("name");
                     String status = value.getString("status");
-                    int followers = value.getLong("followers").intValue();
-                    int following = value.getLong("following").intValue();
 
                     String profileURL = value.getString("profileImage");
 
                     nameTv.setText(name);
                     toolbarNameTv.setText(name);
                     statusTv.setText(status);
-                    followersCountTv.setText(String.valueOf(followers));
-                    followingCountTv.setText(String.valueOf(following));
+
+                     followersList = (List<Object>) value.getDate("followers");
+                     followingList = (List<Object>) value.getDate("following");
+
+                    followersCountTv.setText(""+followersList.size());
+                    followingCountTv.setText(""+followingList.size());
 
                     try {
 
@@ -192,6 +255,16 @@ public class Profile extends Fragment {
 
                     }
 
+                    if(followingList.contains(userUID)){
+                        followBtn.setText("Unfollow");
+                        isFollowed = true;
+
+                    }else{
+                        followBtn.setText("Follow");
+                        isFollowed = true;
+
+
+                    }
 
                 }
 

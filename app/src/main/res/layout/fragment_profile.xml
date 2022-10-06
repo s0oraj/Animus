@@ -66,7 +66,6 @@
                 app:civ_border_width="1dp" />
 
             <ImageButton
-                android:visibility="gone"
                 android:id="@+id/edit_profileImage"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
@@ -75,7 +74,8 @@
                 android:layout_alignBottom="@id/profileImage"
                 android:background="@drawable/ic_circle"
                 android:elevation="3dp"
-                android:src="@drawable/ic_edit" />
+                android:src="@drawable/ic_edit"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -218,12 +218,14 @@
             android:id="@+id/followBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/countLayout"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
             android:background="@drawable/btn_bg2"
             android:minWidth="160dp"
             android:text="Follow"
             android:textColor="@android:color/white"
-            android:visibility="gone"
+            android:visibility="visible"
 
             />
     </RelativeLayout>
