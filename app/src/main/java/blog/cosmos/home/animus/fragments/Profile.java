@@ -71,9 +71,9 @@ public class Profile extends Fragment {
     private ImageButton editProfileBtn;
 
     boolean isFollowed;
-    DocumentReference userRef;
+    DocumentReference userRef, myRef;
 
-    List<Object> followersList, followingList;
+    List<Object> followersList, followingList, followingList_2;
 
 
     public Profile() {
@@ -93,10 +93,17 @@ public class Profile extends Fragment {
 
         init(view);
 
+        userRef = FirebaseFirestore.getInstance().collection("Users")
+                .document(userUID);
+        myRef = FirebaseFirestore.getInstance().collection("Users")
+                .document(user.getUid());
+
 
         if (IS_SEARCHED_USER) {
             isMyProfile = false;
             userUID = USER_ID;
+            loadData();
+
         } else {
             isMyProfile = true;
             userUID = user.getUid();
@@ -113,8 +120,7 @@ public class Profile extends Fragment {
             countLayout.setVisibility(View.GONE);
         }
 
-        userRef = FirebaseFirestore.getInstance().collection("Users")
-                .document(userUID);
+
         loadBasicData();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -131,13 +137,33 @@ public class Profile extends Fragment {
 
     }
 
+    private void loadData(){
+        myRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("Tag_b", error.getMessage());
+                    return;
+                }
+
+                if(value == null || !value.exists()){
+                    return;
+                }
+
+                followingList_2 = (List<Object>) value.get("following");
+
+
+            }
+        });
+    }
+
     private void clickListener() {
 
         followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isFollowed){
-                    followingList.remove(userUID);
+                    followingList.remove(user.getUid());
 
                     Map<String, Object> map = new HashMap<>();
                     map.put("following", followingList);
