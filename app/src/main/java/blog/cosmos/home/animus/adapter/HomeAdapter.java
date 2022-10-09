@@ -46,7 +46,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder>{
     @Override
     public void onBindViewHolder(@NonNull HomeHolder holder, int position) {
         
-        holder.userNameTv.setText(list.get(position).getUserName());
+        holder.userNameTv.setText(list.get(position).getName());
         holder.timeTv.setText(""+list.get(position).getTimestamp());
 
         int count = list.get(position).getLikeCount();

@@ -3,9 +3,19 @@ package blog.cosmos.home.animus.fragments;
 import static android.app.Activity.RESULT_OK;
 import static blog.cosmos.home.animus.MainActivity.IS_SEARCHED_USER;
 import static blog.cosmos.home.animus.MainActivity.USER_ID;
-import static blog.cosmos.home.animus.fragments.Home.LIST_SIZE;
+import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
+import static blog.cosmos.home.animus.utils.Constants.PREF_NAME;
+import static blog.cosmos.home.animus.utils.Constants.PREF_STORED;
+import static blog.cosmos.home.animus.utils.Constants.PREF_URL;
 
+
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +38,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +62,10 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +90,8 @@ public class Profile extends Fragment {
     private FirebaseUser user;
     private LinearLayout countLayout;
     private ImageButton editProfileBtn;
+
+    int count;
 
 
     public Profile() {
@@ -303,6 +323,21 @@ public class Profile extends Fragment {
                         Glide.with(getContext().getApplicationContext())
                                 .load(profileURL)
                                 .placeholder(R.drawable.ic_person)
+                                .listener(new RequestListener<Drawable>() {
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                                       Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                                       storeProfileImage(bitmap, profileURL);
+
+                                        return false;
+                                    }
+                                })
                                 .timeout(6500)
                                 .into(profileImage);
                     } catch (Exception e) {
@@ -326,8 +361,52 @@ public class Profile extends Fragment {
             }
         });
 
-        postCountTv.setText("" + LIST_SIZE);
 
+    }
+
+    private void storeProfileImage(Bitmap bitmap, String url){
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        boolean isStored = preferences.getBoolean(PREF_STORED, false);
+        String urlString = preferences.getString(PREF_URL, "");
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if(isStored && urlString.equals(url)){
+            return;
+        }
+
+        if(IS_SEARCHED_USER)
+            return;
+        ContextWrapper contextWrapper = new ContextWrapper(getContext().getApplicationContext());
+
+        File directory = contextWrapper.getDir("image_date", Context.MODE_PRIVATE);
+
+        if(!directory.exists())
+            directory.mkdirs();
+
+        File path = new File(directory, "profile.png");
+        FileOutputStream outputStream = null;
+
+        try{
+            outputStream = new FileOutputStream(path);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } finally {
+            try{
+                assert outputStream !=null;
+                outputStream.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        editor.putBoolean(PREF_STORED, true);
+        editor.putString(PREF_URL, url);
+        editor.putString(PREF_DIRECTORY, directory.getAbsolutePath());
+        editor.apply();
 
     }
 
@@ -361,12 +440,20 @@ public class Profile extends Fragment {
                         .timeout(6500)
                         .into(holder.imageView);
 
+                count= getItemCount();
+                postCountTv.setText(""+ count);
+
+            }
+
+            @Override
+            public int getItemCount() {
+
+                return super.getItemCount();
             }
         };
 
 
     }
-
 
     @Override
     public void onStop() {

@@ -1,6 +1,10 @@
 package blog.cosmos.home.animus.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,15 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -34,13 +32,10 @@ import blog.cosmos.home.animus.model.HomeModel;
 
 public class Home extends Fragment {
 
-    private RecyclerView recyclerView;
-
     HomeAdapter adapter;
+    private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
-
-    public static int LIST_SIZE =0;
 
 
     public Home() {
@@ -94,7 +89,7 @@ public class Home extends Fragment {
                 .collection("Post Images");
 
 
-        reference.addSnapshotListener( new EventListener<QuerySnapshot>() {
+        reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -117,8 +112,9 @@ public class Home extends Fragment {
                     }
                     HomeModel model = snapshot.toObject(HomeModel.class);
 
+                    System.out.println(model.getName());
                     list.add(new HomeModel(
-                            model.getUserName(),
+                            model.getName(),
                             model.getProfileImage(),
                             model.getImageUrl(),
                             model.getUid(),
@@ -132,9 +128,6 @@ public class Home extends Fragment {
 
                 }
                 adapter.notifyDataSetChanged();
-
-
-                LIST_SIZE = list.size();
 
 
             }

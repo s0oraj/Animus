@@ -1,7 +1,15 @@
 package blog.cosmos.home.animus;
 
+import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
+import static blog.cosmos.home.animus.utils.Constants.PREF_NAME;
+
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +18,10 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Search;
@@ -48,7 +60,17 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_search));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_add));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_heart));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_heart_fill));
+
+        SharedPreferences preferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String directory = preferences.getString(PREF_DIRECTORY, "");
+
+        Bitmap bitmap = loadProfileImage(directory);
+        Drawable drawable= new BitmapDrawable(getResources(),bitmap);
+
+        tabLayout.addTab(tabLayout.newTab().setIcon(drawable));
+
+
+
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -97,12 +119,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
-                    case 4:
+                 /*   case 4:
                         tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
-                        break;
+                        break; */
                 }
 
 
@@ -125,9 +147,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                     case 3:
                         tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart);
                         break;
-                    case 4:
+                   /* case 4:
                         tabLayout.getTabAt(4).setIcon(R.drawable.ic_heart_fill);
-                        break;
+                        break; */
 
                 }
             }
@@ -162,12 +184,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
-                    case 4:
+                 /*   case 4:
                         tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
-                        break;
+                        break; */
 
                 }
 
@@ -176,6 +198,16 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     }
 
+    private Bitmap loadProfileImage(String directory){
+        try{
+            File file = new File(directory, "profile.png");
+
+            return BitmapFactory.decodeStream(new FileInputStream(file));
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
     @Override
