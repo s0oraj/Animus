@@ -202,7 +202,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         try{
             File file = new File(directory, "profile.png");
 
-            return BitmapFactory.decodeStream(new FileInputStream(file));
+            Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+
+           // return BitmapFactory.decodeStream(new FileInputStream(file));
+            return bitmap;
         } catch(FileNotFoundException e){
             e.printStackTrace();
             return null;

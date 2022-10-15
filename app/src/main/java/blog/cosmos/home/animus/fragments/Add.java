@@ -187,6 +187,11 @@ public class Add extends Fragment {
 
         String description = descET.getText().toString();
 
+        List<String> list = new ArrayList<>();
+
+
+
+
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("description", description);
@@ -195,7 +200,7 @@ public class Add extends Fragment {
 
         map.put("name", user.getDisplayName());
         map.put("profileImage", String.valueOf(user.getPhotoUrl()));
-        map.put("likeCount", 0);
+        map.put("likes", list);
         map.put("comments", "");
         map.put("uid", user.getUid());
 

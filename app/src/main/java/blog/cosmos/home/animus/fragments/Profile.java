@@ -380,7 +380,7 @@ public class Profile extends Fragment {
             return;
         ContextWrapper contextWrapper = new ContextWrapper(getContext().getApplicationContext());
 
-        File directory = contextWrapper.getDir("image_date", Context.MODE_PRIVATE);
+        File directory = contextWrapper.getDir("image_data", Context.MODE_PRIVATE);
 
         if(!directory.exists())
             directory.mkdirs();
