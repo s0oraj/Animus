@@ -14,19 +14,22 @@
         android:layout_above="@id/tabLayout"
      />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIconTint="@null"
-        android:background="@color/white"
-        app:tabTextAppearance="@style/CustomTabTextAppearance"
-        app:tabInlineLabel="false"
-        app:tabTextColor="@color/colorNewTextBoxBackgroundDark"
-        app:tabSelectedTextColor="@color/black"
-        android:textAlignment="center"
-        android:layout_alignParentBottom="true">
-    </com.google.android.material.tabs.TabLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIconTint="@null"
+            android:background="@color/white"
+            app:tabTextAppearance="@style/CustomTabTextAppearance"
+            app:tabInlineLabel="false"
+            app:tabTextColor="@color/colorGreyDark"
+            app:tabSelectedTextColor="@color/black"
+            android:textAlignment="center"
+            android:layout_alignParentBottom="true">
+        </com.google.android.material.tabs.TabLayout>
+
+
 
 
 </RelativeLayout>
