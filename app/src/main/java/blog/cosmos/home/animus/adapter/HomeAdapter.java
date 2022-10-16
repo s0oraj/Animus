@@ -50,7 +50,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         holder.userNameTv.setText(list.get(position).getName());
         holder.timeTv.setText("" + list.get(position).getTimestamp());
 
-        int count = list.get(position).getLikeCount();
+        List<String> likeList = list.get(position).getLikes();
+
+        int count = likeList.size();
 
         if (count == 0) {
             holder.likeCountTv.setVisibility(View.INVISIBLE);
@@ -80,7 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 .timeout(7000)
                 .into(holder.imageView);
 
-        holder.clickListener(position, list.get(position).getId(), list.get(position).getName());
+        holder.clickListener(position, list.get(position).getId(), list.get(position).getName(), list.get(position).getUid());
 
 
     }
@@ -96,7 +98,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     public interface OnPressed {
 
-        void onLiked(int position, String id);
+        void onLiked(int position, String id, String uid);
         void onComment(int position, String id, String comment);
 
 
@@ -127,12 +129,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         }
 
-        public void clickListener(int position, final String id, String name) {
+        public void clickListener(int position, final String id, String name, String uid) {
 
             likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onPressed.onLiked(position, id);
+                    onPressed.onLiked(position, id, uid);
 
                 }
             });

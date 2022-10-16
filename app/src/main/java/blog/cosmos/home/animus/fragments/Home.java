@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -64,6 +65,24 @@ public class Home extends Fragment {
         recyclerView.setAdapter(adapter);
 
         loadDataFromFireStore();
+
+        adapter.OnPressed(new HomeAdapter.OnPressed() {
+            @Override
+            public void onLiked(int position, String id, String uid) {
+                DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
+                        .document(uid)
+                        .collection("Post Images")
+                        .document(id);
+
+
+
+            }
+
+            @Override
+            public void onComment(int position, String id, String comment) {
+
+            }
+        });
 
     }
 
@@ -122,7 +141,7 @@ public class Home extends Fragment {
                             model.getDescription(),
                             model.getId(),
                             model.getTimestamp(),
-                            model.getLikeCount()
+                            model.getLikes()
                     ));
 
 
@@ -135,6 +154,7 @@ public class Home extends Fragment {
 
 
     }
+
 
 
 }
