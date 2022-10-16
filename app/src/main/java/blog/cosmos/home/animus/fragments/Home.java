@@ -25,7 +25,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
@@ -37,6 +39,8 @@ public class Home extends Fragment {
     private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
+
+    private List<String> likeList;
 
 
     public Home() {
@@ -60,6 +64,8 @@ public class Home extends Fragment {
 
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
+        likeList = new ArrayList<>();
+
         list = new ArrayList<>();
         adapter = new HomeAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
@@ -68,12 +74,22 @@ public class Home extends Fragment {
 
         adapter.OnPressed(new HomeAdapter.OnPressed() {
             @Override
-            public void onLiked(int position, String id, String uid) {
+            public void onLiked(int position, String id, String uid, List<String> likeList) {
                 DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
                         .document(uid)
                         .collection("Post Images")
                         .document(id);
 
+                if(likeList.contains(user.getUid())){
+                    likeList.remove(user.getUid()); //unlike
+                } else{
+                    likeList.add(user.getUid());
+                }
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("likes", likeList);
+
+                reference.update(map);
 
 
             }
