@@ -40,7 +40,7 @@ public class Home extends Fragment {
     private List<HomeModel> list;
     private FirebaseUser user;
 
-    private List<String> likeList;
+
 
 
     public Home() {
@@ -64,7 +64,7 @@ public class Home extends Fragment {
 
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
-        likeList = new ArrayList<>();
+
 
         list = new ArrayList<>();
         adapter = new HomeAdapter(list, getContext());
@@ -74,16 +74,16 @@ public class Home extends Fragment {
 
         adapter.OnPressed(new HomeAdapter.OnPressed() {
             @Override
-            public void onLiked(int position, String id, String uid, List<String> likeList) {
+            public void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked) {
                 DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
                         .document(uid)
                         .collection("Post Images")
                         .document(id);
 
-                if(likeList.contains(user.getUid())){
+                if(likeList.contains(user.getUid()) && isChecked){
                     likeList.remove(user.getUid()); //unlike
                 } else{
-                    likeList.add(user.getUid());
+                    likeList.add(user.getUid()); // like
                 }
 
                 Map<String, Object> map = new HashMap<>();
