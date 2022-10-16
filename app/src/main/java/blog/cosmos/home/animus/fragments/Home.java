@@ -64,7 +64,7 @@ public class Home extends Fragment {
 
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
-
+        likeList = new ArrayList<>();
 
         list = new ArrayList<>();
         adapter = new HomeAdapter(list, getContext());
