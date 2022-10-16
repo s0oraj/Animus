@@ -56,10 +56,29 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     private void addTabs() {
 
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_search));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_add));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_heart));
+        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.ic_home));
+        tabLayout.getTabAt(0).getIcon().setColorFilter(
+                        ContextCompat.getColor(this, R.color.colorGreyDark),
+                        PorterDuff.Mode.SRC_IN);
+
+
+        tabLayout.addTab(tabLayout.newTab().setText("Search").setIcon(R.drawable.ic_search));
+        tabLayout.getTabAt(1).getIcon().setColorFilter(
+                ContextCompat.getColor(this, R.color.colorGreyDark),
+                PorterDuff.Mode.SRC_IN);
+
+
+        tabLayout.addTab(tabLayout.newTab().setText("Add").setIcon(R.drawable.ic_add));
+        tabLayout.getTabAt(2).getIcon().setColorFilter(
+                ContextCompat.getColor(this, R.color.colorGreyDark),
+                PorterDuff.Mode.SRC_IN);
+
+
+        tabLayout.addTab(tabLayout.newTab().setText("Notif").setIcon(R.drawable.ic_heart));
+        tabLayout.getTabAt(3).getIcon().setColorFilter(
+                ContextCompat.getColor(this, R.color.colorGreyDark),
+                PorterDuff.Mode.SRC_IN);
+
 
         SharedPreferences preferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String directory = preferences.getString(PREF_DIRECTORY, "");
@@ -67,7 +86,13 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         Bitmap bitmap = loadProfileImage(directory);
         Drawable drawable= new BitmapDrawable(getResources(),bitmap);
 
-        tabLayout.addTab(tabLayout.newTab().setIcon(drawable));
+
+        if(drawable.isVisible()){
+            tabLayout.addTab(tabLayout.newTab().setIcon(drawable).setText("Profile"));
+        } else{
+            tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_person));
+        }
+
 
 
 
@@ -136,16 +161,24 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 switch (tab.getPosition()) {
 
                     case 0:
-                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home).getIcon()
+                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                PorterDuff.Mode.SRC_IN);
                         break;
                     case 1:
-                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.ic_search).getIcon()
+                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
-                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.ic_add).getIcon()
+                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
-                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart).getIcon()
+                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                    /* case 4:
                         tabLayout.getTabAt(4).setIcon(R.drawable.ic_heart_fill);
