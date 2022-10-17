@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -134,6 +135,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         private ImageView imageView;
         private CheckBox likeCheckBox;
         private ImageButton  commentBtn, shareBtn;
+        private EditText commentET;
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -149,12 +151,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentBtn = itemView.findViewById(R.id.commentBtn);
             shareBtn = itemView.findViewById(R.id.shareBtn);
             descriptionTv = itemView.findViewById(R.id.descTv);
+            commentET = itemView.findViewById(R.id.commentET);
 
 
         }
 
         public void clickListener(int position, final String id, String name, String uid, List<String> likes) {
 
+
+            commentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(commentET.getVisibility() == View.GONE){
+                        commentET.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
 
 
             likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

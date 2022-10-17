@@ -201,7 +201,7 @@ public class Add extends Fragment {
         map.put("name", user.getDisplayName());
         map.put("profileImage", String.valueOf(user.getPhotoUrl()));
         map.put("likes", list);
-        map.put("comments", "");
+
         map.put("uid", user.getUid());
 
 

@@ -31,7 +31,6 @@
             android:id="@+id/timeTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username"
             android:textColor="#000"
             android:textStyle="bold" />
 
@@ -63,9 +62,9 @@
             android:id="@+id/likeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:layout_margin="8dp"
-            android:button="@drawable/heart_check" />
+            android:button="@drawable/heart_check"
+            android:checked="true" />
 
         <ImageButton
             android:id="@+id/commentBtn"
@@ -91,7 +90,6 @@
         android:layout_below="@id/linearLayout"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="Description"
         android:textStyle="bold" />
 
     <TextView
@@ -101,7 +99,20 @@
         android:layout_below="@id/descTv"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="100 Likes"
         android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/commentET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/likeCountTv"
+        android:layout_margin="6dp"
+        android:background="@drawable/text_box2"
+        android:hint="Type your comment"
+        android:padding="12dp"
+        />
+
+
+
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -80,7 +81,7 @@ public class Home extends Fragment {
                         .collection("Post Images")
                         .document(id);
 
-                if(likeList.contains(user.getUid()) && isChecked){
+                if(likeList.contains(user.getUid())){
                     likeList.remove(user.getUid()); //unlike
                 } else{
                     likeList.add(user.getUid()); // like
@@ -119,54 +120,87 @@ public class Home extends Fragment {
 
     private void loadDataFromFireStore() {
 
-        CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
-                .document(user.getUid())
-                .collection("Post Images");
+       final DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
+                .document(user.getUid());
 
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Users");
 
-        reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                if (error != null) {
-                    Log.e("Error: ", error.getMessage());
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error!=null){
+                    Log.d("Error: ", error.getMessage());
                     return;
                 }
-
-                if (value == null) {
+                if(value==null)
                     return;
-                }
+                List<String> uidList = (List<String>) value.get("following");
 
-                list.clear();
-
-                for (QueryDocumentSnapshot snapshot : value) {
-
-
-                    if (!snapshot.exists()) {
-                        return;
-                    }
-                    HomeModel model = snapshot.toObject(HomeModel.class);
-
-                    System.out.println(model.getName());
-                    list.add(new HomeModel(
-                            model.getName(),
-                            model.getProfileImage(),
-                            model.getImageUrl(),
-                            model.getUid(),
-                            model.getComments(),
-                            model.getDescription(),
-                            model.getId(),
-                            model.getTimestamp(),
-                            model.getLikes()
-                    ));
+                collectionReference.whereIn("uid", uidList)
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if(error!=null){
+                                    Log.d("Error: ",error.getMessage());
+                                }
+                                for(QueryDocumentSnapshot snapshot : value){
 
 
-                }
-                adapter.notifyDataSetChanged();
+                                    snapshot.getReference().collection("Post Images")
+                                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                    if(error!=null){
+                                                        Log.d("Error: ",error.getMessage());
+                                                    }
 
+                                                        // we receive post data here
+                                                        list.clear();
+
+                                                        for (QueryDocumentSnapshot snapshot : value) {
+
+
+                                                            if (!snapshot.exists()) {
+                                                                return;
+                                                            }
+                                                            HomeModel model = snapshot.toObject(HomeModel.class);
+
+                                                            System.out.println(model.getName());
+                                                            list.add(new HomeModel(
+                                                                    model.getName(),
+                                                                    model.getProfileImage(),
+                                                                    model.getImageUrl(),
+                                                                    model.getUid(),
+                                                                    model.getComments(),
+                                                                    model.getDescription(),
+                                                                    model.getId(),
+                                                                    model.getTimestamp(),
+                                                                    model.getLikes()
+                                                            ));
+
+
+                                                        }
+                                                        adapter.notifyDataSetChanged();
+
+
+
+
+
+                                                }
+                                            });
+
+                                }
+                            }
+                        });
 
             }
         });
+
+
+
+
+
+
 
 
     }
