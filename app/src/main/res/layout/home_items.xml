@@ -103,6 +103,8 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/commentLayout"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/likeCountTv"
@@ -120,57 +122,27 @@
         android:padding="12dp"
         />
 
-
+  <!--
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_margin="8dp"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_send"
         android:background="@drawable/ic_circle2"
-        android:id="@+id/commentSendBtn"
+        android:id="@+id/commentSendBtn1"
     />
+    -->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/refresh_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
+            android:id="@+id/commentSendBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
             android:backgroundTint="@color/colorAccent2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
             app:borderWidth="0dp"
+            app:fabCustomSize="48dp"
             app:srcCompat="@android:drawable/ic_menu_send"
             app:tint="@color/white" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/refresh_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/colorAccent2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:borderWidth="0dp"
-            app:srcCompat="@drawable/ic_send"
-            app:tint="@color/black" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/refresh_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/colorAccent2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:borderWidth="0dp"
-            app:srcCompat="@android:drawable/ic_menu_send"
-
-            app:tint="@color/white" />
-
     </LinearLayout>
 
 </RelativeLayout>

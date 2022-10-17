@@ -11,12 +11,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -123,7 +125,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     public interface OnPressed {
 
         void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked);
-        void onComment(int position, String id, String comment);
+        void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
 
     }
@@ -136,6 +138,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         private CheckBox likeCheckBox;
         private ImageButton  commentBtn, shareBtn;
         private EditText commentET;
+        private FloatingActionButton commentSendBtn;
+        LinearLayout commentLayout;
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -152,6 +156,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             shareBtn = itemView.findViewById(R.id.shareBtn);
             descriptionTv = itemView.findViewById(R.id.descTv);
             commentET = itemView.findViewById(R.id.commentET);
+            commentSendBtn = itemView.findViewById(R.id.commentSendBtn);
+            commentLayout = itemView.findViewById(R.id.commentLayout);
 
 
         }
@@ -162,8 +168,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(commentET.getVisibility() == View.GONE){
-                        commentET.setVisibility(View.VISIBLE);
+                    if(commentLayout.getVisibility() == View.GONE){
+                        commentLayout.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -174,6 +180,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     onPressed.onLiked(position, id, uid, likes, isChecked);
+                }
+            });
+
+            commentSendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String comment = commentET.getText().toString();
+                    onPressed.onComment(position,id,uid,comment, commentLayout, commentET);
+
+
                 }
             });
 

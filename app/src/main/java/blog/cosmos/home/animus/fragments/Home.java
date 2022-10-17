@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -42,8 +47,6 @@ public class Home extends Fragment {
     private FirebaseUser user;
 
 
-
-
     public Home() {
         // Required empty public constructor
     }
@@ -66,7 +69,6 @@ public class Home extends Fragment {
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
 
-
         list = new ArrayList<>();
         adapter = new HomeAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
@@ -81,9 +83,9 @@ public class Home extends Fragment {
                         .collection("Post Images")
                         .document(id);
 
-                if(likeList.contains(user.getUid())){
+                if (likeList.contains(user.getUid())) {
                     likeList.remove(user.getUid()); //unlike
-                } else{
+                } else {
                     likeList.add(user.getUid()); // like
                 }
 
@@ -96,7 +98,43 @@ public class Home extends Fragment {
             }
 
             @Override
-            public void onComment(int position, String id, String comment) {
+            public void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET) {
+
+                if (comment.isEmpty() || comment.equals(" ")) {
+                    Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
+                        .document(uid)
+                        .collection("Post Images")
+                        .document(id)
+                        .collection("Comments");
+
+                String commentID = reference.document().getId();
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("uid", user.getUid());
+                map.put("comment", comment);
+                map.put("commentID", commentID);
+                map.put("postID", id);
+
+                reference.document(commentID)
+                        .set(map)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if (task.isSuccessful()) {
+                                    commentET.setText("");
+                                    commentLayout.setVisibility(View.GONE);
+                                } else {
+                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
 
             }
         });
@@ -120,7 +158,7 @@ public class Home extends Fragment {
 
     private void loadDataFromFireStore() {
 
-       final DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
+        final DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
                 .document(user.getUid());
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Users");
@@ -128,11 +166,11 @@ public class Home extends Fragment {
         reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error!=null){
+                if (error != null) {
                     Log.d("Error: ", error.getMessage());
                     return;
                 }
-                if(value==null)
+                if (value == null)
                     return;
                 List<String> uidList = (List<String>) value.get("following");
 
@@ -140,50 +178,47 @@ public class Home extends Fragment {
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                if(error!=null){
-                                    Log.d("Error: ",error.getMessage());
+                                if (error != null) {
+                                    Log.d("Error: ", error.getMessage());
                                 }
-                                for(QueryDocumentSnapshot snapshot : value){
+                                for (QueryDocumentSnapshot snapshot : value) {
 
 
                                     snapshot.getReference().collection("Post Images")
                                             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                 @Override
                                                 public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                                    if(error!=null){
-                                                        Log.d("Error: ",error.getMessage());
+                                                    if (error != null) {
+                                                        Log.d("Error: ", error.getMessage());
                                                     }
 
-                                                        // we receive post data here
-                                                        list.clear();
+                                                    // we receive post data here
+                                                    list.clear();
 
-                                                        for (QueryDocumentSnapshot snapshot : value) {
-
-
-                                                            if (!snapshot.exists()) {
-                                                                return;
-                                                            }
-                                                            HomeModel model = snapshot.toObject(HomeModel.class);
-
-                                                            System.out.println(model.getName());
-                                                            list.add(new HomeModel(
-                                                                    model.getName(),
-                                                                    model.getProfileImage(),
-                                                                    model.getImageUrl(),
-                                                                    model.getUid(),
-                                                                    model.getComments(),
-                                                                    model.getDescription(),
-                                                                    model.getId(),
-                                                                    model.getTimestamp(),
-                                                                    model.getLikes()
-                                                            ));
+                                                    for (QueryDocumentSnapshot snapshot : value) {
 
 
+                                                        if (!snapshot.exists()) {
+                                                            return;
                                                         }
-                                                        adapter.notifyDataSetChanged();
+                                                        HomeModel model = snapshot.toObject(HomeModel.class);
+
+                                                        System.out.println(model.getName());
+                                                        list.add(new HomeModel(
+                                                                model.getName(),
+                                                                model.getProfileImage(),
+                                                                model.getImageUrl(),
+                                                                model.getUid(),
+                                                                model.getComments(),
+                                                                model.getDescription(),
+                                                                model.getId(),
+                                                                model.getTimestamp(),
+                                                                model.getLikes()
+                                                        ));
 
 
-
+                                                    }
+                                                    adapter.notifyDataSetChanged();
 
 
                                                 }
@@ -197,14 +232,7 @@ public class Home extends Fragment {
         });
 
 
-
-
-
-
-
-
     }
-
 
 
 }
