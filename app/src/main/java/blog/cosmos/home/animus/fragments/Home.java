@@ -174,6 +174,10 @@ public class Home extends Fragment {
                     return;
                 List<String> uidList = (List<String>) value.get("following");
 
+                if (uidList == null || uidList.isEmpty())
+                    return;
+
+
                 collectionReference.whereIn("uid", uidList)
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
