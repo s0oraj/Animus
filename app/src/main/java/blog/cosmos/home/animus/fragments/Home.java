@@ -338,4 +338,17 @@ public class Home extends Fragment {
         }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
+            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+            View decorView = getActivity().getWindow().getDecorView();
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        }
+
+
+    }
 }
