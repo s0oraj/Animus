@@ -184,5 +184,8 @@ public class Search extends Fragment {
         void onChange( String uid);
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }

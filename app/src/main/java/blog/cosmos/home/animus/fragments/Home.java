@@ -149,12 +149,6 @@ public class Home extends Fragment {
         if (getActivity() != null)
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
-            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
-        }
-
-
-
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -315,19 +309,4 @@ public class Home extends Fragment {
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
-            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
-            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
-        }
-    }
 }

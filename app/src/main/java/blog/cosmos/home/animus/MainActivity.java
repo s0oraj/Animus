@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
+                        if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
+                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+                        }
                         break;
                     case 1:
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search)
@@ -164,6 +167,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home).getIcon()
                                 .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
                                 PorterDuff.Mode.SRC_IN);
+                        if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
+                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+                        }
                         break;
                     case 1:
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search).getIcon()
@@ -198,6 +204,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
+                        if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
+                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+                        }
                         break;
                     case 1:
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search)
@@ -266,6 +275,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             super.onBackPressed();
         }
     }
+
+
 
 
 
