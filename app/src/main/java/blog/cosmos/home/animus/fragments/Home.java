@@ -149,6 +149,7 @@ public class Home extends Fragment {
         if (getActivity() != null)
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
