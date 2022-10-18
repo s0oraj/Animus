@@ -315,7 +315,7 @@ public class Home extends Fragment {
 
 
     }
-
+/*
     @Override
     public void onPause() {
         super.onPause();
@@ -326,7 +326,7 @@ public class Home extends Fragment {
 
         }
     }
-
+*/
     @Override
     public void onStop() {
         super.onStop();
