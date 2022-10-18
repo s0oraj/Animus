@@ -35,11 +35,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    public static boolean IS_HOME_FRAGMENT = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         init();
 
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.ic_home));
         tabLayout.getTabAt(0).getIcon().setColorFilter(
-                        ContextCompat.getColor(this, R.color.colorGreyDark),
-                        PorterDuff.Mode.SRC_IN);
+                ContextCompat.getColor(this, R.color.colorGreyDark),
+                PorterDuff.Mode.SRC_IN);
 
 
         tabLayout.addTab(tabLayout.newTab().setText("Search").setIcon(R.drawable.ic_search));
@@ -86,17 +87,14 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         String directory = preferences.getString(PREF_DIRECTORY, "");
 
         Bitmap bitmap = loadProfileImage(directory);
-        Drawable drawable= new BitmapDrawable(getResources(),bitmap);
+        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
 
 
-        if(drawable.isVisible()){
+        if (drawable.isVisible()) {
             tabLayout.addTab(tabLayout.newTab().setIcon(drawable).setText("Profile"));
-        } else{
+        } else {
             tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_person));
         }
-
-
-
 
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
@@ -123,41 +121,47 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 switch (tab.getPosition()) {
 
                     case 0:
+                        IS_HOME_FRAGMENT = true;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
-                        if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
-                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
-                            View decorView = MainActivity.this.getWindow().getDecorView();
-                            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-                        }
                         break;
                     case 1:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(2).setIcon(R.drawable.ic_add)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
-                 /*   case 4:
+                    case 4:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
+                        /*
                         tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
-                                        PorterDuff.Mode.SRC_IN);
-                        break; */
+                                        PorterDuff.Mode.SRC_IN);*/
+                        break;
                 }
 
 
@@ -169,28 +173,25 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 switch (tab.getPosition()) {
 
                     case 0:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home).getIcon()
-                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
-                                PorterDuff.Mode.SRC_IN);
-                        if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
-                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-                            View decorView = MainActivity.this.getWindow().getDecorView();
-                            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                        }
+                                .setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                        PorterDuff.Mode.SRC_IN);
                         break;
                     case 1:
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search).getIcon()
-                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                .setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
                         tabLayout.getTabAt(2).setIcon(R.drawable.ic_add).getIcon()
-                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                .setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
                         tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart).getIcon()
-                                .setColorFilter(  ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
+                                .setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                    /* case 4:
@@ -207,41 +208,45 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 switch (tab.getPosition()) {
 
                     case 0:
+                        IS_HOME_FRAGMENT = true;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_fill)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
-                        if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
-                            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
-                            View decorView = MainActivity.this.getWindow().getDecorView();
-                            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-                        }
                         break;
                     case 1:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(2).setIcon(R.drawable.ic_add)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
                         tabLayout.getTabAt(3).setIcon(R.drawable.ic_heart_fill)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);
                         break;
-                 /*   case 4:
-                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
+                    case 4:
+                        IS_HOME_FRAGMENT = false;
+                        changeStatusBarColor();
+                        /*tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
-                                        PorterDuff.Mode.SRC_IN);
-                        break; */
+                                        PorterDuff.Mode.SRC_IN);*/
+                        break;
 
                 }
 
@@ -250,21 +255,23 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     }
 
-    private Bitmap loadProfileImage(String directory){
-        try{
+    private Bitmap loadProfileImage(String directory) {
+        try {
             File file = new File(directory, "profile.png");
 
             Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
 
-           // return BitmapFactory.decodeStream(new FileInputStream(file));
+            // return BitmapFactory.decodeStream(new FileInputStream(file));
             return bitmap;
-        } catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
         }
     }
+
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
+
     @Override
     public void onChange(String uid) {
 
@@ -287,7 +294,30 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     }
 
 
+    public void changeStatusBarColor() {
 
+        View decorView = MainActivity.this.getWindow().getDecorView();
 
+        if (IS_HOME_FRAGMENT) {
 
+            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+            // Draw light icons on a dark background color
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        } else {
+            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+
+            // Draw dark icons on a light background color
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        IS_HOME_FRAGMENT = false;
+        changeStatusBarColor();
+    }
 }

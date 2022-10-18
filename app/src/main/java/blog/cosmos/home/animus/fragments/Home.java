@@ -327,7 +327,7 @@ public class Home extends Fragment {
         }
     }
 */
-    @Override
+   /* @Override
     public void onStop() {
         super.onStop();
         if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
@@ -338,7 +338,10 @@ public class Home extends Fragment {
         }
 
     }
+    */
 
+
+    /*
     @Override
     public void onResume() {
         super.onResume();
@@ -349,6 +352,8 @@ public class Home extends Fragment {
 
         }
 
-
     }
+    */
+
+
 }
