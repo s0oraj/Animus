@@ -152,6 +152,9 @@ public class Home extends Fragment {
 
         if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
             getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+            View decorView = getActivity().getWindow().getDecorView();
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         }
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -318,6 +321,9 @@ public class Home extends Fragment {
         super.onPause();
         if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
             getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+            View decorView = getActivity().getWindow().getDecorView();
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         }
     }
 
@@ -326,6 +332,9 @@ public class Home extends Fragment {
         super.onStop();
         if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
             getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+            View decorView = getActivity().getWindow().getDecorView();
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         }
 
     }

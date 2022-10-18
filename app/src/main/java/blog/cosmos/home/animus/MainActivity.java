@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus;
 
+import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
 import static blog.cosmos.home.animus.utils.Constants.PREF_NAME;
 
@@ -11,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -127,6 +129,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                         PorterDuff.Mode.SRC_IN);
                         if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
                             MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+                            View decorView = MainActivity.this.getWindow().getDecorView();
+                            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
                         }
                         break;
                     case 1:
@@ -169,6 +174,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                 PorterDuff.Mode.SRC_IN);
                         if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
                             MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+                            View decorView = MainActivity.this.getWindow().getDecorView();
+                            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                         }
                         break;
                     case 1:
@@ -206,6 +213,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                         PorterDuff.Mode.SRC_IN);
                         if(MainActivity.this.getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
                             MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+                            View decorView = MainActivity.this.getWindow().getDecorView();
+                            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
                         }
                         break;
                     case 1:
