@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
 import blog.cosmos.home.animus.model.HomeModel;
@@ -148,6 +149,10 @@ public class Home extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         if (getActivity() != null)
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
+            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+        }
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -308,5 +313,20 @@ public class Home extends Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
+            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+        }
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
+            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+        }
+
+    }
 }
