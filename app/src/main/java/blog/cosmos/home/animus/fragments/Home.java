@@ -31,6 +31,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,73 +165,145 @@ public class Home extends Fragment {
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Users");
 
-        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        CollectionReference personalPostReference= FirebaseFirestore.getInstance().collection("Users")
+                        .document(user.getUid())
+                        .collection("Post Images");
+
+
+        personalPostReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.d("Error: ", error.getMessage());
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+              if(error != null){
+                  Log.d("Error: ", error.getMessage());
+                  return;
+              }
+                if (value == null) {
                     return;
                 }
-                if (value == null)
-                    return;
-                List<String> uidList = (List<String>) value.get("following");
+                list.clear();
+                for (QueryDocumentSnapshot snapshot : value) {
+                    if(!snapshot.exists()){
+                        return;
+                    }
 
-                collectionReference.whereIn("uid", uidList)
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                if (error != null) {
-                                    Log.d("Error: ", error.getMessage());
-                                }
-                                for (QueryDocumentSnapshot snapshot : value) {
+                    HomeModel model = snapshot.toObject(HomeModel.class);
+
+                    System.out.println(model.getName());
+
+                    list.add(new HomeModel(
+                            model.getName(),
+                            model.getProfileImage(),
+                            model.getImageUrl(),
+                            model.getUid(),
+                            model.getComments(),
+                            model.getDescription(),
+                            model.getId(),
+                            model.getTimestamp(),
+                            model.getLikes()
+                    ));
+
+                }
+
+                reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.d("Error: ", error.getMessage());
+                            return;
+                        }
+                        if (value == null)
+                            return;
+                        List<String> uidList = (List<String>) value.get("following");
+
+                        if (uidList == null || uidList.isEmpty())
+                            return;
+
+                        collectionReference.whereIn("uid", uidList)
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                        if (error != null) {
+                                            Log.d("Error: ", error.getMessage());
+                                        }
+                                        for (QueryDocumentSnapshot snapshot : value) {
 
 
-                                    snapshot.getReference().collection("Post Images")
-                                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                                    if (error != null) {
-                                                        Log.d("Error: ", error.getMessage());
-                                                    }
+                                            snapshot.getReference().collection("Post Images")
+                                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                            if (error != null) {
+                                                                Log.d("Error: ", error.getMessage());
+                                                            }
 
-                                                    // we receive post data here
-                                                    list.clear();
+                                                            // we receive post data here
+                                                            //list.clear();
 
-                                                    for (QueryDocumentSnapshot snapshot : value) {
+                                                            for (QueryDocumentSnapshot snapshot : value) {
 
 
-                                                        if (!snapshot.exists()) {
-                                                            return;
+                                                                if (!snapshot.exists()) {
+                                                                    return;
+                                                                }
+                                                                HomeModel model = snapshot.toObject(HomeModel.class);
+
+                                                                System.out.println(model.getName());
+                                                                list.add(new HomeModel(
+                                                                        model.getName(),
+                                                                        model.getProfileImage(),
+                                                                        model.getImageUrl(),
+                                                                        model.getUid(),
+                                                                        model.getComments(),
+                                                                        model.getDescription(),
+                                                                        model.getId(),
+                                                                        model.getTimestamp(),
+                                                                        model.getLikes()
+                                                                ));
+
+
+                                                            }
+                                                            Collections.sort(list, new Comparator<HomeModel>() {
+                                                                @Override
+                                                                public int compare(HomeModel homeModel, HomeModel t1) {
+
+                                                                    return homeModel.getTimestamp().compareTo(t1.getTimestamp());
+                                                                }
+                                                            });
+                                                            adapter.notifyDataSetChanged();
                                                         }
-                                                        HomeModel model = snapshot.toObject(HomeModel.class);
+                                                    });
 
-                                                        System.out.println(model.getName());
-                                                        list.add(new HomeModel(
-                                                                model.getName(),
-                                                                model.getProfileImage(),
-                                                                model.getImageUrl(),
-                                                                model.getUid(),
-                                                                model.getComments(),
-                                                                model.getDescription(),
-                                                                model.getId(),
-                                                                model.getTimestamp(),
-                                                                model.getLikes()
-                                                        ));
+                                        }
+                                    }
+                                });
 
 
-                                                    }
-                                                    adapter.notifyDataSetChanged();
+                    }
+                });
 
+                Collections.sort(list, new Comparator<HomeModel>() {
+                    @Override
+                    public int compare(HomeModel homeModel, HomeModel t1) {
 
-                                                }
-                                            });
-
-                                }
-                            }
-                        });
+                        if(t1== null){
+                            return 0;
+                        }
+                        else if(homeModel == null){
+                            return 0;
+                        } else {
+                            return t1.getTimestamp().compareTo(homeModel.getTimestamp());
+                        }
+                    }
+                });
+                adapter.notifyDataSetChanged();
 
             }
         });
+
+
+
+
+
 
 
     }

@@ -26,6 +26,7 @@
             app:tabTextColor="@color/colorGreyDark"
             app:tabSelectedTextColor="@color/black"
             android:textAlignment="center"
+
             android:layout_alignParentBottom="true">
         </com.google.android.material.tabs.TabLayout>
 
