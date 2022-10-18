@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     tools:context=".MainActivity">
 
 
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tabLayout"
+
      />
     <View
         android:id="@+id/view"
@@ -19,13 +21,14 @@
         android:layout_height="0.5dp"
         android:layout_above="@id/tabLayout"
         android:layout_marginBottom="0dp"
-        android:background="#83C8C8C8" />
+        android:background="#2FC8C8C8" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIconTint="@null"
+            android:elevation="2dp"
             android:background="@color/white"
             app:tabTextAppearance="@style/CustomTabTextAppearance"
             app:tabInlineLabel="false"

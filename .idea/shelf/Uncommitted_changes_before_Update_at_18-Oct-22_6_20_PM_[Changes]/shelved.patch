@@ -1,0 +1,86 @@
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n\r\n    <androidx.viewpager.widget.ViewPager\r\n        android:id=\"@+id/viewPager\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_above=\"@id/tabLayout\"\r\n     />\r\n\r\n\r\n        <com.google.android.material.tabs.TabLayout\r\n            android:id=\"@+id/tabLayout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            app:tabIconTint=\"@null\"\r\n            android:background=\"@color/white\"\r\n            app:tabTextAppearance=\"@style/CustomTabTextAppearance\"\r\n            app:tabInlineLabel=\"false\"\r\n            app:tabTextColor=\"@color/colorGreyDark\"\r\n            app:tabSelectedTextColor=\"@color/black\"\r\n            android:textAlignment=\"center\"\r\n\r\n            android:layout_alignParentBottom=\"true\">\r\n        </com.google.android.material.tabs.TabLayout>\r\n\r\n\r\n\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 0b87d16ff6510c03edd5f2891334d6e97f604c1d)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1666096546119)
+@@ -12,6 +12,7 @@
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_above="@id/tabLayout"
++        android:layout_marginBottom="1dp"
+      />
+ 
+ 
+@@ -20,6 +21,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:tabIconTint="@null"
++            android:elevation="2dp"
+             android:background="@color/white"
+             app:tabTextAppearance="@style/CustomTabTextAppearance"
+             app:tabInlineLabel="false"
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/drawable/ic_baseline_account_circle_24.xml\" value=\"0.2045\" />\r\n        <entry key=\"..\\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/layout/activity_main.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/layout/fragment_add.xml\" value=\"0.5\" />\r\n        <entry key=\"..\\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/layout/fragment_login.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/layout/fragment_profile.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/menu/navigation.xml\" value=\"0.196875\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/dialog_bg.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/dsff.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/heart_check.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_circle.xml\" value=\"0.2175\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_circle2.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_comment.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_edit.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_heart.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_heart_red.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/text_box2.xml\" value=\"0.194\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_main.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_splash.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_add.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_create_account.xml\" value=\"0.2441123188405797\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_forgot_password.xml\" value=\"0.15489130434782608\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_home.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_login.xml\" value=\"0.33\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_notification.xml\" value=\"0.2441123188405797\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_profile.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_search.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/home_items.xml\" value=\"0.5\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/image_items.xml\" value=\"0.2441123188405797\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/loading_dialog.xml\" value=\"0.2441123188405797\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/profile_image_items.xml\" value=\"0.2441123188405797\" />\r\n        <entry key=\"..\\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/user_items.xml\" value=\"0.2441123188405797\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 0b87d16ff6510c03edd5f2891334d6e97f604c1d)
++++ b/.idea/misc.xml	(date 1666096281683)
+@@ -9,6 +9,7 @@
+         <entry key="..\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+         <entry key="..\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+         <entry key="..\:/My Apps/Studio Projects/Udacity Android Basics 2.0/Animus/app/src/main/res/menu/navigation.xml" value="0.196875" />
++        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/btn_bg2.xml" value="0.1985" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/dialog_bg.xml" value="0.194" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/dsff.xml" value="0.194" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/heart_check.xml" value="0.194" />
+@@ -18,8 +19,9 @@
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_edit.xml" value="0.194" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_heart.xml" value="0.194" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_heart_red.xml" value="0.194" />
++        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/myrect.xml" value="0.194" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/text_box2.xml" value="0.194" />
+-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_main.xml" value="0.22" />
++        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_main.xml" value="0.33" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_add.xml" value="0.22" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_create_account.xml" value="0.2441123188405797" />
+@@ -27,9 +29,9 @@
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_notification.xml" value="0.2441123188405797" />
+-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
++        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_search.xml" value="0.1" />
+-        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/home_items.xml" value="0.5" />
++        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/home_items.xml" value="0.25" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/image_items.xml" value="0.2441123188405797" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/loading_dialog.xml" value="0.2441123188405797" />
+         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/profile_image_items.xml" value="0.2441123188405797" />
+Index: app/src/main/res/drawable/myrect.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/myrect.xml b/app/src/main/res/drawable/myrect.xml
+new file mode 100644
+--- /dev/null	(date 1666093975812)
++++ b/app/src/main/res/drawable/myrect.xml	(date 1666093975812)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++
++    <!-- res/drawable/myrect.xml -->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++android:shape="rectangle">
++<solid android:color="#42000000" />
++<corners android:radius="5dp" />
++</shape>
+\ No newline at end of file
