@@ -315,45 +315,6 @@ public class Home extends Fragment {
 
 
     }
-/*
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
-            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-            View decorView = getActivity().getWindow().getDecorView();
-            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        }
-    }
-*/
-   /* @Override
-    public void onStop() {
-        super.onStop();
-        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.colorAccent2Dark)){
-            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-            View decorView = getActivity().getWindow().getDecorView();
-            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        }
-
-    }
-    */
-
-
-    /*
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(getActivity().getWindow().getStatusBarColor()==getResources().getColor(R.color.white)){
-            getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
-            View decorView = getActivity().getWindow().getDecorView();
-            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        }
-
-    }
-    */
 
 
 }

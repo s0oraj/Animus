@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                         PorterDuff.Mode.SRC_IN);
                         break;
                     case 1:
+
                         tabLayout.getTabAt(1).setIcon(R.drawable.ic_search).getIcon()
                                 .setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
                                         PorterDuff.Mode.SRC_IN);
@@ -314,10 +315,19 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     }
 
+    /*
     @Override
     protected void onPause() {
         super.onPause();
         IS_HOME_FRAGMENT = false;
+        changeStatusBarColor();
+    }
+    */
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IS_HOME_FRAGMENT = true;
         changeStatusBarColor();
     }
 }
