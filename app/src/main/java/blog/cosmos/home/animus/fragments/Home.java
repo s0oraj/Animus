@@ -279,7 +279,15 @@ public class Home extends Fragment {
                                                                 @Override
                                                                 public int compare(HomeModel homeModel, HomeModel t1) {
 
-                                                                    return homeModel.getTimestamp().compareTo(t1.getTimestamp());
+
+                                                                    if( t1== null || homeModel == null ||
+                                                                            t1.getTimestamp() == null ||
+                                                                            homeModel.getTimestamp() == null
+                                                                    ){
+                                                                        return 0;
+                                                                    } else {
+                                                                        return t1.getTimestamp().compareTo(homeModel.getTimestamp());
+                                                                    }
                                                                 }
                                                             });
                                                             adapter.notifyDataSetChanged();
