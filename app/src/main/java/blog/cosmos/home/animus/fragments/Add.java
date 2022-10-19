@@ -244,6 +244,8 @@ public class Add extends Fragment {
                                         File[] files = file.listFiles();
 
                                         assert files != null;
+
+                                        list.clear();
                                         for (File file1 : files) {
                                             if (file1.getAbsolutePath().endsWith(".jpg") || file1.getAbsolutePath().endsWith(".png")) {
                                                 list.add(new GalleryImages(Uri.fromFile(file1)));

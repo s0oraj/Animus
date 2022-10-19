@@ -275,14 +275,8 @@ public class Home extends Fragment {
 
 
                                                             }
-                                                            Collections.sort(list, new Comparator<HomeModel>() {
-                                                                @Override
-                                                                public int compare(HomeModel homeModel, HomeModel t1) {
 
-                                                                    return homeModel.getTimestamp().compareTo(t1.getTimestamp());
-                                                                }
-                                                            });
-                                                            adapter.notifyDataSetChanged();
+                                                          // adapter.notifyDataSetChanged();
                                                         }
                                                     });
 
@@ -308,7 +302,7 @@ public class Home extends Fragment {
                         }
                     }
                 });
-                adapter.notifyDataSetChanged();
+            //    adapter.notifyDataSetChanged();
 
             }
         });
