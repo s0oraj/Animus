@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     ViewPagerAdapter pagerAdapter;
 
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
 
     public static boolean IS_HOME_FRAGMENT = true;
 

@@ -40,6 +40,7 @@
                 android:layout_toLeftOf="@id/sendButton"
                 android:layout_marginRight="24dp"
                 android:layout_centerVertical="true"
+                android:id="@+id/search_bar_button"
 
                 />
             <ImageView

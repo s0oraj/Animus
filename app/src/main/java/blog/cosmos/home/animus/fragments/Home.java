@@ -1,11 +1,14 @@
 package blog.cosmos.home.animus.fragments;
 
+import static blog.cosmos.home.animus.MainActivity.viewPager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -14,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +54,8 @@ public class Home extends Fragment {
     private List<HomeModel> list;
     private FirebaseUser user;
 
+    private ImageView searchButton;
+
 
     public Home() {
         // Required empty public constructor
@@ -68,6 +75,7 @@ public class Home extends Fragment {
 
 
         init(view);
+        clickListener();
 
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
@@ -164,7 +172,20 @@ public class Home extends Fragment {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        searchButton = view.findViewById(R.id.search_bar_button);
+
     }
+
+    private void clickListener(){
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                viewPager.setCurrentItem(1);
+            }
+        });
+    }
+
 
     private void loadDataFromFireStore() {
 
