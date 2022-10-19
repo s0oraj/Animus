@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -323,6 +324,7 @@ public class Profile extends Fragment {
                         Glide.with(getContext().getApplicationContext())
                                 .load(profileURL)
                                 .placeholder(R.drawable.ic_person)
+                                .circleCrop() // makes your profile pic round while you see it in tablayout
                                 .listener(new RequestListener<Drawable>() {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

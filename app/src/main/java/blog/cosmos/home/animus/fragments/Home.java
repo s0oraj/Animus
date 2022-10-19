@@ -233,6 +233,8 @@ public class Home extends Fragment {
                                         if (error != null) {
                                             Log.d("Error: ", error.getMessage());
                                         }
+                                        if (value == null)
+                                            return;
                                         for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -243,6 +245,9 @@ public class Home extends Fragment {
                                                             if (error != null) {
                                                                 Log.d("Error: ", error.getMessage());
                                                             }
+
+                                                            if (value == null)
+                                                                return;
 
                                                             // we receive post data here
                                                             //list.clear();
