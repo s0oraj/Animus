@@ -197,4 +197,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     }
 
 
+    /**
+     * Helper method which clears the existing dataset of the recyclerview adapter.
+     */
+    public void clear(){
+        if(list!=null && !list.isEmpty()) {
+            int size = list.size();
+            list.clear();
+
+            // Notify the adapter that items were removed so adapter can update the recyclerview accordingly.
+            notifyItemRangeRemoved(0, size);
+        }
+
+    }
+
+
 }
