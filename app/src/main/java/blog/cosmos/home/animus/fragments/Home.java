@@ -2,6 +2,7 @@ package blog.cosmos.home.animus.fragments;
 
 import static blog.cosmos.home.animus.MainActivity.viewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,7 @@ import java.util.Map;
 
 import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
 import blog.cosmos.home.animus.model.HomeModel;
 
@@ -181,7 +183,11 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
 
-                viewPager.setCurrentItem(1);
+               // viewPager.setCurrentItem(1);
+
+                Intent intent = new Intent(getActivity(), ReplacerActivity.class);
+                intent.putExtra("DesiredFragment","search");
+                startActivity(intent);
             }
         });
     }
