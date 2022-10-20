@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus;
 
+import static blog.cosmos.home.animus.MainActivity.FROM_MAINACTIVITY_TO_PROFILEFRAGMENT;
 import static blog.cosmos.home.animus.MainActivity.viewPager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -114,6 +115,12 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
         if (currentFragment instanceof Profile) {
             //viewPager.setCurrentItem(0);
             IS_SEARCHED_USER = false;
+
+            if(FROM_MAINACTIVITY_TO_PROFILEFRAGMENT){
+                FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
+                finish();
+            }
+
         }
             super.onBackPressed();
 

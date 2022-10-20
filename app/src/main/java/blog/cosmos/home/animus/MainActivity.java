@@ -274,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
+    public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
 
     @Override
     public void onChange(String uid) {
@@ -285,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         Intent intent = new Intent(MainActivity.this, ReplacerActivity.class);
         intent.putExtra("DesiredFragment","otherUsersProfile");
+        FROM_MAINACTIVITY_TO_PROFILEFRAGMENT= true;
         startActivity(intent);
 
     }
