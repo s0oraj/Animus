@@ -36,15 +36,21 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
 
         String desiredFragment = getIntent().getStringExtra("DesiredFragment");
-        if(desiredFragment!=null && desiredFragment.equals("search")){
-            setFragment(new Search());
-        } else if (desiredFragment!=null && desiredFragment.equals("otherUsersProfile")){
-            setFragment(new Profile());
+
+        if(desiredFragment!=null)
+        {
+            if(desiredFragment.equals("search")){
+                setFragment(new Search());
+            } else if (desiredFragment.equals("otherUsersProfile")){
+                setFragment(new Profile());
+            }
+            else{
+                setFragment(new LoginFragment());
+            }
         }
         else{
             setFragment(new LoginFragment());
         }
-
 
 
 
