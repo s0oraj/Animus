@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import blog.cosmos.home.animus.R;
@@ -227,6 +228,28 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         return list;
     }
 
+    public void deleteDuplicateItem(){
+
+        sort();
+        notifyDataSetChanged();
+
+    }
+
+    public void sort(){
+        int i,j;
+        if(list.size()<1){
+            for(i=0; i<list.size(); i++){
+                for(j=0; j<list.size(); j++){
+                    if(Objects.equals(list.get(i).getId(), list.get(j).getId())){
+                        list.remove(list.get(i));
+                        notifyItemRemoved(j);
+                        sort();
+                    }
+                }
+            }
+        }
+
+    }
 
 
 }
