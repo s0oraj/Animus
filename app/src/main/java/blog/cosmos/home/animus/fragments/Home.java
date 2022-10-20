@@ -200,10 +200,9 @@ public class Home extends Fragment {
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Users");
 
-        CollectionReference personalPostReference= FirebaseFirestore.getInstance().collection("Users")
+     /*   CollectionReference personalPostReference= FirebaseFirestore.getInstance().collection("Users")
                         .document(user.getUid())
-                        .collection("Post Images");
-
+                        .collection("Post Images"); */
 
 
         /*
@@ -275,7 +274,6 @@ public class Home extends Fragment {
                     return;
                 List<String> uidList = (List<String>) value.get("following");
 
-
                 if (uidList == null || uidList.isEmpty())
                     return;
                 uidList.add(user.getUid());
@@ -291,6 +289,7 @@ public class Home extends Fragment {
                                 }
                                 if (value == null)
                                     return;
+                                list.clear();
                                 for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -306,7 +305,6 @@ public class Home extends Fragment {
                                                         return;
 
                                                     // we receive post data here
-                                                    list.clear();
 
                                                     for (QueryDocumentSnapshot snapshot : value) {
 
@@ -317,6 +315,8 @@ public class Home extends Fragment {
                                                         HomeModel model = snapshot.toObject(HomeModel.class);
 
                                                         System.out.println(model.getName());
+
+
                                                         list.add(new HomeModel(
                                                                 model.getName(),
                                                                 model.getProfileImage(),
@@ -346,7 +346,7 @@ public class Home extends Fragment {
                                                             }
                                                         }
                                                     });
-                                                    adapter.notifyDataSetChanged();
+                                                    adapter.addAll(list);
                                                 }
                                             });
 

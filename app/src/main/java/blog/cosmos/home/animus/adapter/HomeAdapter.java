@@ -211,5 +211,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     }
 
+    /**
+     * Updates the adapter with new data
+     * **/
+    public void addAll(List<HomeModel> data){
+        if (data != null && !data.isEmpty()) {
+            // If new data is not empty then update allPosts List
+            list = data;
+            //Notify the adapter for the change in dataset
+            notifyDataSetChanged();
+        }
+    }
+
+    public List<HomeModel> getList(){
+        return list;
+    }
+
+
 
 }
