@@ -33,9 +33,9 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
         frameLayout = findViewById(R.id.frameLayout);
 
-        Intent data = getIntent();
 
-        String desiredFragment = data.getStringExtra("DesiredFragment");
+
+        String desiredFragment = getIntent().getStringExtra("DesiredFragment");
         if(desiredFragment!=null && desiredFragment.equals("search")){
             setFragment(new Search());
         } else if (desiredFragment!=null && desiredFragment.equals("otherUsersProfile")){
