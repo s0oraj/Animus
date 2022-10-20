@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import blog.cosmos.home.animus.fragments.CreateAccountFragment;
 import blog.cosmos.home.animus.fragments.ForgotPassword;
 import blog.cosmos.home.animus.fragments.LoginFragment;
+import blog.cosmos.home.animus.fragments.Profile;
 import blog.cosmos.home.animus.fragments.Search;
 
 import static blog.cosmos.home.animus.MainActivity.USER_ID;
@@ -73,7 +74,11 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
         /*Intent intent = new Intent(ReplacerActivity.this, MainActivity.class);
         startActivity(intent);*/
+        /*
         viewPager.setCurrentItem(4);
-       finish();
+         */
+
+        setFragment(new Profile());
+      // finish();
     }
 }
