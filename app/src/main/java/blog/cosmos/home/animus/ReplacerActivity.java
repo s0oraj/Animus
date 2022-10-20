@@ -23,6 +23,7 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
 
     private FrameLayout frameLayout;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,11 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
         String desiredFragment = data.getStringExtra("DesiredFragment");
         if(desiredFragment.equals("search")){
             setFragment(new Search());
-        } else{
+        } else if (desiredFragment.equals("otherUsersProfile")){
+            setFragment(new Profile());
+        }
+
+        else{
             setFragment(new LoginFragment());
         }
 
@@ -46,6 +51,8 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
     }
 
     public void setFragment(Fragment fragment){
+
+        currentFragment= fragment;
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
@@ -69,6 +76,9 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
     @Override
     public void onChange(String uid) {
+
+        //User is going from search fragment to profile fragment therefore we need to show user profile instead of our profile
+
         USER_ID = uid;
         IS_SEARCHED_USER = true;
 
@@ -80,5 +90,20 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
         setFragment(new Profile());
       // finish();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        // If user had opened someones profile from search and then presses back, then IS_SEARCH_USER is set to false,
+        // therefore when user opens his/her own profile (main activity profile tab) then he/she sees his own profile
+        // and not the profile he previously search about (since IS_SEARCH_USER has a false value)
+        if (currentFragment instanceof Profile) {
+            //viewPager.setCurrentItem(0);
+            IS_SEARCHED_USER = false;
+        }
+            super.onBackPressed();
+
     }
 }

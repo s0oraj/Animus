@@ -5,6 +5,7 @@ import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
 import static blog.cosmos.home.animus.utils.Constants.PREF_NAME;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -195,9 +196,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                 .setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorGreyDark),
                                         PorterDuff.Mode.SRC_IN);
                         break;
-                   /* case 4:
-                        tabLayout.getTabAt(4).setIcon(R.drawable.ic_heart_fill);
-                        break; */
+                   case 4:
+                        //tabLayout.getTabAt(4).setIcon(R.drawable.ic_heart_fill);
+                       IS_SEARCHED_USER=false;
+                        break;
 
                 }
             }
@@ -279,7 +281,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         USER_ID = uid;
         IS_SEARCHED_USER = true;
 
-        viewPager.setCurrentItem(4);
+        // viewPager.setCurrentItem(4);
+
+        Intent intent = new Intent(MainActivity.this, ReplacerActivity.class);
+        intent.putExtra("DesiredFragment","otherUsersProfile");
+        startActivity(intent);
+
     }
 
 
