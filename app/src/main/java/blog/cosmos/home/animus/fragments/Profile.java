@@ -122,6 +122,7 @@ public class Profile extends Fragment {
         if (IS_SEARCHED_USER) {
             isMyProfile = false;
             userUID = USER_ID;
+            view.findViewById(R.id.profileBackBtn).setVisibility(View.VISIBLE);
             loadData();
 
         } else {

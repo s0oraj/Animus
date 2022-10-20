@@ -74,6 +74,12 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
         }
 
 
+        if(fragment instanceof Profile){
+            fragmentTransaction.addToBackStack(null);
+
+        }
+
+
         fragmentTransaction.replace(frameLayout.getId(), fragment);
         fragmentTransaction.commit();
 
