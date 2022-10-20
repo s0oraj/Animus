@@ -9,6 +9,7 @@ import static blog.cosmos.home.animus.utils.Constants.PREF_STORED;
 import static blog.cosmos.home.animus.utils.Constants.PREF_URL;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -92,6 +93,7 @@ public class Profile extends Fragment {
     private LinearLayout countLayout;
     private ImageButton editProfileBtn;
 
+    private Context mContext;
     int count;
 
 
@@ -197,7 +199,7 @@ public class Profile extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext, "Unfollowed", Toast.LENGTH_SHORT).show();
                                         } else {
                                             Log.e("Tag_3", task.getException().getMessage());
                                         }
@@ -231,11 +233,10 @@ public class Profile extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
-                                            Toast.makeText(getContext(),"Followed", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext, "Followed", Toast.LENGTH_SHORT).show();
                                         } else{
                                             Log.e("tag_3_1",task.getException().getMessage());
                                         }
-
                                     }
                                 });
 
@@ -265,6 +266,8 @@ public class Profile extends Fragment {
     }
 
     private void init(View view) {
+
+        mContext=getContext();
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         assert getActivity() != null;
