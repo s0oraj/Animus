@@ -1,6 +1,7 @@
 package blog.cosmos.home.animus.fragments;
 
 import static android.app.Activity.RESULT_OK;
+import static blog.cosmos.home.animus.MainActivity.FROM_MAINACTIVITY_TO_PROFILEFRAGMENT;
 import static blog.cosmos.home.animus.MainActivity.IS_SEARCHED_USER;
 import static blog.cosmos.home.animus.MainActivity.USER_ID;
 import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
@@ -73,8 +74,10 @@ import java.util.List;
 import java.util.Map;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.model.PostImageModel;
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.jvm.internal.MagicApiIntrinsics;
 
 
 public class Profile extends Fragment {
@@ -92,6 +95,7 @@ public class Profile extends Fragment {
     private FirebaseUser user;
     private LinearLayout countLayout;
     private ImageButton editProfileBtn;
+    private ImageView profileBackBtn;
 
     private Context mContext;
     int count;
@@ -122,7 +126,7 @@ public class Profile extends Fragment {
         if (IS_SEARCHED_USER) {
             isMyProfile = false;
             userUID = USER_ID;
-            view.findViewById(R.id.profileBackBtn).setVisibility(View.VISIBLE);
+           profileBackBtn.setVisibility(View.VISIBLE);
             loadData();
 
         } else {
@@ -263,12 +267,21 @@ public class Profile extends Fragment {
             }
         });
 
+        profileBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getActivity().onBackPressed();
+
+            }
+        });
 
     }
 
     private void init(View view) {
 
         mContext=getContext();
+        profileBackBtn=  view.findViewById(R.id.profileBackBtn);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         assert getActivity() != null;
