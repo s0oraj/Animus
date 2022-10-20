@@ -70,9 +70,10 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
     public void onChange(String uid) {
         USER_ID = uid;
         IS_SEARCHED_USER = true;
+
+        /*Intent intent = new Intent(ReplacerActivity.this, MainActivity.class);
+        startActivity(intent);*/
         viewPager.setCurrentItem(4);
-        Intent intent = new Intent(ReplacerActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+       finish();
     }
 }
