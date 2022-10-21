@@ -47,8 +47,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_items, parent, false);
-
-
         return new HomeHolder(view);
     }
 
@@ -65,9 +63,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         int count = likeList.size();
 
         if (count == 0) {
-            holder.likeCountTv.setVisibility(View.INVISIBLE);
+            holder.likeCountTv.setVisibility(View.GONE);
 
         } else if (count == 1) {
+            if(holder.likeCountTv.getVisibility()== View.GONE){
+                holder.likeCountTv.setVisibility(View.VISIBLE);
+            }
             holder.likeCountTv.setText(count + " like");
 
         } else {
@@ -77,14 +78,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         // check if already like
 
-        if(likeList.contains(user.getUid())){
-            holder.likeCheckBox.setChecked(true);
-        } else{
-            holder.likeCheckBox.setChecked(false);
-        }
-
-
-
+        assert user!=null;
+        holder.likeCheckBox.setChecked(likeList.contains(user.getUid()));
 
         holder.descriptionTv.setText(list.get(position).getDescription());
         Random random = new Random();
@@ -120,7 +115,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     }
 
     public void OnPressed(OnPressed onPressed) {
-        this.onPressed = this.onPressed;
+        this.onPressed = onPressed;
     }
 
     public interface OnPressed {
@@ -143,6 +138,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         LinearLayout commentLayout;
 
 
+
+
         public HomeHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -160,6 +157,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentSendBtn = itemView.findViewById(R.id.commentSendBtn);
             commentLayout = itemView.findViewById(R.id.commentLayout);
 
+            /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                }
+            });*/
 
         }
 
@@ -177,10 +180,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
 
             likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    onPressed.onLiked(position, id, uid, likes, isChecked);
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                    onPressed.onLiked(position, id, uid, likes, b);
                 }
             });
 
@@ -228,28 +231,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         return list;
     }
 
-    public void deleteDuplicateItem(){
 
-        sort();
-        notifyDataSetChanged();
-
-    }
-
-    public void sort(){
-        int i,j;
-        if(list.size()<1){
-            for(i=0; i<list.size(); i++){
-                for(j=0; j<list.size(); j++){
-                    if(Objects.equals(list.get(i).getId(), list.get(j).getId())){
-                        list.remove(list.get(i));
-                        notifyItemRemoved(j);
-                        sort();
-                    }
-                }
-            }
-        }
-
-    }
 
 
 }

@@ -119,6 +119,9 @@ public class Home extends Fragment {
                 map.put("likes", likeList);
 
                 reference.update(map);
+                //adapter.notifyItemChanged(position);
+
+
 
 
             }
