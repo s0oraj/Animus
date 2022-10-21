@@ -107,6 +107,8 @@ public class LoginFragment extends Fragment {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        rlnotif =view.findViewById(R.id.rlnotif);
+        textnotif=view.findViewById(R.id.textnotif);
 
     }
 
