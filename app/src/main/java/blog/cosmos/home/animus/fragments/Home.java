@@ -243,6 +243,8 @@ public class Home extends Fragment {
                     return;
                 }
 
+                personalList.clear();
+
                 for (QueryDocumentSnapshot snapshot : value) {
                     if(!snapshot.exists()){
                         return;
@@ -266,6 +268,7 @@ public class Home extends Fragment {
 
                 }
 
+                personalList.addAll(followingUsersList);
                 Collections.sort(personalList, new Comparator<HomeModel>() {
                     @Override
                     public int compare(HomeModel homeModel, HomeModel t1) {
@@ -281,7 +284,11 @@ public class Home extends Fragment {
                     }
                 });
 
-                adapter.notifyDataSetChanged();
+               // list=personalList;
+                list.clear();
+                list.addAll(personalList);
+               // adapter.notifyDataSetChanged();
+                adapter.addAll(list);
 
 
 
@@ -319,6 +326,7 @@ public class Home extends Fragment {
                                 if (value == null)
                                     return;
                                 //  list.clear();
+                                followingUsersList.clear();
                                 for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -359,21 +367,7 @@ public class Home extends Fragment {
                                                                 model.getLikes()
                                                         ));
 
-                                                        Collections.sort(followingUsersList, new Comparator<HomeModel>() {
-                                                            @Override
-                                                            public int compare(HomeModel homeModel, HomeModel t1) {
 
-                                                                if( t1== null || homeModel == null ||
-                                                                        t1.getTimestamp() == null ||
-                                                                        homeModel.getTimestamp() == null
-                                                                ){
-                                                                    return 0;
-                                                                } else {
-                                                                    return t1.getTimestamp().compareTo(homeModel.getTimestamp());
-                                                                }
-                                                            }
-                                                        });
-                                                        adapter.notifyDataSetChanged();
 
 
                                                     }
@@ -383,7 +377,31 @@ public class Home extends Fragment {
 
                                 }
 
+                                followingUsersList.addAll(personalList);
+                                Collections.sort(followingUsersList, new Comparator<HomeModel>() {
+                                    @Override
+                                    public int compare(HomeModel homeModel, HomeModel t1) {
+
+                                        if( t1== null || homeModel == null ||
+                                                t1.getTimestamp() == null ||
+                                                homeModel.getTimestamp() == null
+                                        ){
+                                            return 0;
+                                        } else {
+                                            return t1.getTimestamp().compareTo(homeModel.getTimestamp());
+                                        }
+                                    }
+                                });
+                                list=followingUsersList;
+                               // list.clear();
+                              //  list.addAll(followingUsersList);
+                                 adapter.addAll(list);
+                               // adapter.notifyDataSetChanged();
+
                             }
+
+
+
                         });
 
 
