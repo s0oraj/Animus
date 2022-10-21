@@ -92,10 +92,12 @@ public class Profile extends Fragment {
     private CircleImageView profileImage;
     private Button followBtn;
     private RecyclerView recyclerView;
-    private FirebaseUser user;
+
     private LinearLayout countLayout;
     private ImageButton editProfileBtn;
     private ImageView profileBackBtn;
+    private FirebaseUser user;
+    private FirebaseAuth auth;
 
     private Context mContext;
     int count;
@@ -117,6 +119,9 @@ public class Profile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init(view);
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
 
 
         myRef = FirebaseFirestore.getInstance().collection("Users")
@@ -299,8 +304,6 @@ public class Profile extends Fragment {
         countLayout = view.findViewById(R.id.countLayout);
         editProfileBtn = view.findViewById(R.id.edit_profileImage);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
 
 
     }
@@ -361,6 +364,7 @@ public class Profile extends Fragment {
                                 .into(profileImage);
                     } catch (Exception e) {
                         e.printStackTrace();
+
                     }
 
                     if (followersList.contains(user.getUid())) {
@@ -394,6 +398,7 @@ public class Profile extends Fragment {
             return;
         }
 
+        // Dont save photo or profile if its not current user
         if(IS_SEARCHED_USER)
             return;
         ContextWrapper contextWrapper = new ContextWrapper(getContext().getApplicationContext());
