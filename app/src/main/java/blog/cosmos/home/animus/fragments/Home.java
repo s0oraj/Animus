@@ -290,9 +290,7 @@ public class Home extends Fragment {
 
                 if (uidList == null || uidList.isEmpty())
                     return;
-                uidList.add(user.getUid());
-                // adding the current users id so that current users posts are also visible,
-                // along with the "following" i.e list of people current user is following
+               // uidList.add(user.getUid());
 
                 for(int i=0;i<uidList.toArray().length;i++){
                     Log.d("TAG","uidList index: "+i+"" +uidList.get(i));
