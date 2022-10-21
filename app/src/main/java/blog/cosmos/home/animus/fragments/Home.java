@@ -216,6 +216,7 @@ public class Home extends Fragment {
 
                 gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
                 gsc= GoogleSignIn.getClient(getActivity(),gso);
+
                 gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
