@@ -43,8 +43,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
@@ -287,7 +289,16 @@ public class Home extends Fragment {
                // list=personalList;
                 list.clear();
                 list.addAll(personalList);
-               // adapter.notifyDataSetChanged();
+
+                // deleting duplicate items in list
+                Set<HomeModel> s= new HashSet<HomeModel>();
+                s.addAll(list);
+                list = new ArrayList<HomeModel>();
+                list.addAll(s);
+
+
+
+                // adapter.notifyDataSetChanged();
                 adapter.addAll(list);
 
 
@@ -327,6 +338,7 @@ public class Home extends Fragment {
                                     return;
                                 //  list.clear();
                                 followingUsersList.clear();
+
                                 for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -342,7 +354,7 @@ public class Home extends Fragment {
                                                         return;
 
                                                     // we receive post data here
-
+                                                    List<HomeModel> followingUsersList2= new ArrayList<>();
                                                     for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -368,6 +380,37 @@ public class Home extends Fragment {
                                                         ));
 
 
+                                                       // followingUsersList.addAll(personalList);
+                                                        Collections.sort(followingUsersList, new Comparator<HomeModel>() {
+                                                            @Override
+                                                            public int compare(HomeModel homeModel, HomeModel t1) {
+
+                                                                if( t1== null || homeModel == null ||
+                                                                        t1.getTimestamp() == null ||
+                                                                        homeModel.getTimestamp() == null
+                                                                ){
+                                                                    return 0;
+                                                                } else {
+                                                                    return t1.getTimestamp().compareTo(homeModel.getTimestamp());
+                                                                }
+                                                            }
+                                                        });
+                                                        //list=followingUsersList;
+                                                        //list.clear();
+                                                      //  list.addAll(followingUsersList);
+
+                                                        // deleting duplicate items in list
+                                                        Set<HomeModel> s= new HashSet<HomeModel>();
+                                                        s.addAll(list);
+                                                        list = new ArrayList<HomeModel>();
+                                                        list.addAll(s);
+
+
+                                                        // adapter.addAll(list);
+                                                        adapter.notifyDataSetChanged();
+
+
+
 
 
                                                     }
@@ -377,26 +420,6 @@ public class Home extends Fragment {
 
                                 }
 
-                                followingUsersList.addAll(personalList);
-                                Collections.sort(followingUsersList, new Comparator<HomeModel>() {
-                                    @Override
-                                    public int compare(HomeModel homeModel, HomeModel t1) {
-
-                                        if( t1== null || homeModel == null ||
-                                                t1.getTimestamp() == null ||
-                                                homeModel.getTimestamp() == null
-                                        ){
-                                            return 0;
-                                        } else {
-                                            return t1.getTimestamp().compareTo(homeModel.getTimestamp());
-                                        }
-                                    }
-                                });
-                                list=followingUsersList;
-                               // list.clear();
-                              //  list.addAll(followingUsersList);
-                                 adapter.addAll(list);
-                               // adapter.notifyDataSetChanged();
 
                             }
 

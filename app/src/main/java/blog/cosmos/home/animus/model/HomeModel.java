@@ -103,4 +103,28 @@ public class HomeModel {
     public void setLikes(List<String> likes) {
         this.likes = likes;
     }
+
+
+
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
+        if(obj instanceof HomeModel)
+        {
+            HomeModel temp = (HomeModel) obj;
+            if(this.name.equals(temp.name) && this.profileImage.equals(temp.profileImage) && this.imageUrl.equals(temp.imageUrl) && this.description.equals(temp.description) && this.uid.equals(temp.uid) && this.id.equals(temp.id))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+
+        return (this.name.hashCode() + this.profileImage.hashCode() + this.imageUrl.hashCode() + this.description.hashCode() + this.uid.hashCode() + this.id.hashCode());
+    }
 }
