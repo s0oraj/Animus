@@ -58,6 +58,8 @@ public class Home extends Fragment {
     private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
+    private List<HomeModel> personalList;
+    private List<HomeModel> followingUsersList;
 
     private ImageView searchButton;
 
@@ -86,6 +88,9 @@ public class Home extends Fragment {
 
 
         list = new ArrayList<>();
+        personalList = new ArrayList<>();
+        followingUsersList = new ArrayList<>();
+
         adapter = new HomeAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
 
@@ -247,7 +252,7 @@ public class Home extends Fragment {
 
                     System.out.println(model.getName());
 
-                    list.add(new HomeModel(
+                    personalList.add(new HomeModel(
                             model.getName(),
                             model.getProfileImage(),
                             model.getImageUrl(),
@@ -261,7 +266,7 @@ public class Home extends Fragment {
 
                 }
 
-                Collections.sort(list, new Comparator<HomeModel>() {
+                Collections.sort(personalList, new Comparator<HomeModel>() {
                     @Override
                     public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -275,11 +280,19 @@ public class Home extends Fragment {
                         }
                     }
                 });
+
                 adapter.notifyDataSetChanged();
 
-                reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+
+
+            }
+        });
+
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
                     Log.d("Error: ", error.getMessage());
                     return;
@@ -290,7 +303,7 @@ public class Home extends Fragment {
 
                 if (uidList == null || uidList.isEmpty())
                     return;
-               // uidList.add(user.getUid());
+                // uidList.add(user.getUid());
 
                 for(int i=0;i<uidList.toArray().length;i++){
                     Log.d("TAG","uidList index: "+i+"" +uidList.get(i));
@@ -305,7 +318,7 @@ public class Home extends Fragment {
                                 }
                                 if (value == null)
                                     return;
-                              //  list.clear();
+                                //  list.clear();
                                 for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -334,7 +347,7 @@ public class Home extends Fragment {
                                                         Log.d("TAG",model.getDescription());
 
 
-                                                        list.add(new HomeModel(
+                                                        followingUsersList.add(new HomeModel(
                                                                 model.getName(),
                                                                 model.getProfileImage(),
                                                                 model.getImageUrl(),
@@ -346,7 +359,7 @@ public class Home extends Fragment {
                                                                 model.getLikes()
                                                         ));
 
-                                                        Collections.sort(list, new Comparator<HomeModel>() {
+                                                        Collections.sort(followingUsersList, new Comparator<HomeModel>() {
                                                             @Override
                                                             public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -376,12 +389,6 @@ public class Home extends Fragment {
 
             }
         });
-
-
-
-            }
-        });
-
 
 
 
