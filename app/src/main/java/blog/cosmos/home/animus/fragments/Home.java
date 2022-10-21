@@ -23,6 +23,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -185,12 +188,30 @@ public class Home extends Fragment {
 
                // viewPager.setCurrentItem(1);
 
-                Intent intent = new Intent(getActivity(), ReplacerActivity.class);
+                /*Intent intent = new Intent(getActivity(), ReplacerActivity.class);
                 intent.putExtra("DesiredFragment","search");
                 startActivity(intent);
+*/
+
+                GoogleSignInOptions gso;
+                GoogleSignInClient gsc;
+
+                gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                gsc= GoogleSignIn.getClient(getActivity(),gso);
+
+                gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        getActivity().finish();
+                        startActivity(new Intent(getActivity(),ReplacerActivity.class));
+                    }
+                });
+
             }
         });
     }
+
+
 
 
     private void loadDataFromFireStore() {
@@ -200,12 +221,12 @@ public class Home extends Fragment {
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Users");
 
-     /*   CollectionReference personalPostReference= FirebaseFirestore.getInstance().collection("Users")
+        CollectionReference personalPostReference= FirebaseFirestore.getInstance().collection("Users")
                         .document(user.getUid())
-                        .collection("Post Images"); */
+                        .collection("Post Images");
 
 
-        /*
+
         personalPostReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -256,16 +277,9 @@ public class Home extends Fragment {
                 });
                 adapter.notifyDataSetChanged();
 
-
-
-
-            }
-        });
-       */
-
-        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
                     Log.d("Error: ", error.getMessage());
                     return;
@@ -280,6 +294,10 @@ public class Home extends Fragment {
                 // adding the current users id so that current users posts are also visible,
                 // along with the "following" i.e list of people current user is following
 
+                for(int i=0;i<uidList.toArray().length;i++){
+                    Log.d("TAG","uidList index: "+i+"" +uidList.get(i));
+                }
+
                 collectionReference.whereIn("uid", uidList)
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
@@ -289,7 +307,7 @@ public class Home extends Fragment {
                                 }
                                 if (value == null)
                                     return;
-                                list.clear();
+                              //  list.clear();
                                 for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -315,6 +333,7 @@ public class Home extends Fragment {
                                                         HomeModel model = snapshot.toObject(HomeModel.class);
 
                                                         System.out.println(model.getName());
+                                                        Log.d("TAG",model.getDescription());
 
 
                                                         list.add(new HomeModel(
@@ -329,6 +348,20 @@ public class Home extends Fragment {
                                                                 model.getLikes()
                                                         ));
 
+                                                        Collections.sort(list, new Comparator<HomeModel>() {
+                                                            @Override
+                                                            public int compare(HomeModel homeModel, HomeModel t1) {
+
+                                                                if( t1== null || homeModel == null ||
+                                                                        t1.getTimestamp() == null ||
+                                                                        homeModel.getTimestamp() == null
+                                                                ){
+                                                                    return 0;
+                                                                } else {
+                                                                    return t1.getTimestamp().compareTo(homeModel.getTimestamp());
+                                                                }
+                                                            }
+                                                        });
                                                         adapter.notifyDataSetChanged();
 
 
@@ -345,6 +378,13 @@ public class Home extends Fragment {
 
             }
         });
+
+
+
+            }
+        });
+
+
 
 
 
