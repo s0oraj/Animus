@@ -361,7 +361,6 @@ public class Profile extends Fragment {
                                 .into(profileImage);
                     } catch (Exception e) {
                         e.printStackTrace();
-
                     }
 
                     if (followersList.contains(user.getUid())) {
