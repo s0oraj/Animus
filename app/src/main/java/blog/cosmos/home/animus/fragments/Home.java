@@ -197,7 +197,7 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
 
-               // viewPager.setCurrentItem(1);
+                // viewPager.setCurrentItem(1);
 
                 Intent intent = new Intent(getActivity(), ReplacerActivity.class);
                 intent.putExtra("DesiredFragment","search");
@@ -240,18 +240,18 @@ public class Home extends Fragment {
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Users");
 
         CollectionReference personalPostReference= FirebaseFirestore.getInstance().collection("Users")
-                        .document(user.getUid())
-                        .collection("Post Images");
+                .document(user.getUid())
+                .collection("Post Images");
 
 
 
         personalPostReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-              if(error != null){
-                  Log.d("Error: ", error.getMessage());
-                  return;
-              }
+                if(error != null){
+                    Log.d("Error: ", error.getMessage());
+                    return;
+                }
                 if (value == null) {
                     return;
                 }
@@ -378,7 +378,6 @@ public class Home extends Fragment {
                                                         System.out.println(model.getName());
                                                         Log.d("TAG",model.getDescription());
 
-
                                                         followingUsersList.add(new HomeModel(
                                                                 model.getName(),
                                                                 model.getProfileImage(),
@@ -417,7 +416,7 @@ public class Home extends Fragment {
                                                             }
                                                         });
                                                         adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
-                                                                              // therefore custom addAll() method of adapter fixes this
+                                                        // therefore custom addAll() method of adapter fixes this
 
 
 
