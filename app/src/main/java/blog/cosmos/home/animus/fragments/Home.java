@@ -62,6 +62,7 @@ public class Home extends Fragment {
     private FirebaseUser user;
     private List<HomeModel> personalList;
     private List<HomeModel> followingUsersList;
+    private List<HomeModel> followingUsersListBackup;
 
     private ImageView searchButton;
 
@@ -92,6 +93,7 @@ public class Home extends Fragment {
         list = new ArrayList<>();
         personalList = new ArrayList<>();
         followingUsersList = new ArrayList<>();
+        followingUsersListBackup = new ArrayList<>();
 
         adapter = new HomeAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
@@ -268,38 +270,38 @@ public class Home extends Fragment {
                             model.getLikes()
                     ));
 
+                    List<HomeModel> tempList= followingUsersList;
+                    tempList.addAll(personalList);
+                    list = tempList;
+
+                    //Deleting repetitive posts (refer to homemodel @override equals for details)
+                    Set<HomeModel> s= new HashSet<HomeModel>();
+                    s.addAll(list);
+                    list = new ArrayList<HomeModel>();
+                    list.addAll(s);
+
+                    //Sorting posts from latest to oldest
+                    Collections.sort(list, new Comparator<HomeModel>() {
+                        @Override
+                        public int compare(HomeModel homeModel, HomeModel t1) {
+
+                            if( t1== null || homeModel == null ||
+                                    t1.getTimestamp() == null ||
+                                    homeModel.getTimestamp() == null
+                            ){
+                                return 0;
+                            } else {
+                                return t1.getTimestamp().compareTo(homeModel.getTimestamp());
+                            }
+                        }
+                    });
+                    adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                    // therefore custom addAll() method of adapter fixes this
+
+
                 }
 
-                personalList.addAll(followingUsersList);
-                Collections.sort(personalList, new Comparator<HomeModel>() {
-                    @Override
-                    public int compare(HomeModel homeModel, HomeModel t1) {
 
-                        if( t1== null || homeModel == null ||
-                                t1.getTimestamp() == null ||
-                                homeModel.getTimestamp() == null
-                        ){
-                            return 0;
-                        } else {
-                            return t1.getTimestamp().compareTo(homeModel.getTimestamp());
-                        }
-                    }
-                });
-
-               // list=personalList;
-                list.clear();
-                list.addAll(personalList);
-
-                // deleting duplicate items in list
-                Set<HomeModel> s= new HashSet<HomeModel>();
-                s.addAll(list);
-                list = new ArrayList<HomeModel>();
-                list.addAll(s);
-
-
-
-                // adapter.notifyDataSetChanged();
-                adapter.addAll(list);
 
 
 
@@ -338,6 +340,7 @@ public class Home extends Fragment {
                                     return;
                                 //  list.clear();
                                 followingUsersList.clear();
+
 
                                 for (QueryDocumentSnapshot snapshot : value) {
 
@@ -379,9 +382,18 @@ public class Home extends Fragment {
                                                                 model.getLikes()
                                                         ));
 
+                                                        List<HomeModel> tempList= personalList;
+                                                        tempList.addAll(followingUsersList);
+                                                        list = tempList;
 
-                                                       // followingUsersList.addAll(personalList);
-                                                        Collections.sort(followingUsersList, new Comparator<HomeModel>() {
+                                                        //Deleting repetitive posts (refer to homemodel @override equals for details)
+                                                        Set<HomeModel> s= new HashSet<HomeModel>();
+                                                        s.addAll(list);
+                                                        list = new ArrayList<HomeModel>();
+                                                        list.addAll(s);
+
+                                                        //Sorting posts from latest to oldest
+                                                        Collections.sort(list, new Comparator<HomeModel>() {
                                                             @Override
                                                             public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -395,19 +407,12 @@ public class Home extends Fragment {
                                                                 }
                                                             }
                                                         });
-                                                        //list=followingUsersList;
-                                                        //list.clear();
-                                                      //  list.addAll(followingUsersList);
-
-                                                        // deleting duplicate items in list
-                                                        Set<HomeModel> s= new HashSet<HomeModel>();
-                                                        s.addAll(list);
-                                                        list = new ArrayList<HomeModel>();
-                                                        list.addAll(s);
+                                                        adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                                                                              // therefore custom addAll() method of adapter fixes this
 
 
-                                                        // adapter.addAll(list);
-                                                        adapter.notifyDataSetChanged();
+
+
 
 
 
