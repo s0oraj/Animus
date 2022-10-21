@@ -43,6 +43,7 @@
                 android:id="@+id/search_bar_button"
 
                 />
+
             <ImageView
                 android:id="@+id/sendButton"
                 android:layout_width="wrap_content"
@@ -50,10 +51,13 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/ic_send"
-                android:contentDescription="@null"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:contentDescription="@null" />
 
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>

@@ -62,9 +62,10 @@ public class Home extends Fragment {
     private FirebaseUser user;
     private List<HomeModel> personalList;
     private List<HomeModel> followingUsersList;
-    private List<HomeModel> followingUsersListBackup;
+
 
     private ImageView searchButton;
+    private ImageView sendButton;
 
 
     public Home() {
@@ -93,7 +94,7 @@ public class Home extends Fragment {
         list = new ArrayList<>();
         personalList = new ArrayList<>();
         followingUsersList = new ArrayList<>();
-        followingUsersListBackup = new ArrayList<>();
+
 
         adapter = new HomeAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
@@ -187,6 +188,7 @@ public class Home extends Fragment {
         user = auth.getCurrentUser();
 
         searchButton = view.findViewById(R.id.search_bar_button);
+        sendButton = view.findViewById(R.id.sendButton);
 
     }
 
@@ -197,11 +199,19 @@ public class Home extends Fragment {
 
                // viewPager.setCurrentItem(1);
 
-                /*Intent intent = new Intent(getActivity(), ReplacerActivity.class);
+                Intent intent = new Intent(getActivity(), ReplacerActivity.class);
                 intent.putExtra("DesiredFragment","search");
                 startActivity(intent);
-*/
 
+
+
+
+            }
+        });
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 GoogleSignInOptions gso;
                 GoogleSignInClient gsc;
 
@@ -215,9 +225,9 @@ public class Home extends Fragment {
                         startActivity(new Intent(getActivity(),ReplacerActivity.class));
                     }
                 });
-
             }
         });
+
     }
 
 
@@ -270,7 +280,7 @@ public class Home extends Fragment {
                             model.getLikes()
                     ));
 
-                    List<HomeModel> tempList= followingUsersList;
+                    List<HomeModel> tempList= new ArrayList<HomeModel>(followingUsersList);
                     tempList.addAll(personalList);
                     list = tempList;
 
@@ -357,7 +367,7 @@ public class Home extends Fragment {
                                                         return;
 
                                                     // we receive post data here
-                                                    List<HomeModel> followingUsersList2= new ArrayList<>();
+
                                                     for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -382,7 +392,7 @@ public class Home extends Fragment {
                                                                 model.getLikes()
                                                         ));
 
-                                                        List<HomeModel> tempList= personalList;
+                                                        List<HomeModel> tempList= new ArrayList<HomeModel>(personalList);;
                                                         tempList.addAll(followingUsersList);
                                                         list = tempList;
 
@@ -409,10 +419,6 @@ public class Home extends Fragment {
                                                         });
                                                         adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                                                                               // therefore custom addAll() method of adapter fixes this
-
-
-
-
 
 
 

@@ -260,6 +260,7 @@ public class LoginFragment extends Fragment {
 
         DocumentReference documentReference =   FirebaseFirestore.getInstance().collection("Users").document(user.getUid());
 
+        // if user already exists, otherwise the else section code is executed, this is done so that an existing users data doesn't get overridden
         if(documentReference!=null){
             documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                 @Override
