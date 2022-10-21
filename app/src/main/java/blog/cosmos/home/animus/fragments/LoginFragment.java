@@ -110,6 +110,7 @@ public class LoginFragment extends Fragment {
         rlnotif =view.findViewById(R.id.rlnotif);
         textnotif=view.findViewById(R.id.textnotif);
 
+
     }
 
     private void clickListener(){
