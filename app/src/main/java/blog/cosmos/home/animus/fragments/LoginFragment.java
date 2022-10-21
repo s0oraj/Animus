@@ -2,6 +2,7 @@ package blog.cosmos.home.animus.fragments;
 
 import static blog.cosmos.home.animus.fragments.CreateAccountFragment.EMAIL_REGEX;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -35,7 +36,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +70,8 @@ public class LoginFragment extends Fragment {
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
 
+    private Activity activity;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -91,6 +99,7 @@ public class LoginFragment extends Fragment {
     private void init(View view) {
 
 
+        activity=getActivity();
         emailEt = view.findViewById(R.id.emailET);
         passwordEt = view.findViewById(R.id.passwordET);
         loginBtn = view.findViewById(R.id.recoverBtn);
@@ -249,44 +258,107 @@ public class LoginFragment extends Fragment {
 
     private void updateUi(FirebaseUser user){
 
+        DocumentReference documentReference =   FirebaseFirestore.getInstance().collection("Users").document(user.getUid());
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-
-        List<String> list = new ArrayList<>();
-        List<String> list1 = new ArrayList<>();
-
-        Map<String,Object> map = new HashMap<>();
-
-        if(account.getDisplayName()!=null){
-        map.put("name", account.getDisplayName());}
-        map.put("email", account.getEmail());
-        map.put("profileImage", String.valueOf(account.getPhotoUrl()));
-        map.put("uid", user.getUid());
-        map.put("following",list1);
-        map.put("followers", list);
-        map.put("status"," ");
+        if(documentReference!=null){
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
 
-        FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
-                .set(map)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-
-                        if(task.isSuccessful()){
-                            assert getActivity()!=null;
-                            progressBar.setVisibility(View.GONE);
-                            sendUserToMainActivity();
-
-                        }else{
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getContext(), "Error "+task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
+                    if(error != null){
+                        Log.d("Error: ", error.getMessage());
+                        return;
                     }
-                });
+                    if (value == null) {
+                        return;
+                    }
+
+                    List<String> followersList = (List<String>) value.get("followers");
+                    List<String> followingList = (List<String>) value.get("following");
+
+                    FirebaseUser user1 = auth.getCurrentUser();
+                    GoogleSignInAccount account1 = GoogleSignIn.getLastSignedInAccount(activity);
+                    Map<String,Object> map1 = new HashMap<>();
+                    if(account1.getDisplayName()!=null){
+                        map1.put("name", account1.getDisplayName());}
+                    map1.put("email", account1.getEmail());
+                    map1.put("profileImage", String.valueOf(account1.getPhotoUrl()));
+                    map1.put("uid", user1.getUid());
+                    map1.put("following",followingList);
+                    map1.put("followers", followersList);
+                    map1.put("status"," ");
+
+                    FirebaseFirestore.getInstance().collection("Users").document(user1.getUid())
+                            .set(map1)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+
+                                    if(task.isSuccessful()){
+                                        assert getActivity()!=null;
+                                        progressBar.setVisibility(View.GONE);
+                                        sendUserToMainActivity();
+
+                                    }else{
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getContext(), "Error "+task.getException().getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+
+                }
+            });
+
+        }
+        else{
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+
+            List<String> list = new ArrayList<>();
+            List<String> list1 = new ArrayList<>();
+
+            Map<String,Object> map = new HashMap<>();
+
+
+            if(account.getDisplayName()!=null){
+                map.put("name", account.getDisplayName());}
+            map.put("email", account.getEmail());
+            map.put("profileImage", String.valueOf(account.getPhotoUrl()));
+            map.put("uid", user.getUid());
+            map.put("following",list1);
+            map.put("followers", list);
+            map.put("status"," ");
+
+
+
+            FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
+                    .set(map)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+
+                            if(task.isSuccessful()){
+                                assert getActivity()!=null;
+                                progressBar.setVisibility(View.GONE);
+                                sendUserToMainActivity();
+
+                            }else{
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getContext(), "Error "+task.getException().getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+        }
+
+
+
+
 
 
     }
