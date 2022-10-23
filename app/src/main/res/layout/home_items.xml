@@ -131,12 +131,18 @@
 
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_below="@id/likeAndDescriptionLayout"
+                android:layout_height="wrap_content"
+                android:id="@+id/commentRecyclerView"/>
+
 
             <LinearLayout
                 android:id="@+id/commentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/likeAndDescriptionLayout"
+                android:layout_below="@id/commentRecyclerView"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">
