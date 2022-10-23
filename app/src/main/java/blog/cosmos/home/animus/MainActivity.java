@@ -40,7 +40,7 @@ import blog.cosmos.home.animus.fragments.Search;
 
 public class MainActivity extends AppCompatActivity implements Search.OndataPass {
 
-    ViewPagerAdapter pagerAdapter;
+    ViewPagerAdapter viewPagerAdapter;
     BottomNavigationView bottomNavigationView;
     FloatingActionButton floatingActionButton;
 
@@ -73,17 +73,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         //addTabs();
         clickListener();
-        setupViewPager(viewPager);
-
-        bottomNavigationView.setBackground(null);
-        bottomNavigationView.getMenu().getItem(2).setEnabled(true); // set this to false later if you only want the float button to respond and not area just below it (where add button was previously located)
-
-
+        setupViewPager();
 
        // findViewById(R.id.constrainLayout).setBackground(getResources().getDrawable(com.marsad.stylishdialogs.R.color.float_transparent));
-
-
-
 
     }
 
@@ -91,8 +83,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         viewPager = findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setBackground(null);
+        bottomNavigationView.getMenu().getItem(2).setEnabled(true); // set this to false later if you only want the float button to respond and not area just below it (where add button was previously located)
+
         //tabLayout = findViewById(R.id.tabLayout);
         floatingActionButton = findViewById(R.id.fab);
 
@@ -142,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
 
+
             }
 
             @Override
@@ -161,18 +158,28 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 switch (position) {
                     case 0:
                         bottomNavigationView.getMenu().findItem(R.id.home_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=true;
+                        changeStatusBarColor();
                         break;
                     case 1:
                         bottomNavigationView.getMenu().findItem(R.id.search_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
                         break;
                     case 2:
                         bottomNavigationView.getMenu().findItem(R.id.add_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
                         break;
                     case 3:
                         bottomNavigationView.getMenu().findItem(R.id.notification_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
                         break;
                     case 4:
                         bottomNavigationView.getMenu().findItem(R.id.profile_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
                         break;
 
 
@@ -199,35 +206,22 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
 
-    private void setupViewPager(ViewPager viewPager)
+    private void setupViewPager()
     {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         homeFragment=new Home();
         searchFragment=new Search();
         addFragment=new Add();
         notificationFragment= new Notification();
         profileFragment= new Profile();
-        adapter.addFragment(homeFragment);
-        adapter.addFragment(searchFragment);
-        adapter.addFragment(addFragment);
-        adapter.addFragment(notificationFragment);
-        adapter.addFragment(profileFragment);
-        viewPager.setAdapter(adapter);
+        viewPagerAdapter.addFragment(homeFragment);
+        viewPagerAdapter.addFragment(searchFragment);
+        viewPagerAdapter.addFragment(addFragment);
+        viewPagerAdapter.addFragment(notificationFragment);
+        viewPagerAdapter.addFragment(profileFragment);
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
-    private Bitmap loadProfileImage(String directory) {
-        try {
-            File file = new File(directory, "profile.png");
-
-            Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-
-            // return BitmapFactory.decodeStream(new FileInputStream(file));
-            return bitmap;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
@@ -299,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     private void addTabs() {
 
-        tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.ic_home));
+      /*  tabLayout.addTab(tabLayout.newTab().setText("Home").setIcon(R.drawable.ic_home));
         tabLayout.getTabAt(0).getIcon().setColorFilter(
                 ContextCompat.getColor(this, R.color.colorGreyDark),
                 PorterDuff.Mode.SRC_IN);
@@ -340,8 +334,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        // pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
+        // viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(viewPagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -350,10 +344,11 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                         ContextCompat.getColor(this, R.color.black),
                         PorterDuff.Mode.SRC_IN);
 
+*/
+        //tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+          /*  @Override
+           public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 Context context = MainActivity.this;
 
@@ -396,21 +391,21 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                     case 4:
                         IS_HOME_FRAGMENT = false;
                         changeStatusBarColor();
-                        /*
+
                         tabLayout.getTabAt(4).setIcon(R.drawable.ic_launcher)
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);*/
-                        break;
-                }
+                      // break;
+               //}
 
 
-            }
+           // }  */
 
-            @Override
+          /*  @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
-                switch (tab.getPosition()) {
+               switch (tab.getPosition()) {
 
                     case 0:
                         IS_HOME_FRAGMENT = false;
@@ -442,7 +437,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                 }
             }
-
+*/
+            /*
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -488,12 +484,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                                 .getIcon().setColorFilter(
                                         ContextCompat.getColor(context, R.color.black),
                                         PorterDuff.Mode.SRC_IN);*/
-                        break;
+                    //    break;
 
-                }
+               // }
 
-            }
-        });
+          //  } */
+        //});
 
     }
 }
