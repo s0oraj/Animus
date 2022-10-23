@@ -4,6 +4,8 @@ import static blog.cosmos.home.animus.MainActivity.viewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +60,7 @@ import blog.cosmos.home.animus.model.HomeModel;
 public class Home extends Fragment {
 
     HomeAdapter adapter;
+    int commentCount =0;
     private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
@@ -171,10 +174,26 @@ public class Home extends Fragment {
             @Override
             public void setCommentCount(TextView textView) {
 
+                textView.setText("See all "+ commentCount+ " comments");
+
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(commentCount==0){
+                            textView.setVisibility(View.GONE);
+                        } else {
+                            textView.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                },1200);
+
             }
         });
 
     }
+
+
 
     public void init(View view) {
 
@@ -401,7 +420,6 @@ public class Home extends Fragment {
                                                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                                       if(task.isSuccessful()){
 
-                                                                          int commentCount=0;
 
                                                                           for(QueryDocumentSnapshot snapshot : task.getResult() ){
 
