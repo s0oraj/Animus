@@ -160,7 +160,13 @@ public class CreateAccountFragment extends Fragment {
                             FirebaseUser user = auth.getCurrentUser();
 
 
-                            String image = "https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg";
+                            String image = "https://st4.depositphotos.com/15648834/23779/v/600/depositphotos_237795814-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+                          if(user.getPhotoUrl()==null || user.getPhotoUrl().toString().isEmpty()){
+                              image = "https://i.pinimg.com/564x/a9/75/93/a975934bb378afc4ca8c133df451f56e.jpg";
+                          }
+                          else{
+                             image= user.getPhotoUrl().toString();
+                          }
                             UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
                             request.setDisplayName(name);
                             request.setPhotoUri(Uri.parse(image));
