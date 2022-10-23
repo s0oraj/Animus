@@ -53,15 +53,13 @@ public class Comment extends Fragment {
 
     FirebaseUser user;
 
-    String id,uid;
+    String id, uid;
 
     CollectionReference reference;
 
     public Comment() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
@@ -78,9 +76,9 @@ public class Comment extends Fragment {
 
         init(view);
 
-        Log.d("LOG",uid + "\n\n" + id);
+        Log.d("LOG", uid + "\n\n" + id);
 
-          reference = FirebaseFirestore.getInstance().collection("Users")
+        reference = FirebaseFirestore.getInstance().collection("Users")
                 .document(uid)
                 .collection("Post Images")
                 .document(id)
@@ -92,11 +90,6 @@ public class Comment extends Fragment {
     }
 
     private void clickListener() {
-
-        String image = "https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg";
-        UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
-        request.setPhotoUri(Uri.parse(image));
-        user.updateProfile(request.build());
 
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +132,6 @@ public class Comment extends Fragment {
                         });
 
 
-
             }
         });
 
@@ -150,15 +142,16 @@ public class Comment extends Fragment {
         reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
+                if (error != null) {
                     return;
                 }
 
-                if(value == null){
+                if (value == null) {
+                    Toast.makeText(getContext(),"No Comments",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                for(DocumentSnapshot snapshot: value){
+                for (DocumentSnapshot snapshot : value) {
                     CommentModel model = snapshot.toObject(CommentModel.class);
                     list.add(model);
                 }
@@ -174,15 +167,15 @@ public class Comment extends Fragment {
         sendBtn = view.findViewById(R.id.sendBtn);
         recyclerView = view.findViewById(R.id.commentRecyclerView);
 
-        user= FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        list= new ArrayList<>();
+        list = new ArrayList<>();
         commentAdapter = new CommentAdapter(getContext(), list);
         recyclerView.setAdapter(commentAdapter);
 
-        if(getArguments() == null){
+        if (getArguments() == null) {
             return;
         }
 
