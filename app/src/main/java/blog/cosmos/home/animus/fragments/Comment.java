@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.adapter.CommentAdapter;
 
 
 public class Comment extends Fragment {
@@ -23,6 +24,8 @@ public class Comment extends Fragment {
     EditText commentEt;
     ImageButton sendBtn;
     RecyclerView recyclerView;
+
+    CommentAdapter commentAdapter;
 
     public Comment() {
         // Required empty public constructor
