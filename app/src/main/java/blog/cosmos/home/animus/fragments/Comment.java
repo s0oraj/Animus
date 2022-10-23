@@ -15,8 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
@@ -33,6 +42,10 @@ public class Comment extends Fragment {
     CommentAdapter commentAdapter;
 
     List<CommentModel> list;
+
+    FirebaseUser user;
+
+
     public Comment() {
         // Required empty public constructor
     }
@@ -65,10 +78,41 @@ public class Comment extends Fragment {
             @Override
             public void onClick(View view) {
                 String comment = commentEt.getText().toString();
-                if(comment.isEmpty()){
-                    Toast.makeText(getContext(),"Enter comment", Toast.LENGTH_SHORT).show();
+
+                if (comment.isEmpty() || comment.equals(" ")) {
+                    Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
+                        .document(uid)
+                        .collection("Post Images")
+                        .document(id)
+                        .collection("Comments");
+
+                String commentID = reference.document().getId();
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("uid", user.getUid());
+                map.put("comment", comment);
+                map.put("commentID", commentID);
+                map.put("postID", id);
+
+                reference.document(commentID)
+                        .set(map)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if (task.isSuccessful()) {
+                                    commentEt.setText("");
+                                } else {
+                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
 
 
 
@@ -86,6 +130,8 @@ public class Comment extends Fragment {
         commentEt = view.findViewById(R.id.commentET);
         sendBtn = view.findViewById(R.id.sendBtn);
         recyclerView = view.findViewById(R.id.commentRecyclerView);
+
+        user= FirebaseAuth.getInstance().getCurrentUser();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

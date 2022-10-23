@@ -113,8 +113,8 @@ public class Home extends Fragment {
         followingUsersList = new ArrayList<>();
 
 
-        adapter = new HomeAdapter(followingUsersList, getContext());
-        personalAdapter = new HomePersonalAdapter(personalList, getContext());
+        adapter = new HomeAdapter(followingUsersList, getActivity());
+        personalAdapter = new HomePersonalAdapter(personalList, getActivity());
          concatAdapter = new ConcatAdapter(adapter,personalAdapter);
 
         recyclerView.setAdapter(concatAdapter);
@@ -150,41 +150,7 @@ public class Home extends Fragment {
             @Override
             public void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET) {
 
-                if (comment.isEmpty() || comment.equals(" ")) {
-                    Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
-                        .document(uid)
-                        .collection("Post Images")
-                        .document(id)
-                        .collection("Comments");
 
-                String commentID = reference.document().getId();
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("uid", user.getUid());
-                map.put("comment", comment);
-                map.put("commentID", commentID);
-                map.put("postID", id);
-
-                reference.document(commentID)
-                        .set(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                                if (task.isSuccessful()) {
-                                    commentET.setText("");
-                                    commentLayout.setVisibility(View.GONE);
-                                } else {
-                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-
-                            }
-                        });
 
             }
 

@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -31,12 +32,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapter.HomeHolder> {
 
-    Context context;
+    Activity context;
     OnPressed onPressed;
     private List<HomeModel> list;
 
 
-    public HomePersonalAdapter(List<HomeModel> list, Context context) {
+    public HomePersonalAdapter(List<HomeModel> list, Activity context) {
         this.list = list;
         this.context = context;
     }

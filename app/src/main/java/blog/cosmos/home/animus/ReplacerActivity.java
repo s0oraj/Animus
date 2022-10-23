@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import blog.cosmos.home.animus.fragments.Comment;
 import blog.cosmos.home.animus.fragments.CreateAccountFragment;
 import blog.cosmos.home.animus.fragments.ForgotPassword;
 import blog.cosmos.home.animus.fragments.LoginFragment;
@@ -34,6 +35,11 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
         frameLayout = findViewById(R.id.frameLayout);
 
+        boolean isComment = getIntent().getBooleanExtra("isComment", false);
+
+        if(isComment){
+            setFragment(new Comment());
+        }
 
 
         String desiredFragment = getIntent().getStringExtra("DesiredFragment");

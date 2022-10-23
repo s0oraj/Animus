@@ -1,6 +1,8 @@
 package blog.cosmos.home.animus.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -31,17 +33,18 @@ import java.util.List;
 import java.util.Random;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.model.HomeModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
-    Context context;
+    Activity context;
     OnPressed onPressed;
     private List<HomeModel> list;
 
 
-    public HomeAdapter(List<HomeModel> list, Context context) {
+    public HomeAdapter(List<HomeModel> list, Activity context) {
         this.list = list;
         this.context = context;
     }
@@ -210,6 +213,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
                 }
             });
+
+
+            Intent intent = new Intent(context, ReplacerActivity.class);
+            intent.putExtra("id",id);
+            intent.putExtra("uid",uid);
+            intent.putExtra("isComment",true);
+
+            context.startActivity(intent);
 
         }
     }
