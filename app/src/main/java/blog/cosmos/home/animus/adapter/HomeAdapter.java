@@ -111,6 +111,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         );
 
+        if(list.get(position).getUid().equals(user.getUid())){
+            onPressed.setPersonalCommentsCount(holder.commentTV,list.get(position).getUid() );
+        }
+        else{
+            onPressed.setFollowingCommentsCount(holder.commentTV,list.get(position).getUid());
+        }
         onPressed.setCommentCount(holder.commentTV, list.get(position).getUid());
 
 
@@ -132,6 +138,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
         void setCommentCount(TextView textView,String userId);
+
+        void setPersonalCommentsCount(TextView textView,String userId);
+        void setFollowingCommentsCount(TextView textView,String userId);
 
     }
 

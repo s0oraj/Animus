@@ -183,16 +183,37 @@ public class Home extends Fragment {
             @Override
             public void setCommentCount(final TextView textView, String userID) {
 
-                Activity activity = getActivity();
 
 
+              //  String userIdReference= userID;
+              //  String currentUserReference = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                //boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void setPersonalCommentsCount(TextView textView, String userID) {
+                String userIdReference = userID;
+                String currentUserReference = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+                Activity activity = getActivity();
                 personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-
+                        String userID = userIdReference;
+                       String currentUserId = currentUserReference;
                         if(isCurrentUser){
+
+
                             assert personalPostsCommentCount.getValue() != null;
                             if(personalPostsCommentCount.getValue()==0){
                                 textView.setVisibility(View.GONE);
@@ -213,10 +234,21 @@ public class Home extends Fragment {
 
                     }
                 });
+
+            }
+
+            @Override
+            public void setFollowingCommentsCount(TextView textView, String userID) {
+                String userIdReference = userID;
+                String currentUserReference = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                Activity activity = getActivity();
                 followingPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
 
+                        String userID = userIdReference;
+                        String currentUserId = currentUserReference;
                         if(!isCurrentUser){
                             assert followingPostsCommentCount.getValue() != null;
                             if(followingPostsCommentCount.getValue()==0){
@@ -235,11 +267,6 @@ public class Home extends Fragment {
 
                     }
                 });
-
-
-
-
-
             }
         });
 
