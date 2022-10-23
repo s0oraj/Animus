@@ -132,7 +132,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked);
 
-        void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
+       // void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
         void setCommentCount(TextView textView);
 
@@ -192,6 +192,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                     if (commentLayout.getVisibility() == View.GONE) {
                         commentLayout.setVisibility(View.VISIBLE);
                     }
+
+                    Intent intent = new Intent(context, ReplacerActivity.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("uid",uid);
+                    intent.putExtra("isComment",true);
+
+                    context.startActivity(intent);
                 }
             });
 
@@ -204,23 +211,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 }
             });
 
-            commentSendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String comment = commentET.getText().toString();
-                    onPressed.onComment(position, id, uid, comment, commentLayout, commentET);
 
 
-                }
-            });
 
-
-            Intent intent = new Intent(context, ReplacerActivity.class);
-            intent.putExtra("id",id);
-            intent.putExtra("uid",uid);
-            intent.putExtra("isComment",true);
-
-            context.startActivity(intent);
 
         }
     }

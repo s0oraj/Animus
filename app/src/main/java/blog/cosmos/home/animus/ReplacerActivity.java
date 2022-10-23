@@ -86,6 +86,16 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
 
         }
 
+        if(fragment instanceof Comment){
+            String id = getIntent().getStringExtra("id");
+            String uid = getIntent().getStringExtra("uid");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id);
+            bundle.putString("uid", uid);
+            fragment.setArguments(bundle);
+        }
+
 
         fragmentTransaction.replace(frameLayout.getId(), fragment);
         fragmentTransaction.commit();
