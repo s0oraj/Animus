@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,11 +61,14 @@ import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
+import blog.cosmos.home.animus.adapter.HomePersonalAdapter;
 import blog.cosmos.home.animus.model.HomeModel;
 
 public class Home extends Fragment {
 
     HomeAdapter adapter;
+    HomePersonalAdapter personalAdapter;
+    ConcatAdapter concatAdapter;
     private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
@@ -109,10 +113,14 @@ public class Home extends Fragment {
         followingUsersList = new ArrayList<>();
 
 
-        adapter = new HomeAdapter(list, getContext());
-        recyclerView.setAdapter(adapter);
+        adapter = new HomeAdapter(followingUsersList, getContext());
+        personalAdapter = new HomePersonalAdapter(personalList, getContext());
+         concatAdapter = new ConcatAdapter(adapter,personalAdapter);
+
+        recyclerView.setAdapter(concatAdapter);
 
         loadDataFromFireStore();
+
 
         adapter.OnPressed(new HomeAdapter.OnPressed() {
             @Override
@@ -181,75 +189,12 @@ public class Home extends Fragment {
             }
 
             @Override
-            public void setCommentCount(final TextView textView, String userID) {
-
-
-
-              //  String userIdReference= userID;
-              //  String currentUserReference = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-                //boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-
-
-
-
-
-
-
-            }
-
-            @Override
-            public void setPersonalCommentsCount(TextView textView, String userID) {
-                String userIdReference = userID;
-                String currentUserReference = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                Activity activity = getActivity();
-                personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer integer) {
-                        String userID = userIdReference;
-                       String currentUserId = currentUserReference;
-                        if(isCurrentUser){
-
-
-                            assert personalPostsCommentCount.getValue() != null;
-                            if(personalPostsCommentCount.getValue()==0){
-                                textView.setVisibility(View.GONE);
-                            } else {
-                                textView.setVisibility(View.VISIBLE);
-
-
-
-                                StringBuilder builder = new StringBuilder();
-                                builder.append("See all ")
-                                        .append(personalPostsCommentCount.getValue())
-                                        .append(" comments");
-
-                                textView.setText(builder); }
-
-                            //textView.setText("See all "+ commentCount.getValue()+ " comments");
-                        }
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void setFollowingCommentsCount(TextView textView, String userID) {
-                String userIdReference = userID;
-                String currentUserReference = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            public void setCommentCount(TextView textView) {
                 Activity activity = getActivity();
                 followingPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
 
-                        String userID = userIdReference;
-                        String currentUserId = currentUserReference;
-                        if(!isCurrentUser){
                             assert followingPostsCommentCount.getValue() != null;
                             if(followingPostsCommentCount.getValue()==0){
                                 textView.setVisibility(View.GONE);
@@ -263,11 +208,109 @@ public class Home extends Fragment {
                                 textView.setText(builder); }
 
                             //textView.setText("See all "+ commentCount.getValue()+ " comments");
-                        }
+
 
                     }
                 });
+
             }
+
+
+        });
+        personalAdapter.OnPressed(new HomePersonalAdapter.OnPressed() {
+            @Override
+            public void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked) {
+                DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
+                        .document(uid)
+                        .collection("Post Images")
+                        .document(id);
+
+                if (likeList.contains(user.getUid())) {
+                    likeList.remove(user.getUid()); //unlike
+                } else {
+                    likeList.add(user.getUid()); // like
+                }
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("likes", likeList);
+
+                reference.update(map);
+                //adapter.notifyItemChanged(position);
+
+
+
+
+            }
+
+            @Override
+            public void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET) {
+
+                if (comment.isEmpty() || comment.equals(" ")) {
+                    Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
+                        .document(uid)
+                        .collection("Post Images")
+                        .document(id)
+                        .collection("Comments");
+
+                String commentID = reference.document().getId();
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("uid", user.getUid());
+                map.put("comment", comment);
+                map.put("commentID", commentID);
+                map.put("postID", id);
+
+                reference.document(commentID)
+                        .set(map)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if (task.isSuccessful()) {
+                                    commentET.setText("");
+                                    commentLayout.setVisibility(View.GONE);
+                                } else {
+                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
+
+            }
+
+            @Override
+            public void setCommentCount(TextView textView) {
+                Activity activity = getActivity();
+                personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+
+                        assert personalPostsCommentCount.getValue() != null;
+                        if(personalPostsCommentCount.getValue()==0){
+                            textView.setVisibility(View.GONE);
+                        } else {
+                            textView.setVisibility(View.VISIBLE);
+                            StringBuilder builder = new StringBuilder();
+                            builder.append("See all ")
+                                    .append(personalPostsCommentCount.getValue())
+                                    .append(" comments");
+
+                            textView.setText(builder); }
+
+                        //textView.setText("See all "+ commentCount.getValue()+ " comments");
+
+
+                    }
+                });
+
+            }
+
+
         });
 
     }
@@ -373,7 +416,7 @@ public class Home extends Fragment {
 
                     HomeModel model = snapshot.toObject(HomeModel.class);
 
-
+                    System.out.println(model.getName());
 
                     personalList.add(new HomeModel(
                             model.getName(),
@@ -385,39 +428,38 @@ public class Home extends Fragment {
                             model.getTimestamp(),
                             model.getLikes()
                     ));
+
                     snapshot.getReference().collection("Comments").get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(task.isSuccessful()){
+                            .addOnCompleteListener(task -> {
 
-                                        int count =0;
-                                        for(QueryDocumentSnapshot snapshot : task.getResult() ){
+                                if (task.isSuccessful()) {
 
-                                            count++;
-
-                                        }
-                                        personalPostsCommentCount.setValue(count);
+                                    Map<String, Object> map = new HashMap<>();
+                                    for (QueryDocumentSnapshot commentSnapshot : task
+                                            .getResult()) {
+                                        map = commentSnapshot.getData();
                                     }
+
+                                    personalPostsCommentCount.setValue(map.size());
+
                                 }
+
                             });
 
 
-
-
-                    //  Rest of the code below in this for loop updates the home ui screens adapter, with new data
+                    /*
                     List<HomeModel> tempList= new ArrayList<HomeModel>(followingUsersList);
                     tempList.addAll(personalList);
                     list = tempList;
-
+*/
                     //Deleting repetitive posts (refer to homemodel @override equals for details)
                     Set<HomeModel> s= new HashSet<HomeModel>();
-                    s.addAll(list);
-                    list = new ArrayList<HomeModel>();
-                    list.addAll(s);
+                    s.addAll(personalList);
+                    personalList = new ArrayList<HomeModel>();
+                    personalList.addAll(s);
 
                     //Sorting posts from latest to oldest
-                    Collections.sort(list, new Comparator<HomeModel>() {
+                    Collections.sort(personalList, new Comparator<HomeModel>() {
                         @Override
                         public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -431,7 +473,7 @@ public class Home extends Fragment {
                             }
                         }
                     });
-                    adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                    personalAdapter.addAll(personalList); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                     // therefore custom addAll() method of adapter fixes this
 
 
@@ -502,6 +544,8 @@ public class Home extends Fragment {
                                                         }
                                                         HomeModel model = snapshot.toObject(HomeModel.class);
 
+                                                        System.out.println(model.getName());
+                                                        Log.d("TAG",model.getDescription());
 
                                                         followingUsersList.add(new HomeModel(
                                                                 model.getName(),
@@ -515,37 +559,35 @@ public class Home extends Fragment {
                                                         ));
 
                                                         snapshot.getReference().collection("Comments").get()
-                                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                      if(task.isSuccessful()){
+                                                                .addOnCompleteListener(task -> {
 
-                                                                          int count =0;
-                                                                          for(QueryDocumentSnapshot snapshot : task.getResult() ){
+                                                                    if (task.isSuccessful()) {
 
-                                                                              count++;
+                                                                        Map<String, Object> map = new HashMap<>();
+                                                                        for (QueryDocumentSnapshot commentSnapshot : task
+                                                                                .getResult()) {
+                                                                            map = commentSnapshot.getData();
+                                                                        }
 
-                                                                          }
-                                                                          followingPostsCommentCount.setValue(count);
-                                                                      }
+                                                                        followingPostsCommentCount.setValue(map.size());
+
                                                                     }
+
                                                                 });
 
-
-
-                                                        //  Rest of the code below in this for loop updates the home ui screens adapter, with new data
+                                                        /*
                                                         List<HomeModel> tempList= new ArrayList<HomeModel>(personalList);;
                                                         tempList.addAll(followingUsersList);
-                                                        list = tempList;
+                                                        list = tempList; */
 
                                                         //Deleting repetitive posts (refer to homemodel @override equals for details)
                                                         Set<HomeModel> s= new HashSet<HomeModel>();
-                                                        s.addAll(list);
-                                                        list = new ArrayList<HomeModel>();
-                                                        list.addAll(s);
+                                                        s.addAll(followingUsersList);
+                                                        followingUsersList = new ArrayList<HomeModel>();
+                                                        followingUsersList.addAll(s);
 
                                                         //Sorting posts from latest to oldest
-                                                        Collections.sort(list, new Comparator<HomeModel>() {
+                                                        Collections.sort(followingUsersList, new Comparator<HomeModel>() {
                                                             @Override
                                                             public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -559,7 +601,7 @@ public class Home extends Fragment {
                                                                 }
                                                             }
                                                         });
-                                                        adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                                                        adapter.addAll(followingUsersList); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                                                         // therefore custom addAll() method of adapter fixes this
 
 
@@ -583,10 +625,6 @@ public class Home extends Fragment {
 
             }
         });
-
-
-
-
 
 
     }

@@ -298,7 +298,7 @@ public class LoginFragment extends Fragment {
 
 
                                     if(task.isSuccessful()){
-                                        assert getActivity()!=null;
+                                      //  assert getActivity()!=null;
                                         progressBar.setVisibility(View.GONE);
                                         sendUserToMainActivity();
 
@@ -372,7 +372,7 @@ public class LoginFragment extends Fragment {
 
         startActivity(new Intent(getContext().getApplicationContext(), MainActivity.class));
 
-        getActivity().finish();
+        activity.finish();
 
     }
 

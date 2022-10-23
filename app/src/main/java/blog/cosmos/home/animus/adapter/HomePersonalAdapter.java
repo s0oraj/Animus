@@ -15,17 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.Random;
@@ -34,14 +29,14 @@ import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.HomeModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
+public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapter.HomeHolder> {
 
     Context context;
     OnPressed onPressed;
     private List<HomeModel> list;
 
 
-    public HomeAdapter(List<HomeModel> list, Context context) {
+    public HomePersonalAdapter(List<HomeModel> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -112,8 +107,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         );
 
 
-
-
     }
 
     @Override
@@ -132,7 +125,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
         void setCommentCount(TextView textView);
-
 
 
     }
@@ -168,7 +160,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentLayout = itemView.findViewById(R.id.commentLayout);
             commentTV =itemView.findViewById(R.id.commentTV);
 
-           onPressed.setCommentCount(commentTV);
+            onPressed.setCommentCount(commentTV);
 
 
             /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

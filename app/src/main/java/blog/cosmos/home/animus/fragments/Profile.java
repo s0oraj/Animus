@@ -69,6 +69,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -177,7 +178,11 @@ public class Profile extends Fragment {
                     return;
                 }
 
+
                 followingList_2 = (List<Object>) value.get("following");
+                if(followingList_2==null){
+                    followingList_2=new ArrayList<>();
+                }
 
 
             }
@@ -334,6 +339,13 @@ public class Profile extends Fragment {
 
                     followersList = (List<Object>) value.get("followers");
                     followingList = (List<Object>) value.get("following");
+
+                    if(followingList==null){
+                        followingList=new ArrayList<>();
+                    }
+                    if(followersList==null){
+                        followersList= new ArrayList<>();
+                    }
 
 
                     followersCountTv.setText("" + followersList.size());
