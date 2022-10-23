@@ -1,13 +1,8 @@
 package blog.cosmos.home.animus.fragments;
 
-import static android.content.Context.ACTIVITY_SERVICE;
-import static blog.cosmos.home.animus.MainActivity.viewPager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -57,7 +50,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
@@ -200,47 +192,6 @@ public class Home extends Fragment {
 
 
 
-
-            }
-
-            @Override
-            public void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET) {
-
-                if (comment.isEmpty() || comment.equals(" ")) {
-                    Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
-                        .document(uid)
-                        .collection("Post Images")
-                        .document(id)
-                        .collection("Comments");
-
-                String commentID = reference.document().getId();
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("uid", user.getUid());
-                map.put("comment", comment);
-                map.put("commentID", commentID);
-                map.put("postID", id);
-
-                reference.document(commentID)
-                        .set(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                                if (task.isSuccessful()) {
-                                    commentET.setText("");
-                                    commentLayout.setVisibility(View.GONE);
-                                } else {
-                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-
-                            }
-                        });
 
             }
 

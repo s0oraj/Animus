@@ -1,7 +1,7 @@
 package blog.cosmos.home.animus.adapter;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -9,17 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -27,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.model.HomeModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -123,7 +121,7 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
 
         void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked);
 
-        void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
+        // void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
         void setCommentCount(TextView textView);
 
@@ -137,10 +135,6 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
         private ImageView imageView;
         private CheckBox likeCheckBox;
         private ImageButton commentBtn, shareBtn;
-        private EditText commentET;
-        private FloatingActionButton commentSendBtn;
-        LinearLayout commentLayout;
-
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -156,10 +150,9 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
             commentBtn = itemView.findViewById(R.id.commentBtn);
             shareBtn = itemView.findViewById(R.id.shareBtn);
             descriptionTv = itemView.findViewById(R.id.descTv);
-            commentET = itemView.findViewById(R.id.commentET);
-            commentSendBtn = itemView.findViewById(R.id.commentSendBtn);
-            commentLayout = itemView.findViewById(R.id.commentLayout);
-            commentTV =itemView.findViewById(R.id.commentTV);
+
+
+            commentTV = itemView.findViewById(R.id.commentTV);
 
             onPressed.setCommentCount(commentTV);
 
@@ -179,9 +172,13 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (commentLayout.getVisibility() == View.GONE) {
-                        commentLayout.setVisibility(View.VISIBLE);
-                    }
+
+                    Intent intent = new Intent(context, ReplacerActivity.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("uid", uid);
+                    intent.putExtra("isComment", true);
+
+                    context.startActivity(intent);
                 }
             });
 
@@ -194,15 +191,6 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
                 }
             });
 
-            commentSendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String comment = commentET.getText().toString();
-                    onPressed.onComment(position, id, uid, comment, commentLayout, commentET);
-
-
-                }
-            });
 
         }
     }

@@ -49,8 +49,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
    static class CommentHolder extends RecyclerView.ViewHolder{
 
 
-        private CircleImageView profileImage;
-        private TextView nameTv, commentTv;
+         CircleImageView profileImage;
+         TextView nameTv, commentTv;
 
 
 
