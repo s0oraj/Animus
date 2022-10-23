@@ -4,7 +4,7 @@ public class CommentModel {
 
 
 
-    String comment, commentID, postID, uid;
+    String comment, commentID, postID, uid, name, profileImageUrl;
 
 
     public CommentModel(){

@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import blog.cosmos.home.animus.R;
@@ -38,6 +40,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
     @Override
     public void onBindViewHolder(@NonNull CommentHolder holder, int position) {
+
+        Glide.with(context)
+                .load(list.get(position).getProfileImage())
+                .into(holder.profileImage);
+
+        holder.nameTv.setText(list.get(position).getName());
+        holder.commentTv.setText(list.get(position).getComment());
+
 
     }
 

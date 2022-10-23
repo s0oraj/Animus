@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -74,6 +76,8 @@ public class Comment extends Fragment {
 
         init(view);
 
+        Log.d("LOG",uid + "\n\n" + id);
+
           reference = FirebaseFirestore.getInstance().collection("Users")
                 .document(uid)
                 .collection("Post Images")
@@ -105,6 +109,9 @@ public class Comment extends Fragment {
                 map.put("comment", comment);
                 map.put("commentID", commentID);
                 map.put("postID", id);
+                map.put("name", user.getDisplayName());
+                map.put("profileImageUrl", user.getPhotoUrl().toString());
+
 
                 reference.document(commentID)
                         .set(map)
@@ -143,7 +150,7 @@ public class Comment extends Fragment {
                     return;
                 }
 
-                for(QueryDocumentSnapshot snapshot: value){
+                for(DocumentSnapshot snapshot: value){
                     CommentModel model = snapshot.toObject(CommentModel.class);
                     list.add(model);
                 }

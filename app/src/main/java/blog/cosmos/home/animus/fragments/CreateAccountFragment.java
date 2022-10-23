@@ -158,6 +158,8 @@ public class CreateAccountFragment extends Fragment {
 
                             FirebaseUser user = auth.getCurrentUser();
 
+
+                            String image = "https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
                             UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
                             request.setDisplayName(name);
 
