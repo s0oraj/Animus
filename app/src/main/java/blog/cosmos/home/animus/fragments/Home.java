@@ -278,8 +278,7 @@ public class Home extends Fragment {
                             model.getDescription(),
                             model.getId(),
                             model.getTimestamp(),
-                            model.getLikes(),
-                            model.getSnapshot()
+                            model.getLikes()
                     ));
 
                     List<HomeModel> tempList= new ArrayList<HomeModel>(followingUsersList);
@@ -387,10 +386,29 @@ public class Home extends Fragment {
                                                                 model.getDescription(),
                                                                 model.getId(),
                                                                 model.getTimestamp(),
-                                                                model.getLikes(),
-                                                                model.getSnapshot()
+                                                                model.getLikes()
                                                         ));
 
+                                                        snapshot.getReference().collection("Comments").get()
+                                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                      if(task.isSuccessful()){
+
+                                                                          int commentCount=0;
+
+                                                                          for(QueryDocumentSnapshot snapshot : task.getResult() ){
+
+                                                                              commentCount++;
+                                                                          }
+
+                                                                      }
+                                                                    }
+                                                                });
+
+
+
+                                                        //  Rest of the code below in this for loop updates the home ui screens adapter, with new data
                                                         List<HomeModel> tempList= new ArrayList<HomeModel>(personalList);;
                                                         tempList.addAll(followingUsersList);
                                                         list = tempList;

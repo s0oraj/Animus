@@ -131,10 +131,14 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/commentRecyclerView"
+            <TextView
+                android:id="@+id/commentTV"
+                android:text="View all comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingStart="8dp"
+                android:visibility="gone"
                 android:layout_below="@id/likeAndDescriptionLayout" />
 
 
@@ -142,7 +146,7 @@
                 android:id="@+id/commentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/commentRecyclerView"
+                android:layout_below="@id/commentTV"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">

@@ -15,15 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import blog.cosmos.home.animus.R;
@@ -108,6 +112,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         );
 
 
+
     }
 
     @Override
@@ -131,14 +136,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     class HomeHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView profileImage;
-        private TextView userNameTv, timeTv, likeCountTv, descriptionTv;
+        private TextView userNameTv, timeTv, likeCountTv, descriptionTv, commentTV;
         private ImageView imageView;
         private CheckBox likeCheckBox;
         private ImageButton commentBtn, shareBtn;
         private EditText commentET;
         private FloatingActionButton commentSendBtn;
         LinearLayout commentLayout;
-        RecyclerView commentRecyclerView;
+
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -157,7 +162,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentET = itemView.findViewById(R.id.commentET);
             commentSendBtn = itemView.findViewById(R.id.commentSendBtn);
             commentLayout = itemView.findViewById(R.id.commentLayout);
-            commentRecyclerView =itemView.findViewById(R.id.commentRecyclerView);
+            commentTV =itemView.findViewById(R.id.commentTV);
+
+
 
             /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

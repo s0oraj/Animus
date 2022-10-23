@@ -16,14 +16,14 @@ public class HomeModel {
 
     private List<String> likes;
 
-    QueryDocumentSnapshot snapshot;
+
 
 
 
     public HomeModel() {
     }
 
-    public HomeModel(String name, String profileImage, String imageUrl, String uid, String description, String id, Date timestamp, List<String> likes, QueryDocumentSnapshot snapshot) {
+    public HomeModel(String name, String profileImage, String imageUrl, String uid, String description, String id, Date timestamp, List<String> likes) {
         this.name = name;
         this.profileImage = profileImage;
         this.imageUrl = imageUrl;
@@ -32,16 +32,10 @@ public class HomeModel {
         this.id = id;
         this.timestamp = timestamp;
         this.likes = likes;
-        this.snapshot = snapshot;
+
     }
 
-    public QueryDocumentSnapshot getSnapshot() {
-        return snapshot;
-    }
 
-    public void setSnapshot(QueryDocumentSnapshot snapshot) {
-        this.snapshot = snapshot;
-    }
 
     public String getName() {
         return name;
