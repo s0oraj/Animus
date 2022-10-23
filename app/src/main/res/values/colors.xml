@@ -47,6 +47,22 @@
 
 
 
+    <color name="material_me_bar">#2B3D4D</color>
+
+    <color name="fabButtonColor2">#F0514B</color>
+
+    <!-- Darker variant for the status bar and contextual app bars -->
+    <color name="colorPrimaryDarkPets">#C0403C</color>
+
+
+
+    <color name="fabButtonColorstar">#ff5757</color>
+    <color name="fabButtonColor3star">#FF007F</color>
+    <color name="fabButtonColor4">#F50057</color>
+    <color name="fabButtonColor5">#FF033E</color>
+
+
+
 
 
 </resources>

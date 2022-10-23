@@ -16,5 +16,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+
+        <!-- Customize your theme here. -->
     </style>
 </resources>

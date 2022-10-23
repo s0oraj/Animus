@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/home_navigation_icon"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/ic_home"
         android:iconTint="@color/black"
         android:title="Home" />
 
@@ -14,18 +14,19 @@
 
     <item
         android:id="@+id/add_navigation_icon"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/ic_add_transparent"
         android:title="Add" />
+    <!-- android:icon="@drawable/ic_add" -->
 
     <item
         android:id="@+id/notification_navigation_icon"
-        android:icon="@drawable/ic_add"
-        android:title="Notification" />
+        android:icon="@drawable/heart_check"
+        android:title="Notif" />
 
 
     <item
         android:id="@+id/profile_navigation_icon"
-        android:icon="@drawable/ic_heart_fill"
+        android:icon="@drawable/ic_person"
         android:title="Profile" />
 
 </menu>
