@@ -20,7 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +51,8 @@ public class Comment extends Fragment {
 
     String id,uid;
 
+    CollectionReference reference;
+
     public Comment() {
         // Required empty public constructor
     }
@@ -68,6 +74,12 @@ public class Comment extends Fragment {
 
         init(view);
 
+          reference = FirebaseFirestore.getInstance().collection("Users")
+                .document(uid)
+                .collection("Post Images")
+                .document(id)
+                .collection("Comments");
+
         loadCommentData();
 
         clickListener();
@@ -84,11 +96,7 @@ public class Comment extends Fragment {
                     Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                CollectionReference reference = FirebaseFirestore.getInstance().collection("Users")
-                        .document(uid)
-                        .collection("Post Images")
-                        .document(id)
-                        .collection("Comments");
+
 
                 String commentID = reference.document().getId();
 
@@ -123,6 +131,25 @@ public class Comment extends Fragment {
     }
 
     private void loadCommentData() {
+
+        reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    return;
+                }
+
+                if(value == null){
+                    return;
+                }
+
+                for(QueryDocumentSnapshot snapshot: value){
+                    CommentModel model = snapshot.toObject(CommentModel.class);
+                    list.add(model);
+                }
+                commentAdapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
