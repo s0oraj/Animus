@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,26 @@ public class Comment extends Fragment {
         init(view);
 
         loadCommentData();
+
+        clickListener();
+    }
+
+    private void clickListener() {
+
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String comment = commentEt.getText().toString();
+                if(comment.isEmpty()){
+                    Toast.makeText(getContext(),"Enter comment", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+
+            }
+        });
+
     }
 
     private void loadCommentData() {
