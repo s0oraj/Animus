@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -164,6 +165,11 @@ public class Home extends Fragment {
 
                             }
                         });
+
+            }
+
+            @Override
+            public void setCommentCount(TextView textView) {
 
             }
         });
