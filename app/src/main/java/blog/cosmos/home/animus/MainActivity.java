@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     ViewPagerAdapter viewPagerAdapter;
     BottomNavigationView bottomNavigationView;
     FloatingActionButton floatingActionButton;
-
-
 
 
 
@@ -242,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     }
 
-
     @Override
     public void onBackPressed() {
 
@@ -253,7 +251,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             super.onBackPressed();
         }
     }
-
 
     public void changeStatusBarColor() {
 
