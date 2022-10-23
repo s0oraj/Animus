@@ -73,6 +73,10 @@ public class Home extends Fragment {
     private final MutableLiveData<Integer> commentCount = new MutableLiveData<>();
 
 
+    private final MutableLiveData<Integer> personalPostsCommentCount = new MutableLiveData<>();
+    private final MutableLiveData<Integer> followingPostsCommentCount = new MutableLiveData<>();
+
+
     private ImageView searchButton;
     private ImageView sendButton;
 
@@ -177,30 +181,58 @@ public class Home extends Fragment {
             }
 
             @Override
-            public void setCommentCount(final TextView textView) {
+            public void setCommentCount(final TextView textView, String userID) {
 
                 Activity activity = getActivity();
 
-                commentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
+
+                boolean isCurrentUser = userID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
 
-                        assert commentCount.getValue() != null;
-                        if(commentCount.getValue()==0){
-                            textView.setVisibility(View.GONE);
-                        } else {
-                            textView.setVisibility(View.VISIBLE);
+                        if(isCurrentUser){
+                            assert personalPostsCommentCount.getValue() != null;
+                            if(personalPostsCommentCount.getValue()==0){
+                                textView.setVisibility(View.GONE);
+                            } else {
+                                textView.setVisibility(View.VISIBLE);
 
 
 
-                        StringBuilder builder = new StringBuilder();
-                        builder.append("See all")
-                                .append(commentCount.getValue())
-                                .append(" comments");
+                                StringBuilder builder = new StringBuilder();
+                                builder.append("See all ")
+                                        .append(commentCount.getValue())
+                                        .append(" comments");
 
-                        textView.setText(builder); }
+                                textView.setText(builder); }
 
-                        //textView.setText("See all "+ commentCount.getValue()+ " comments");
+                            //textView.setText("See all "+ commentCount.getValue()+ " comments");
+                        }
+
+                    }
+                });
+                followingPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+
+                        if(!isCurrentUser){
+                            assert followingPostsCommentCount.getValue() != null;
+                            if(followingPostsCommentCount.getValue()==0){
+                                textView.setVisibility(View.GONE);
+                            } else {
+                                textView.setVisibility(View.VISIBLE);
+                                StringBuilder builder = new StringBuilder();
+                                builder.append("See all ")
+                                        .append(commentCount.getValue())
+                                        .append(" comments");
+
+                                textView.setText(builder); }
+
+                            //textView.setText("See all "+ commentCount.getValue()+ " comments");
+                        }
+
                     }
                 });
 
@@ -338,7 +370,7 @@ public class Home extends Fragment {
                                             count++;
 
                                         }
-                                        commentCount.setValue(count);
+                                        personalPostsCommentCount.setValue(count);
                                     }
                                 }
                             });
@@ -467,7 +499,7 @@ public class Home extends Fragment {
                                                                               count++;
 
                                                                           }
-                                                                          commentCount.setValue(count);
+                                                                          followingPostsCommentCount.setValue(count);
                                                                       }
                                                                     }
                                                                 });

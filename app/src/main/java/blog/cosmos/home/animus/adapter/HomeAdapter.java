@@ -111,6 +111,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         );
 
+        onPressed.setCommentCount(holder.commentTV, list.get(position).getUid());
 
 
     }
@@ -130,7 +131,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
-        void setCommentCount(TextView textView);
+        void setCommentCount(TextView textView,String userId);
 
     }
 
@@ -165,7 +166,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentLayout = itemView.findViewById(R.id.commentLayout);
             commentTV =itemView.findViewById(R.id.commentTV);
 
-            onPressed.setCommentCount(commentTV);
+          //  onPressed.setCommentCount(commentTV);
 
 
             /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
