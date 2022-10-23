@@ -268,18 +268,18 @@ public class Home extends Fragment {
 
                     HomeModel model = snapshot.toObject(HomeModel.class);
 
-                    System.out.println(model.getName());
+
 
                     personalList.add(new HomeModel(
                             model.getName(),
                             model.getProfileImage(),
                             model.getImageUrl(),
                             model.getUid(),
-                            model.getComments(),
                             model.getDescription(),
                             model.getId(),
                             model.getTimestamp(),
-                            model.getLikes()
+                            model.getLikes(),
+                            model.getSnapshot()
                     ));
 
                     List<HomeModel> tempList= new ArrayList<HomeModel>(followingUsersList);
@@ -378,19 +378,17 @@ public class Home extends Fragment {
                                                         }
                                                         HomeModel model = snapshot.toObject(HomeModel.class);
 
-                                                        System.out.println(model.getName());
-                                                        Log.d("TAG",model.getDescription());
 
                                                         followingUsersList.add(new HomeModel(
                                                                 model.getName(),
                                                                 model.getProfileImage(),
                                                                 model.getImageUrl(),
                                                                 model.getUid(),
-                                                                model.getComments(),
                                                                 model.getDescription(),
                                                                 model.getId(),
                                                                 model.getTimestamp(),
-                                                                model.getLikes()
+                                                                model.getLikes(),
+                                                                model.getSnapshot()
                                                         ));
 
                                                         List<HomeModel> tempList= new ArrayList<HomeModel>(personalList);;

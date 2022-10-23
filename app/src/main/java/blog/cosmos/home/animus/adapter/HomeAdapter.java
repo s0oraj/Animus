@@ -36,6 +36,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     OnPressed onPressed;
     private List<HomeModel> list;
 
+
     public HomeAdapter(List<HomeModel> list, Context context) {
         this.list = list;
         this.context = context;
@@ -66,7 +67,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             holder.likeCountTv.setVisibility(View.GONE);
 
         } else if (count == 1) {
-            if(holder.likeCountTv.getVisibility()== View.GONE){
+            if (holder.likeCountTv.getVisibility() == View.GONE) {
                 holder.likeCountTv.setVisibility(View.VISIBLE);
             }
             holder.likeCountTv.setText(count + " like");
@@ -78,7 +79,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         // check if already like
 
-        assert user!=null;
+        assert user != null;
         holder.likeCheckBox.setChecked(likeList.contains(user.getUid()));
 
         holder.descriptionTv.setText(list.get(position).getDescription());
@@ -121,23 +122,23 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     public interface OnPressed {
 
         void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked);
+
         void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
 
     }
 
-     class HomeHolder extends RecyclerView.ViewHolder {
+    class HomeHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView profileImage;
         private TextView userNameTv, timeTv, likeCountTv, descriptionTv;
         private ImageView imageView;
         private CheckBox likeCheckBox;
-        private ImageButton  commentBtn, shareBtn;
+        private ImageButton commentBtn, shareBtn;
         private EditText commentET;
         private FloatingActionButton commentSendBtn;
         LinearLayout commentLayout;
-
-
+        RecyclerView commentRecyclerView;
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -156,6 +157,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentET = itemView.findViewById(R.id.commentET);
             commentSendBtn = itemView.findViewById(R.id.commentSendBtn);
             commentLayout = itemView.findViewById(R.id.commentLayout);
+            commentRecyclerView =itemView.findViewById(R.id.commentRecyclerView);
 
             /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -172,7 +174,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(commentLayout.getVisibility() == View.GONE){
+                    if (commentLayout.getVisibility() == View.GONE) {
                         commentLayout.setVisibility(View.VISIBLE);
                     }
                 }
@@ -191,7 +193,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 @Override
                 public void onClick(View view) {
                     String comment = commentET.getText().toString();
-                    onPressed.onComment(position,id,uid,comment, commentLayout, commentET);
+                    onPressed.onComment(position, id, uid, comment, commentLayout, commentET);
 
 
                 }
@@ -204,8 +206,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     /**
      * Helper method which clears the existing dataset of the recyclerview adapter.
      */
-    public void clear(){
-        if(list!=null && !list.isEmpty()) {
+    public void clear() {
+        if (list != null && !list.isEmpty()) {
             int size = list.size();
             list.clear();
 
@@ -217,8 +219,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     /**
      * Updates the adapter with new data
-     * **/
-    public void addAll(List<HomeModel> data){
+     **/
+    public void addAll(List<HomeModel> data) {
         if (data != null && !data.isEmpty()) {
             // If new data is not empty then update allPosts List
             list = data;
@@ -227,11 +229,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         }
     }
 
-    public List<HomeModel> getList(){
+    public List<HomeModel> getList() {
         return list;
     }
-
-
 
 
 }

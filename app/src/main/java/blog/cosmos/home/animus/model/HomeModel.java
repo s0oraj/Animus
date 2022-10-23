@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.model;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class HomeModel {
 
-    private String name,  profileImage, imageUrl, uid, comments, description, id;
+    private String name,  profileImage, imageUrl, uid, description, id;
 
     @ServerTimestamp
     private Date timestamp;
@@ -15,21 +16,31 @@ public class HomeModel {
 
     private List<String> likes;
 
+    QueryDocumentSnapshot snapshot;
+
 
 
     public HomeModel() {
     }
 
-    public HomeModel(String name, String profileImage, String imageUrl, String uid, String comments, String description, String id, Date timestamp, List<String> likes) {
+    public HomeModel(String name, String profileImage, String imageUrl, String uid, String description, String id, Date timestamp, List<String> likes, QueryDocumentSnapshot snapshot) {
         this.name = name;
         this.profileImage = profileImage;
         this.imageUrl = imageUrl;
         this.uid = uid;
-        this.comments = comments;
         this.description = description;
         this.id = id;
         this.timestamp = timestamp;
         this.likes = likes;
+        this.snapshot = snapshot;
+    }
+
+    public QueryDocumentSnapshot getSnapshot() {
+        return snapshot;
+    }
+
+    public void setSnapshot(QueryDocumentSnapshot snapshot) {
+        this.snapshot = snapshot;
     }
 
     public String getName() {
@@ -64,13 +75,6 @@ public class HomeModel {
         this.uid = uid;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public String getDescription() {
         return description;
