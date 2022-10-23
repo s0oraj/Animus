@@ -147,12 +147,7 @@ public class Home extends Fragment {
 
             }
 
-            @Override
-            public void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET) {
 
-
-
-            }
 
             @Override
             public void setCommentCount(TextView textView) {

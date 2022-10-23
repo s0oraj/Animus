@@ -115,8 +115,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         );
 
 
-
-
     }
 
     @Override
@@ -132,10 +130,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked);
 
-       // void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
+        // void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
         void setCommentCount(TextView textView);
-
 
 
     }
@@ -147,10 +144,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         private ImageView imageView;
         private CheckBox likeCheckBox;
         private ImageButton commentBtn, shareBtn;
-        private EditText commentET;
-        private FloatingActionButton commentSendBtn;
-        LinearLayout commentLayout;
-
 
 
         public HomeHolder(@NonNull View itemView) {
@@ -166,12 +159,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentBtn = itemView.findViewById(R.id.commentBtn);
             shareBtn = itemView.findViewById(R.id.shareBtn);
             descriptionTv = itemView.findViewById(R.id.descTv);
-            commentET = itemView.findViewById(R.id.commentET);
-            commentSendBtn = itemView.findViewById(R.id.commentSendBtn);
-            commentLayout = itemView.findViewById(R.id.commentLayout);
-            commentTV =itemView.findViewById(R.id.commentTV);
 
-           onPressed.setCommentCount(commentTV);
+
+            commentTV = itemView.findViewById(R.id.commentTV);
+
+            onPressed.setCommentCount(commentTV);
 
 
             /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -189,14 +181,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (commentLayout.getVisibility() == View.GONE) {
-                        commentLayout.setVisibility(View.VISIBLE);
-                    }
 
                     Intent intent = new Intent(context, ReplacerActivity.class);
-                    intent.putExtra("id",id);
-                    intent.putExtra("uid",uid);
-                    intent.putExtra("isComment",true);
+                    intent.putExtra("id", id);
+                    intent.putExtra("uid", uid);
+                    intent.putExtra("isComment", true);
 
                     context.startActivity(intent);
                 }
@@ -210,9 +199,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                     onPressed.onLiked(position, id, uid, likes, b);
                 }
             });
-
-
-
 
 
         }

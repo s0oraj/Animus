@@ -45,6 +45,7 @@ public class Comment extends Fragment {
 
     FirebaseUser user;
 
+    String id,uid;
 
     public Comment() {
         // Required empty public constructor
@@ -136,9 +137,16 @@ public class Comment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         list= new ArrayList<>();
-
         commentAdapter = new CommentAdapter(getContext(), list);
         recyclerView.setAdapter(commentAdapter);
+
+        if(getArguments() == null){
+            return;
+        }
+
+        id = getArguments().getString("id");
+        uid = getArguments().getString("uid");
+
 
     }
 }
