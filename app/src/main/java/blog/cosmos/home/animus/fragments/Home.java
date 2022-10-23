@@ -1,7 +1,9 @@
 package blog.cosmos.home.animus.fragments;
 
+import static android.content.Context.ACTIVITY_SERVICE;
 import static blog.cosmos.home.animus.MainActivity.viewPager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,12 +65,12 @@ import blog.cosmos.home.animus.model.HomeModel;
 public class Home extends Fragment {
 
     HomeAdapter adapter;
-    int commentCount =0;
     private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
     private List<HomeModel> personalList;
     private List<HomeModel> followingUsersList;
+    private final MutableLiveData<Integer> commentCount = new MutableLiveData<>();
 
 
     private ImageView searchButton;
@@ -172,26 +177,32 @@ public class Home extends Fragment {
             }
 
             @Override
-            public void setCommentCount(TextView textView) {
+            public void setCommentCount(final TextView textView) {
 
-                textView.setText("See all "+ commentCount+ " comments");
+                Activity activity = getActivity();
 
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                commentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
                     @Override
-                    public void run() {
-                        if(commentCount==0){
+                    public void onChanged(Integer integer) {
+                        if(commentCount.getValue()==0){
                             textView.setVisibility(View.GONE);
                         } else {
                             textView.setVisibility(View.VISIBLE);
                         }
 
+                        textView.setText("See all "+ commentCount.getValue()+ " comments");
                     }
-                },1200);
+                });
+
+
+
+
 
             }
         });
 
     }
+
 
 
 
@@ -305,7 +316,27 @@ public class Home extends Fragment {
                             model.getTimestamp(),
                             model.getLikes()
                     ));
+                    snapshot.getReference().collection("Comments").get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
 
+                                        int count =0;
+                                        for(QueryDocumentSnapshot snapshot : task.getResult() ){
+
+                                            count++;
+
+                                        }
+                                        commentCount.setValue(count);
+                                    }
+                                }
+                            });
+
+
+
+
+                    //  Rest of the code below in this for loop updates the home ui screens adapter, with new data
                     List<HomeModel> tempList= new ArrayList<HomeModel>(followingUsersList);
                     tempList.addAll(personalList);
                     list = tempList;
@@ -420,12 +451,13 @@ public class Home extends Fragment {
                                                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                                       if(task.isSuccessful()){
 
-
+                                                                          int count =0;
                                                                           for(QueryDocumentSnapshot snapshot : task.getResult() ){
 
-                                                                              commentCount++;
-                                                                          }
+                                                                              count++;
 
+                                                                          }
+                                                                          commentCount.setValue(count);
                                                                       }
                                                                     }
                                                                 });
