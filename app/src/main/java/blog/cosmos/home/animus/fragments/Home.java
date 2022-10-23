@@ -203,7 +203,7 @@ public class Home extends Fragment {
 
                                 StringBuilder builder = new StringBuilder();
                                 builder.append("See all ")
-                                        .append(commentCount.getValue())
+                                        .append(personalPostsCommentCount.getValue())
                                         .append(" comments");
 
                                 textView.setText(builder); }
@@ -225,7 +225,7 @@ public class Home extends Fragment {
                                 textView.setVisibility(View.VISIBLE);
                                 StringBuilder builder = new StringBuilder();
                                 builder.append("See all ")
-                                        .append(commentCount.getValue())
+                                        .append(followingPostsCommentCount.getValue())
                                         .append(" comments");
 
                                 textView.setText(builder); }
