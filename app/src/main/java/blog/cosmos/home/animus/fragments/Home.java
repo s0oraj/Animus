@@ -184,13 +184,23 @@ public class Home extends Fragment {
                 commentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
+
+                        assert commentCount.getValue() != null;
                         if(commentCount.getValue()==0){
                             textView.setVisibility(View.GONE);
                         } else {
                             textView.setVisibility(View.VISIBLE);
-                        }
 
-                        textView.setText("See all "+ commentCount.getValue()+ " comments");
+
+
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("See all")
+                                .append(commentCount.getValue())
+                                .append(" comments");
+
+                        textView.setText(builder); }
+
+                        //textView.setText("See all "+ commentCount.getValue()+ " comments");
                     }
                 });
 
