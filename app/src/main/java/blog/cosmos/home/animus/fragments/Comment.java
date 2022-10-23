@@ -14,8 +14,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
+import blog.cosmos.home.animus.model.CommentModel;
 
 
 public class Comment extends Fragment {
@@ -27,6 +31,7 @@ public class Comment extends Fragment {
 
     CommentAdapter commentAdapter;
 
+    List<CommentModel> list;
     public Comment() {
         // Required empty public constructor
     }
@@ -48,6 +53,11 @@ public class Comment extends Fragment {
 
         init(view);
 
+        loadCommentData();
+    }
+
+    private void loadCommentData() {
+
     }
 
     private void init(View view) {
@@ -57,6 +67,11 @@ public class Comment extends Fragment {
         recyclerView = view.findViewById(R.id.commentRecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        list= new ArrayList<>();
+
+        commentAdapter = new CommentAdapter(getContext(), list);
+        recyclerView.setAdapter(commentAdapter);
 
     }
 }

@@ -1,15 +1,31 @@
 package blog.cosmos.home.animus.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.model.CommentModel;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder> {
+
+
+    Context context;
+    List<CommentModel> list;
+
+    public CommentAdapter(Context context, List<CommentModel> list){
+        this.context = context;
+        this.list = list;
+    }
+
 
     @NonNull
     @Override
@@ -27,13 +43,27 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
-    class CommentHolder extends RecyclerView.ViewHolder{
+   static class CommentHolder extends RecyclerView.ViewHolder{
+
+
+        private CircleImageView profileImage;
+        private TextView nameTv, commentTv;
+
+
 
         public CommentHolder(@NonNull View itemView) {
             super(itemView);
+
+
+            profileImage = itemView.findViewById(R.id.profileImage);
+            nameTv = itemView.findViewById(R.id.nameTv);
+            commentTv = itemView.findViewById(R.id.commentTV);
+
+
+
         }
     }
 
