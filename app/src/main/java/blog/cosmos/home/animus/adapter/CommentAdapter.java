@@ -42,7 +42,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
     public void onBindViewHolder(@NonNull CommentHolder holder, int position) {
 
         Glide.with(context)
-                .load(list.get(position).getProfileImage())
+                .load(list.get(position).getProfileImageUrl())
                 .into(holder.profileImage);
 
         holder.nameTv.setText(list.get(position).getName());

@@ -1,6 +1,7 @@
 package blog.cosmos.home.animus.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -159,9 +160,10 @@ public class CreateAccountFragment extends Fragment {
                             FirebaseUser user = auth.getCurrentUser();
 
 
-                            String image = "https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
+                            String image = "https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg";
                             UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
                             request.setDisplayName(name);
+                            request.setPhotoUri(Uri.parse(image));
 
                             user.updateProfile(request.build());
 

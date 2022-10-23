@@ -11,11 +11,14 @@ public class CommentModel {
 
     }
 
-    public CommentModel(String comment, String commentID, String postID, String uid){
+
+    public CommentModel(String comment, String commentID, String postID, String uid, String name, String profileImageUrl) {
         this.comment = comment;
         this.commentID = commentID;
         this.postID = postID;
-        this.uid= uid;
+        this.uid = uid;
+        this.name = name;
+        this.profileImageUrl = profileImageUrl;
     }
 
     public String getComment() {
@@ -48,5 +51,21 @@ public class CommentModel {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

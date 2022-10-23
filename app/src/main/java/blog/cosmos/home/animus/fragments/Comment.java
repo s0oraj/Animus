@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -90,6 +92,12 @@ public class Comment extends Fragment {
     }
 
     private void clickListener() {
+
+        String image = "https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg";
+        UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
+        request.setPhotoUri(Uri.parse(image));
+        user.updateProfile(request.build());
+
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
