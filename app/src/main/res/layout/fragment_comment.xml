@@ -35,7 +35,9 @@
             android:layout_margin="6dp"
             android:background="@drawable/ic_circle"
             android:elevation="1dp"
-            android:src="@drawable/ic_send" />
+            android:foregroundTint="@color/gray_btn_bg_color"
+            android:src="@drawable/ic_send"
+            />
 
     </LinearLayout>
 
