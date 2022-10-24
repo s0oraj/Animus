@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
@@ -168,6 +169,10 @@ public class Home extends Fragment {
             @Override
             public void onCommentBtnPressed(String id, String uid, boolean isComment) {
 
+                Bundle bundle = new Bundle();
+                bundle.putString("id", id);
+                bundle.putString("uid", uid);
+                ((MainActivity) getActivity()).setCommentFragment(new Comment(), bundle);
             }
 
 
@@ -226,6 +231,11 @@ public class Home extends Fragment {
 
             @Override
             public void onCommentBtnPressed(String id, String uid, boolean isComment) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("id", id);
+                bundle.putString("uid", uid);
+                ((MainActivity) getActivity()).setCommentFragment(new Comment(), bundle);
 
             }
 

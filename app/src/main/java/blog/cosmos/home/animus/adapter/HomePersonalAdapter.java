@@ -1,7 +1,6 @@
 package blog.cosmos.home.animus.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.Random;
 
 import blog.cosmos.home.animus.R;
-import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.model.HomeModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -175,12 +173,16 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
                 @Override
                 public void onClick(View view) {
 
+                    /*
                     Intent intent = new Intent(context, ReplacerActivity.class);
                     intent.putExtra("id", id);
                     intent.putExtra("uid", uid);
                     intent.putExtra("isComment", true);
 
                     context.startActivity(intent);
+                     */
+
+                    onPressed.onCommentBtnPressed(id,uid,true);
                 }
             });
 

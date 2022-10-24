@@ -16,11 +16,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -34,6 +38,9 @@ import java.io.FileNotFoundException;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
+import blog.cosmos.home.animus.fragments.Comment;
+import blog.cosmos.home.animus.fragments.CreateAccountFragment;
+import blog.cosmos.home.animus.fragments.ForgotPassword;
 import blog.cosmos.home.animus.fragments.Home;
 import blog.cosmos.home.animus.fragments.Notification;
 import blog.cosmos.home.animus.fragments.Profile;
@@ -45,13 +52,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     BottomNavigationView bottomNavigationView;
     FloatingActionButton floatingActionButton;
 
-
-
     public static ViewPager viewPager;
 
     public static boolean IS_HOME_FRAGMENT = true;
-
-
 
     Home homeFragment;
     Search searchFragment;
@@ -60,7 +63,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     Profile profileFragment;
     MenuItem prevMenuItem;
 
+    private FrameLayout frameLayout;
+    private ConstraintLayout mainScreenNavigationLayout;
 
+    public static String USER_ID;
+    public static boolean IS_SEARCHED_USER = false;
+    public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
 
 
     @Override
@@ -79,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     }
 
     private void init() {
+
+        frameLayout = findViewById(R.id.frameLayout);
+        mainScreenNavigationLayout = findViewById(R.id.mainScreenNavigationLayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -204,6 +215,34 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     }
 
 
+    public void setCommentFragment(Fragment fragment, Bundle bundle){
+        mainScreenNavigationLayout.setVisibility(View.GONE);
+
+
+        Fragment currentFragment= fragment;
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+
+
+        if(fragment instanceof Comment){
+            String id = bundle.getString("id");
+            String uid = bundle.getString("uid");
+
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("id", id);
+            bundle1.putString("uid", uid);
+            fragment.setArguments(bundle1);
+        }
+
+
+
+        fragmentTransaction.replace(frameLayout.getId(), fragment);
+        fragmentTransaction.commit();
+        frameLayout.setVisibility(View.VISIBLE);
+
+    }
 
     private void setupViewPager()
     {
@@ -221,10 +260,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-
-    public static String USER_ID;
-    public static boolean IS_SEARCHED_USER = false;
-    public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
 
     @Override
     public void onChange(String uid) {
@@ -247,7 +282,18 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         if (viewPager.getCurrentItem() == 4) {
             viewPager.setCurrentItem(0);
             IS_SEARCHED_USER = false;
+            if(frameLayout.getVisibility()== View.VISIBLE && mainScreenNavigationLayout.getVisibility()== View.GONE){
+                frameLayout.setVisibility(View.GONE);
+                mainScreenNavigationLayout.setVisibility(View.VISIBLE);
+            }
         } else {
+
+            if(frameLayout.getVisibility()== View.VISIBLE && mainScreenNavigationLayout.getVisibility()== View.GONE){
+                frameLayout.setVisibility(View.GONE);
+                mainScreenNavigationLayout.setVisibility(View.VISIBLE);
+            }
+
+
             super.onBackPressed();
         }
     }
