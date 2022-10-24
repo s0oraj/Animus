@@ -250,8 +250,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
       //  activitymainlayout.setVisibility(View.INVISIBLE);
       //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
-        frameLayout.setVisibility(View.VISIBLE);
+
         fragmentTransaction.commit();
+        frameLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -290,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     @Override
     public void onBackPressed() {
         boolean isFromComment=false;
-        if(frameLayout.getVisibility()== View.VISIBLE && frameLayout.getBackground()== getDrawable(R.color.white)){
+        if(frameLayout.getVisibility()== View.VISIBLE ){
             isFromComment=true;
         }
 
