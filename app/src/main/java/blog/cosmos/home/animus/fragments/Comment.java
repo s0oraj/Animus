@@ -81,6 +81,10 @@ public class Comment extends Fragment {
 
 
 
+    /*    activity.getWindow()
+                .setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); */
+
         Log.d("LOG",uid + "\n\n" + id);
 
           reference = FirebaseFirestore.getInstance().collection("Users")

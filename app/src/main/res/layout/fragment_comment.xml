@@ -53,9 +53,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/commentLayout"
+        android:layout_height="match_parent"
         android:layout_below="@id/toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/idLLMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
 
     <LinearLayout
         android:padding="6dp"
@@ -72,6 +79,10 @@
             android:layout_weight="1"
             android:background="@drawable/text_box2"
             android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sendBtn"
             android:hint="Enter your comment here" />
 
         <ImageButton
@@ -86,5 +97,8 @@
             />
 
     </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </RelativeLayout>
