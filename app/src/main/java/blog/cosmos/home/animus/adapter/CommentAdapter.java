@@ -49,6 +49,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         holder.commentTv.setText(list.get(position).getComment());
 
 
+
     }
 
     @Override
