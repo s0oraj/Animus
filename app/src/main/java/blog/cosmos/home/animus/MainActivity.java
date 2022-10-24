@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     private FrameLayout frameLayout;
     private ConstraintLayout mainScreenNavigationLayout;
+    CoordinatorLayout activitymainlayout;
 
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         init();
 
@@ -88,8 +90,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     private void init() {
 
-        frameLayout = findViewById(R.id.frameLayout);
+        frameLayout = findViewById(R.id.frameLayout2);
         mainScreenNavigationLayout = findViewById(R.id.mainScreenNavigationLayout);
+        activitymainlayout = findViewById(R.id.activitymainlayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -216,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
     public void setCommentFragment(Fragment fragment, Bundle bundle){
-        mainScreenNavigationLayout.setVisibility(View.GONE);
+
 
 
         Fragment currentFragment= fragment;
@@ -237,10 +240,17 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         }
 
 
+        if(fragment instanceof Comment){
+            fragmentTransaction.addToBackStack(null);
+        }
+
 
         fragmentTransaction.replace(frameLayout.getId(), fragment);
+
         fragmentTransaction.commit();
+        mainScreenNavigationLayout.setVisibility(View.INVISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -278,18 +288,23 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     @Override
     public void onBackPressed() {
+        boolean isFromComment=false;
+        if(frameLayout.getVisibility()== View.VISIBLE && mainScreenNavigationLayout.getVisibility()== View.INVISIBLE){
+            isFromComment=true;
+        }
+
 
         if (viewPager.getCurrentItem() == 4) {
             viewPager.setCurrentItem(0);
             IS_SEARCHED_USER = false;
-            if(frameLayout.getVisibility()== View.VISIBLE && mainScreenNavigationLayout.getVisibility()== View.GONE){
+            if(isFromComment){
                 frameLayout.setVisibility(View.GONE);
                 mainScreenNavigationLayout.setVisibility(View.VISIBLE);
             }
         } else {
 
-            if(frameLayout.getVisibility()== View.VISIBLE && mainScreenNavigationLayout.getVisibility()== View.GONE){
-                frameLayout.setVisibility(View.GONE);
+            if(isFromComment){
+                frameLayout.setVisibility(View.INVISIBLE);
                 mainScreenNavigationLayout.setVisibility(View.VISIBLE);
             }
 
