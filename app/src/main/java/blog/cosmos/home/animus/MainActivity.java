@@ -133,12 +133,14 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         }
         fragmentTransaction.replace(frameLayout.getId(), fragment);
 
+
       //  activitymainlayout.setVisibility(View.INVISIBLE);
       //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
 
         fragmentTransaction.commit();
         IS_HOME_FRAGMENT=false;
         changeStatusBarColor();
+
 
     }
 
@@ -161,27 +163,33 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     @Override
     public void onBackPressed() {
 
+        if (getSupportFragmentManager().getBackStackEntryCount() ==1) {
+               if (viewPager.getCurrentItem() == 4) {
+                  IS_SEARCHED_USER = false;
 
-        if (viewPager.getCurrentItem() == 4) {
-            viewPager.setCurrentItem(0);
-            IS_SEARCHED_USER = false;
+                  viewPager.setCurrentItem(0);
+                  IS_HOME_FRAGMENT=true;
+                   changeStatusBarColor();
 
-                IS_HOME_FRAGMENT=true;
-                changeStatusBarColor();
 
+                 } else if(viewPager.getCurrentItem() == 3 ||
+                    viewPager.getCurrentItem() == 2 ||
+                    viewPager.getCurrentItem() == 1){
+                    viewPager.setCurrentItem(0);
+                   IS_HOME_FRAGMENT=true;
+                   changeStatusBarColor();
+
+                } else{
+                   finish();
+                    }
 
         }
-        else {
 
-
-
-                IS_HOME_FRAGMENT=true;
-                changeStatusBarColor();
-
-
-
+        else{
             super.onBackPressed();
         }
+
+
     }
 
     public void changeStatusBarColor() {
