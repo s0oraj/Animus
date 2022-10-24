@@ -125,6 +125,8 @@ public class HomePersonalAdapter extends RecyclerView.Adapter<HomePersonalAdapte
 
         void setCommentCount(TextView textView);
 
+        void onCommentBtnPressed(String id, String uid, boolean isComment);
+
 
     }
 

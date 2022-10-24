@@ -134,6 +134,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         void setCommentCount(TextView textView);
 
+        void onCommentBtnPressed(String id, String uid, boolean isComment);
+
 
     }
 
@@ -182,12 +184,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 @Override
                 public void onClick(View view) {
 
+                    /*
                     Intent intent = new Intent(context, ReplacerActivity.class);
                     intent.putExtra("id", id);
                     intent.putExtra("uid", uid);
                     intent.putExtra("isComment", true);
 
                     context.startActivity(intent);
+
+                     */
+
+                    onPressed.onCommentBtnPressed(id,uid,true);
                 }
             });
 
