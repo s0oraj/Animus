@@ -1,6 +1,7 @@
 package blog.cosmos.home.animus.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
 import blog.cosmos.home.animus.model.CommentModel;
@@ -49,6 +52,9 @@ public class Comment extends Fragment {
     RecyclerView recyclerView;
 
     CommentAdapter commentAdapter;
+    private EditText userMsgEdt;
+
+    private  boolean isScrollToLastRequired = false;
 
     List<CommentModel> list;
 
@@ -146,6 +152,9 @@ public class Comment extends Fragment {
             }
         });
 
+
+
+
     }
 
     private void loadCommentData() {
@@ -171,13 +180,13 @@ public class Comment extends Fragment {
 
     }
 
-    private void init(View view) {
+    private void init(View view1) {
 
         activity= getActivity();
 
-        commentEt = view.findViewById(R.id.commentET);
-        sendBtn = view.findViewById(R.id.sendBtn);
-        recyclerView = view.findViewById(R.id.commentRecyclerView);
+        commentEt = view1.findViewById(R.id.commentET);
+        sendBtn = view1.findViewById(R.id.sendBtn);
+        recyclerView = view1.findViewById(R.id.commentRecyclerView);
 
         user= FirebaseAuth.getInstance().getCurrentUser();
 
@@ -187,12 +196,36 @@ public class Comment extends Fragment {
         commentAdapter = new CommentAdapter(getContext(), list);
         recyclerView.setAdapter(commentAdapter);
 
+        userMsgEdt = view1.findViewById(R.id.commentET);
+
         if(getArguments() == null){
             return;
         }
 
         id = getArguments().getString("id");
         uid = getArguments().getString("uid");
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
+
+
+
+        //Setup editText behavior for opening soft keyboard
+        userMsgEdt.setOnTouchListener((view, motionEvent) -> {
+            InputMethodManager keyboard = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (keyboard != null) {
+                isScrollToLastRequired = linearLayoutManager.findLastVisibleItemPosition() == commentAdapter.getItemCount() - 1;
+                keyboard.showSoftInput(view1.findViewById(R.id.sendBtn), InputMethodManager.SHOW_FORCED);
+            }
+            return false;
+        });
+        //Executes recycler view scroll if required.
+        recyclerView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            if (bottom < oldBottom && isScrollToLastRequired) {
+                recyclerView.postDelayed(() -> recyclerView.scrollToPosition(
+                        recyclerView.getAdapter().getItemCount() - 1), 100);
+            }
+        });
 
 
     }
