@@ -78,7 +78,7 @@ public class Comment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init(view);
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
 
 
         Log.d("LOG",uid + "\n\n" + id);
