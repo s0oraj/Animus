@@ -247,10 +247,11 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         fragmentTransaction.replace(frameLayout.getId(), fragment);
 
-        fragmentTransaction.commit();
-        mainScreenNavigationLayout.setVisibility(View.INVISIBLE);
-        frameLayout.setVisibility(View.VISIBLE);
 
+      //  activitymainlayout.setVisibility(View.INVISIBLE);
+      //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
+        frameLayout.setVisibility(View.VISIBLE);
+        fragmentTransaction.commit();
 
     }
 
@@ -289,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     @Override
     public void onBackPressed() {
         boolean isFromComment=false;
-        if(frameLayout.getVisibility()== View.VISIBLE && mainScreenNavigationLayout.getVisibility()== View.INVISIBLE){
+        if(frameLayout.getVisibility()== View.VISIBLE && frameLayout.getBackground()== getDrawable(R.color.white)){
             isFromComment=true;
         }
 
@@ -298,14 +299,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             viewPager.setCurrentItem(0);
             IS_SEARCHED_USER = false;
             if(isFromComment){
-                frameLayout.setVisibility(View.GONE);
-                mainScreenNavigationLayout.setVisibility(View.VISIBLE);
+                frameLayout.setVisibility(View.INVISIBLE);
             }
         } else {
 
             if(isFromComment){
                 frameLayout.setVisibility(View.INVISIBLE);
-                mainScreenNavigationLayout.setVisibility(View.VISIBLE);
             }
 
 

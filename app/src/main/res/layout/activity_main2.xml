@@ -17,8 +17,8 @@
         android:id="@+id/activitymainlayout"/>
 
     <FrameLayout
-        android:visibility="visible"
-
+        android:visibility="invisible"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/frameLayout2"/>
