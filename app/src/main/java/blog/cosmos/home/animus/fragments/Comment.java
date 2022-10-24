@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ import blog.cosmos.home.animus.model.CommentModel;
 public class Comment extends Fragment {
 
 
+    Activity activity;
     EditText commentEt;
     ImageButton sendBtn;
     RecyclerView recyclerView;
@@ -75,6 +78,8 @@ public class Comment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init(view);
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
 
         Log.d("LOG",uid + "\n\n" + id);
 
@@ -163,6 +168,8 @@ public class Comment extends Fragment {
     }
 
     private void init(View view) {
+
+        activity= getActivity();
 
         commentEt = view.findViewById(R.id.commentET);
         sendBtn = view.findViewById(R.id.sendBtn);

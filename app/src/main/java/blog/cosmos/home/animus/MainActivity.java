@@ -252,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
       //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
 
         fragmentTransaction.commit();
+        IS_HOME_FRAGMENT=false;
+        changeStatusBarColor();
         frameLayout.setVisibility(View.VISIBLE);
 
     }
@@ -290,22 +292,26 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     @Override
     public void onBackPressed() {
-        boolean isFromComment=false;
-        if(frameLayout.getVisibility()== View.VISIBLE ){
-            isFromComment=true;
-        }
+        boolean isFromComment= frameLayout.getVisibility() == View.VISIBLE;
 
 
         if (viewPager.getCurrentItem() == 4) {
             viewPager.setCurrentItem(0);
             IS_SEARCHED_USER = false;
-            if(isFromComment){
+            if(isFromComment)
+            {
                 frameLayout.setVisibility(View.INVISIBLE);
+                IS_HOME_FRAGMENT=true;
+                changeStatusBarColor();
             }
-        } else {
+
+        }
+        else {
 
             if(isFromComment){
                 frameLayout.setVisibility(View.INVISIBLE);
+                IS_HOME_FRAGMENT=true;
+                changeStatusBarColor();
             }
 
 
