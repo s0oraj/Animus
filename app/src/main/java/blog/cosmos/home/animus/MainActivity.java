@@ -43,19 +43,26 @@ import blog.cosmos.home.animus.fragments.Comment;
 import blog.cosmos.home.animus.fragments.CreateAccountFragment;
 import blog.cosmos.home.animus.fragments.ForgotPassword;
 import blog.cosmos.home.animus.fragments.Home;
+import blog.cosmos.home.animus.fragments.MainScreenFragment;
 import blog.cosmos.home.animus.fragments.Notification;
 import blog.cosmos.home.animus.fragments.Profile;
 import blog.cosmos.home.animus.fragments.Search;
 
 public class MainActivity extends AppCompatActivity implements Search.OndataPass {
 
+    public static ViewPager viewPager;
+
+    public static String USER_ID;
+    public static boolean IS_SEARCHED_USER = false;
+    public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
+    public static boolean IS_HOME_FRAGMENT = true;
+
+    private FrameLayout frameLayout;
+
     ViewPagerAdapter viewPagerAdapter;
     BottomNavigationView bottomNavigationView;
     FloatingActionButton floatingActionButton;
 
-    public static ViewPager viewPager;
-
-    public static boolean IS_HOME_FRAGMENT = true;
 
     Home homeFragment;
     Search searchFragment;
@@ -64,163 +71,24 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     Profile profileFragment;
     MenuItem prevMenuItem;
 
-    private FrameLayout frameLayout;
+
     private ConstraintLayout mainScreenNavigationLayout;
     CoordinatorLayout activitymainlayout;
 
-    public static String USER_ID;
-    public static boolean IS_SEARCHED_USER = false;
-    public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
+        frameLayout = findViewById(R.id.frameLayout);
 
-        init();
+        setFragment(new MainScreenFragment());
 
-        //addTabs();
-        clickListener();
-        setupViewPager();
-
-       // findViewById(R.id.constrainLayout).setBackground(getResources().getDrawable(com.marsad.stylishdialogs.R.color.float_transparent));
 
     }
-
-    private void init() {
-
-        frameLayout = findViewById(R.id.frameLayout2);
-        mainScreenNavigationLayout = findViewById(R.id.mainScreenNavigationLayout);
-        activitymainlayout = findViewById(R.id.activitymainlayout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        viewPager = findViewById(R.id.viewpager);
-        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setBackground(null);
-        bottomNavigationView.getMenu().getItem(2).setEnabled(true); // set this to false later if you only want the float button to respond and not area just below it (where add button was previously located)
-
-        //tabLayout = findViewById(R.id.tabLayout);
-        floatingActionButton = findViewById(R.id.fab);
-
-    }
-
-    private void clickListener(){
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.home_navigation_icon:l:
-                                viewPager.setCurrentItem(0);
-                                IS_HOME_FRAGMENT=true;
-                                changeStatusBarColor();
-                                return true;
-                            case R.id.search_navigation_icon:
-                                viewPager.setCurrentItem(1);
-                                IS_HOME_FRAGMENT=false;
-                                changeStatusBarColor();
-                                return true;
-                            case R.id.add_navigation_icon:
-                                viewPager.setCurrentItem(2);
-                                IS_HOME_FRAGMENT=false;
-                                changeStatusBarColor();
-                                return true;
-                            case R.id.notification_navigation_icon:
-                                viewPager.setCurrentItem(3);
-                                IS_HOME_FRAGMENT=false;
-                                changeStatusBarColor();
-                                return true;
-                            case R.id.profile_navigation_icon:
-                                viewPager.setCurrentItem(4);
-                                IS_HOME_FRAGMENT=false;
-                                changeStatusBarColor();
-                                return true;
-
-                        }
-                        return false;
-                    }
-
-
-                });
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-              /*  if (prevMenuItem != null) {
-                    prevMenuItem.setChecked(false);
-                }
-                else
-                {
-                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
-                }
-                Log.d("page", "onPageSelected: "+position);
-                bottomNavigationView.getMenu().getItem(position).setChecked(true);
-                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
-               */
-
-                switch (position) {
-                    case 0:
-                        bottomNavigationView.getMenu().findItem(R.id.home_navigation_icon).setChecked(true);
-                        IS_HOME_FRAGMENT=true;
-                        changeStatusBarColor();
-                        break;
-                    case 1:
-                        bottomNavigationView.getMenu().findItem(R.id.search_navigation_icon).setChecked(true);
-                        IS_HOME_FRAGMENT=false;
-                        changeStatusBarColor();
-                        break;
-                    case 2:
-                        bottomNavigationView.getMenu().findItem(R.id.add_navigation_icon).setChecked(true);
-                        IS_HOME_FRAGMENT=false;
-                        changeStatusBarColor();
-                        break;
-                    case 3:
-                        bottomNavigationView.getMenu().findItem(R.id.notification_navigation_icon).setChecked(true);
-                        IS_HOME_FRAGMENT=false;
-                        changeStatusBarColor();
-                        break;
-                    case 4:
-                        bottomNavigationView.getMenu().findItem(R.id.profile_navigation_icon).setChecked(true);
-                        IS_HOME_FRAGMENT=false;
-                        changeStatusBarColor();
-                        break;
-
-
-
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(2);
-                IS_HOME_FRAGMENT=false;
-                changeStatusBarColor();
-            }
-        });
-    }
-
-
-    public void setCommentFragment(Fragment fragment, Bundle bundle){
-
-
+    public void setFragment(Fragment fragment){
 
         Fragment currentFragment= fragment;
 
@@ -228,6 +96,27 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
 
 
+
+
+        if(fragment instanceof MainScreenFragment){
+            fragmentTransaction.addToBackStack(null);
+
+        }
+
+
+
+        fragmentTransaction.replace(frameLayout.getId(), fragment);
+        fragmentTransaction.commit();
+
+    }
+
+
+    public void setCommentFragment(Fragment fragment, Bundle bundle){
+
+        Fragment currentFragment= fragment;
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
 
         if(fragment instanceof Comment){
             String id = bundle.getString("id");
@@ -239,14 +128,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             fragment.setArguments(bundle1);
         }
 
-
         if(fragment instanceof Comment){
             fragmentTransaction.addToBackStack(null);
         }
-
-
         fragmentTransaction.replace(frameLayout.getId(), fragment);
-
 
       //  activitymainlayout.setVisibility(View.INVISIBLE);
       //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
@@ -254,24 +139,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         fragmentTransaction.commit();
         IS_HOME_FRAGMENT=false;
         changeStatusBarColor();
-        frameLayout.setVisibility(View.VISIBLE);
 
-    }
-
-    private void setupViewPager()
-    {
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        homeFragment=new Home();
-        searchFragment=new Search();
-        addFragment=new Add();
-        notificationFragment= new Notification();
-        profileFragment= new Profile();
-        viewPagerAdapter.addFragment(homeFragment);
-        viewPagerAdapter.addFragment(searchFragment);
-        viewPagerAdapter.addFragment(addFragment);
-        viewPagerAdapter.addFragment(notificationFragment);
-        viewPagerAdapter.addFragment(profileFragment);
-        viewPager.setAdapter(viewPagerAdapter);
     }
 
 
@@ -292,27 +160,24 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     @Override
     public void onBackPressed() {
-        boolean isFromComment= frameLayout.getVisibility() == View.VISIBLE;
 
 
         if (viewPager.getCurrentItem() == 4) {
             viewPager.setCurrentItem(0);
             IS_SEARCHED_USER = false;
-            if(isFromComment)
-            {
-                frameLayout.setVisibility(View.INVISIBLE);
+
                 IS_HOME_FRAGMENT=true;
                 changeStatusBarColor();
-            }
+
 
         }
         else {
 
-            if(isFromComment){
-                frameLayout.setVisibility(View.INVISIBLE);
+
+
                 IS_HOME_FRAGMENT=true;
                 changeStatusBarColor();
-            }
+
 
 
             super.onBackPressed();

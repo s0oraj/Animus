@@ -172,7 +172,8 @@ public class Home extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", id);
                 bundle.putString("uid", uid);
-                ((MainActivity) getActivity()).setCommentFragment(new Comment(), bundle);
+               ((MainActivity) getActivity()).setCommentFragment(new Comment(), bundle);
+
             }
 
 
