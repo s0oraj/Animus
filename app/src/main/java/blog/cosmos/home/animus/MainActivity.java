@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
         init();
 
         //addTabs();
