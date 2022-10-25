@@ -29,7 +29,10 @@ import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
 import blog.cosmos.home.animus.model.CommentModel;
 
-
+/**
+ *  Source https://stackoverflow.com/questions/27246981/android-floating-activity-with-dismiss-on-swipe
+ *  a combination of two answers were used here. Answers from Gaëtan Maisse and Zain
+ */
 public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
 

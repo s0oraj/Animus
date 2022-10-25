@@ -79,6 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:inputType="textCapSentences|textMultiLine"
                 android:background="@drawable/text_box2"
                 android:padding="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
