@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -16,21 +17,38 @@ import androidx.annotation.Nullable;
 
 import blog.cosmos.home.animus.R;
 
+
 public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
 
-    LinearLayout baseLayout;
+    LinearLayout rootLayout;
 
 
-    private int previousFingerPosition = 0;
+    float rootLayoutY=0;
+
+
+    private float oldY = 0;
+    private float baseLayoutPosition = 0;
+    private float defaultViewHeight = 0;
+    private boolean isScrollingUp = false;
+    private boolean isScrollingDown = false;
+
+   /* private int previousFingerPosition = 0;
     private int baseLayoutPosition = 0;
     private int defaultViewHeight;
 
     private boolean isClosing = false;
     private boolean isScrollingUp = false;
-    private boolean isScrollingDown = false;
+    private boolean isScrollingDown = false; */
+
+    private boolean isClosing = false;
+    @Override
+    public int getTheme() {
+
+         return R.style.NoBackgroundDialogTheme2;
 
 
+    }
 
     @Nullable
     @Override
@@ -42,15 +60,22 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     @Override
     public void onStart() {
         super.onStart();
-        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        getDialog().getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        baseLayout = view.findViewById(R.id.linearDialogLayout);
-        baseLayout.setOnTouchListener(this);
+        rootLayout = view.findViewById(R.id.linearDialogLayout);
+        rootLayout.setOnTouchListener(this);
+
+        rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                defaultViewHeight = rootLayout.getHeight();
+            }
+        });
 
 
 
@@ -65,18 +90,26 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
             case MotionEvent.ACTION_DOWN:
                 // save default base layout height
-                defaultViewHeight = baseLayout.getHeight();
+                defaultViewHeight = rootLayout.getHeight();
 
                 // Init finger and view position
-                previousFingerPosition = Y;
-                baseLayoutPosition = (int) baseLayout.getY();
+                oldY = Y;
+                baseLayoutPosition = (int) rootLayout.getY();
                 break;
 
             case MotionEvent.ACTION_UP:
+
+
+                defaultViewHeight = rootLayout.getHeight();
+                if (rootLayoutY >= defaultViewHeight / 2) {
+                    dismiss();
+                    return true;
+                }
+
                 // If user was doing a scroll up
                 if(isScrollingUp){
                     // Reset baselayout position
-                    baseLayout.setY(0);
+                    rootLayout.setY(0);
                     // We are not in scrolling up mode anymore
                     isScrollingUp = false;
                 }
@@ -84,66 +117,27 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                 // If user was doing a scroll down
                 if(isScrollingDown){
                     // Reset baselayout position
-                    baseLayout.setY(0);
+                    rootLayout.setY(0);
                     // Reset base layout size
-                    baseLayout.getLayoutParams().height = defaultViewHeight;
-                    baseLayout.requestLayout();
+                    rootLayout.getLayoutParams().height = (int) defaultViewHeight;
+                    rootLayout.requestLayout();
                     // We are not in scrolling down mode anymore
                     isScrollingDown = false;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(!isClosing){
-                    int currentYPosition = (int) baseLayout.getY();
 
-                    // If we scroll up
-                    if(previousFingerPosition >Y){
-                        // First time android rise an event for "up" move
-                        if(!isScrollingUp){
-                            isScrollingUp = true;
-                        }
 
-                        // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
-                        if(baseLayout.getHeight()<defaultViewHeight){
-                            baseLayout.getLayoutParams().height = baseLayout.getHeight() - (Y - previousFingerPosition);
-                            baseLayout.requestLayout();
-                        }
-                        else {
-                            // Has user scroll enough to "auto close" popup ?
-                            if ((baseLayoutPosition - currentYPosition) > defaultViewHeight / 4) {
-                                closeUpAndDismissDialog(currentYPosition);
-                                return true;
-                            }
+                rootLayoutY = Math.abs(rootLayout.getY());
+                rootLayout.setY( rootLayout.getY() + (Y - oldY));
 
-                            //
-                        }
-                        baseLayout.setY(baseLayout.getY() + (Y - previousFingerPosition));
-
-                    }
-                    // If we scroll down
-                    else{
-
-                        // First time android rise an event for "down" move
-                        if(!isScrollingDown){
-                            isScrollingDown = true;
-                        }
-
-                        // Has user scroll enough to "auto close" popup ?
-                        if (Math.abs(baseLayoutPosition - currentYPosition) > defaultViewHeight / 2)
-                        {
-                            closeDownAndDismissDialog(currentYPosition);
-                            return true;
-                        }
-
-                        // Change base layout size and position (must change position because view anchor is top left corner)
-                        baseLayout.setY(baseLayout.getY() + (Y - previousFingerPosition));
-                        baseLayout.getLayoutParams().height = baseLayout.getHeight() - (Y - previousFingerPosition);
-                        baseLayout.requestLayout();
-                    }
-
-                    // Update position
-                    previousFingerPosition = Y;
+                if(oldY > Y){
+                    if(!isScrollingUp) isScrollingUp = true;
+                } else{
+                    if(!isScrollingDown) isScrollingDown = true;
                 }
+                oldY = Y;
+
                 break;
         }
         return true;
@@ -152,7 +146,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
     public void closeUpAndDismissDialog(int currentPosition){
         isClosing = true;
-        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(baseLayout, "y", currentPosition, -baseLayout.getHeight());
+        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(rootLayout, "y", currentPosition, -rootLayout.getHeight());
         positionAnimator.setDuration(300);
         positionAnimator.addListener(new Animator.AnimatorListener()
         {
@@ -188,7 +182,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         Point size = new Point();
         display.getSize(size);
         int screenHeight = size.y;
-        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(baseLayout, "y", currentPosition, screenHeight+baseLayout.getHeight());
+        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(rootLayout, "y", currentPosition, screenHeight+rootLayout.getHeight());
         positionAnimator.setDuration(300);
         positionAnimator.addListener(new Animator.AnimatorListener()
         {

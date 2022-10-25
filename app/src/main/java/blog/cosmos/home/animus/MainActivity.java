@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,8 +39,6 @@ import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
 import blog.cosmos.home.animus.fragments.Comment;
 import blog.cosmos.home.animus.fragments.DialogFragment;
-import blog.cosmos.home.animus.fragments.DialogFragment2;
-import blog.cosmos.home.animus.fragments.DialogFragment3;
 import blog.cosmos.home.animus.fragments.Home;
 import blog.cosmos.home.animus.fragments.MainScreenFragment;
 import blog.cosmos.home.animus.fragments.Notification;
@@ -227,8 +226,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                //startActivity(new Intent(MainActivity.this, PopUpActivity.class));
 
-                DialogFragment2 dialogFragment=new DialogFragment2();
+                DialogFragment dialogFragment=new DialogFragment();
                 dialogFragment.show(getSupportFragmentManager(),"My  Fragment");
+
+
             }
         });
     }
@@ -396,11 +397,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-      //  View popup = v;
+
 
         // inflate the custom popup layout
        View inflatedView = layoutInflater.inflate(R.layout.popup_layout, null,false);
-        // find the ListView in the popup layout
+        RelativeLayout rootLayout = (RelativeLayout) inflatedView.findViewById(R.id.popUpRoot);
+                // find the ListView in the popup layout
         ListView listView = (ListView)inflatedView.findViewById(R.id.commentsListView);
         LinearLayout headerView = (LinearLayout)inflatedView.findViewById(R.id.headerLayout);
         // get device size
@@ -427,13 +429,19 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         popWindow.setAnimationStyle(R.style.PopupAnimation);
         popWindow.setTouchInterceptor(new View.OnTouchListener() {
+            LinearLayout rootLayout;
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-               /* if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    popWindow.dismiss();
-                } */
+
+            float rootLayoutY=0;
+
+
+            private float oldY = 0;
+            private float baseLayoutPosition = 0;
+            private float defaultViewHeight = 0;
+            private boolean isScrollingUp = false;
+            private boolean isScrollingDown = false;
+
+            public boolean onTouch(View view, MotionEvent event) {
 
                 // Get finger position on screen
                 final int Y = (int) event.getRawY();
@@ -443,14 +451,22 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                     case MotionEvent.ACTION_DOWN:
                         // save default base layout height
-                        defaultViewHeight = v.getHeight();
+                        defaultViewHeight = popupView.getHeight();
 
                         // Init finger and view position
-                        previousFingerPosition = Y;
+                        oldY = Y;
                         baseLayoutPosition = (int) popupView.getY();
                         break;
 
                     case MotionEvent.ACTION_UP:
+
+
+                        defaultViewHeight = popupView.getHeight();
+                        if (rootLayoutY >= defaultViewHeight / 2) {
+                            popWindow.dismiss();
+                            return true;
+                        }
+
                         // If user was doing a scroll up
                         if(isScrollingUp){
                             // Reset baselayout position
@@ -464,73 +480,27 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                             // Reset baselayout position
                             popupView.setY(0);
                             // Reset base layout size
-                            popupView.getLayoutParams().height = defaultViewHeight;
+                            popupView.getLayoutParams().height = (int) defaultViewHeight;
                             popupView.requestLayout();
                             // We are not in scrolling down mode anymore
                             isScrollingDown = false;
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        if(!isClosing){
-                            int currentYPosition = (int) popupView.getY();
 
-                            // If we scroll up
-                            if(previousFingerPosition >Y){
-                                // First time android rise an event for "up" move
-                                if(!isScrollingUp){
-                                    isScrollingUp = true;
-                                }
 
-                                // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
-                                if(popupView.getHeight()<defaultViewHeight){
-                                    popupView.getLayoutParams().height = popupView.getHeight() - (Y - previousFingerPosition);
-                                    popupView.requestLayout();
-                                }
-                                else {
-                                    // Has user scroll enough to "auto close" popup ?
-                                    if ((baseLayoutPosition - currentYPosition) > defaultViewHeight / 4) {
-                                       closeUpAndDismissDialog(currentYPosition);
-                                       // popWindow.dismiss();
-                                        return true;
-                                    }
+                        rootLayoutY = Math.abs(popupView.getY());
+                        popupView.setY( popupView.getY() + (Y - oldY));
 
-                                    //
-                                }
-                                popupView.setY(popupView.getY() + (Y - previousFingerPosition));
-
-                            }
-                            // If we scroll down
-                            else{
-
-                                // First time android rise an event for "down" move
-                                if(!isScrollingDown){
-                                    isScrollingDown = true;
-                                }
-
-                                // Has user scroll enough to "auto close" popup ?
-                                if (Math.abs(baseLayoutPosition - currentYPosition) > defaultViewHeight / 2)
-                                {
-                                    closeDownAndDismissDialog(currentYPosition);
-                                    //popWindow.dismiss();
-                                    return true;
-                                }
-
-                                // Change base layout size and position (must change position because view anchor is top left corner)
-                                popupView.setY(popupView.getY() + (Y - previousFingerPosition));
-                                popupView.getLayoutParams().height = popupView.getHeight() - (Y - previousFingerPosition);
-                                popupView.requestLayout();
-                            }
-
-                            // Update position
-                            previousFingerPosition = Y;
+                        if(oldY > Y){
+                            if(!isScrollingUp) isScrollingUp = true;
+                        } else{
+                            if(!isScrollingDown) isScrollingDown = true;
                         }
+                        oldY = Y;
+
                         break;
                 }
-
-
-
-
-
                 return true;
             }
         });
