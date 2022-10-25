@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -45,6 +46,10 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrListener;
+import com.r0adkll.slidr.model.SlidrPosition;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -241,10 +246,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                // onShowPopup(popupView);
 
-                findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.frameLayout, new Comment())
-                        .commit();
+
+                startActivity(new Intent(MainActivity.this,ExampleActivity.class));
             }
         });
     }

@@ -31,10 +31,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrConfig;
-import com.r0adkll.slidr.model.SlidrInterface;
-import com.r0adkll.slidr.model.SlidrPosition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -231,16 +227,6 @@ public class Comment extends Fragment {
             }
         });
 
-
-    }
-
-
-    SlidrInterface slidrInterface;
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(slidrInterface == null)
-            slidrInterface = Slidr.replace(getView().findViewById(R.id.content_container), new SlidrConfig.Builder().position(SlidrPosition.LEFT).build());
 
     }
 }
