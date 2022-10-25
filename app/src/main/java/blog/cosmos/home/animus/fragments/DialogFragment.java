@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -62,7 +63,14 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.dialog_fragment,container,false);
+
+
+        View view = inflater.inflate(R.layout.dialog_fragment,container,false);
+        userMsgEdt = view.findViewById(R.id.commentET);
+
+        getDialog().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        return view;
     }
 
     @Override
@@ -111,6 +119,16 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
             }
         });
 
+
+        userMsgEdt.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager keyboard = (InputMethodManager) getActivity()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                keyboard.showSoftInput(userMsgEdt, 0);
+            }
+        }, 1000);
+        userMsgEdt.requestFocus();
 
 
 
