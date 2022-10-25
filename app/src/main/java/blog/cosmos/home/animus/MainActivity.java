@@ -4,6 +4,8 @@ import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
 import static blog.cosmos.home.animus.utils.Constants.PREF_NAME;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -90,6 +92,14 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
 
+    View popupView;
+    private int previousFingerPosition = 0;
+    private int baseLayoutPosition = 0;
+    private int defaultViewHeight;
+
+    private boolean isClosing = false;
+    private boolean isScrollingUp = false;
+    private boolean isScrollingDown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        popupView = findViewById(R.id.popUp);
 
         viewPager = findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
@@ -228,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                 */
 
-                onShowPopup(findViewById(R.id.popUp));
+                onShowPopup(popupView);
             }
         });
     }
@@ -396,6 +407,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+      //  View popup = v;
 
         // inflate the custom popup layout
        View inflatedView = layoutInflater.inflate(R.layout.popup_layout, null,false);
@@ -430,9 +442,106 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // TODO Auto-generated method stub
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+               /* if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     popWindow.dismiss();
+                } */
+
+                // Get finger position on screen
+                final int Y = (int) event.getRawY();
+
+                // Switch on motion event type
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        // save default base layout height
+                        defaultViewHeight = v.getHeight();
+
+                        // Init finger and view position
+                        previousFingerPosition = Y;
+                        baseLayoutPosition = (int) popupView.getY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // If user was doing a scroll up
+                        if(isScrollingUp){
+                            // Reset baselayout position
+                            popupView.setY(0);
+                            // We are not in scrolling up mode anymore
+                            isScrollingUp = false;
+                        }
+
+                        // If user was doing a scroll down
+                        if(isScrollingDown){
+                            // Reset baselayout position
+                            popupView.setY(0);
+                            // Reset base layout size
+                            popupView.getLayoutParams().height = defaultViewHeight;
+                            popupView.requestLayout();
+                            // We are not in scrolling down mode anymore
+                            isScrollingDown = false;
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if(!isClosing){
+                            int currentYPosition = (int) popupView.getY();
+
+                            // If we scroll up
+                            if(previousFingerPosition >Y){
+                                // First time android rise an event for "up" move
+                                if(!isScrollingUp){
+                                    isScrollingUp = true;
+                                }
+
+                                // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
+                                if(popupView.getHeight()<defaultViewHeight){
+                                    popupView.getLayoutParams().height = popupView.getHeight() - (Y - previousFingerPosition);
+                                    popupView.requestLayout();
+                                }
+                                else {
+                                    // Has user scroll enough to "auto close" popup ?
+                                    if ((baseLayoutPosition - currentYPosition) > defaultViewHeight / 4) {
+                                      //  closeUpAndDismissDialog(currentYPosition);
+                                        popWindow.dismiss();
+                                        return true;
+                                    }
+
+                                    //
+                                }
+                                popupView.setY(popupView.getY() + (Y - previousFingerPosition));
+
+                            }
+                            // If we scroll down
+                            else{
+
+                                // First time android rise an event for "down" move
+                                if(!isScrollingDown){
+                                    isScrollingDown = true;
+                                }
+
+                                // Has user scroll enough to "auto close" popup ?
+                                if (Math.abs(baseLayoutPosition - currentYPosition) > defaultViewHeight / 2)
+                                {
+                                   // closeDownAndDismissDialog(currentYPosition);
+                                    popWindow.dismiss();
+                                    return true;
+                                }
+
+                                // Change base layout size and position (must change position because view anchor is top left corner)
+                                popupView.setY(popupView.getY() + (Y - previousFingerPosition));
+                                popupView.getLayoutParams().height = popupView.getHeight() - (Y - previousFingerPosition);
+                                popupView.requestLayout();
+                            }
+
+                            // Update position
+                            previousFingerPosition = Y;
+                        }
+                        break;
                 }
+
+
+
+
+
                 return true;
             }
         });
@@ -453,4 +562,75 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
            //     R.layout.popup_list_item, android.R.id.text1, contactsList));
     }
 
+
+    public void closeUpAndDismissDialog(int currentPosition){
+        isClosing = true;
+        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(popupView, "y", currentPosition, -popupView.getHeight());
+        positionAnimator.setDuration(300);
+        positionAnimator.addListener(new Animator.AnimatorListener()
+        {
+
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator)
+            {
+                finish();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+
+        });
+        positionAnimator.start();
+    }
+
+    public void closeDownAndDismissDialog(int currentPosition){
+        isClosing = true;
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int screenHeight = size.y;
+        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(popupView, "y", currentPosition, screenHeight+popupView.getHeight());
+        positionAnimator.setDuration(300);
+        positionAnimator.addListener(new Animator.AnimatorListener()
+        {
+
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator)
+            {
+                finish();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+
+        });
+        positionAnimator.start();
+    }
 }
+
+
+
