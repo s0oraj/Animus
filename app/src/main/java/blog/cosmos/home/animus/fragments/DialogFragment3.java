@@ -17,38 +17,28 @@ import androidx.annotation.Nullable;
 
 import blog.cosmos.home.animus.R;
 
-
-public class DialogFragment2 extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
+public class DialogFragment3 extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
 
     LinearLayout rootLayout;
 
 
-    float rootLayoutY=0;
-
-
-    private int oldY = 0;
-    private int baseLayoutPosition = 0;
-    private int defaultViewHeight = 0;
-    private boolean isScrollingUp = false;
-    private boolean isScrollingDown = false;
-
-   /* private int previousFingerPosition = 0;
+    private int previousFingerPosition = 0;
     private int baseLayoutPosition = 0;
     private int defaultViewHeight;
 
     private boolean isClosing = false;
     private boolean isScrollingUp = false;
-    private boolean isScrollingDown = false; */
+    private boolean isScrollingDown = false;
 
-    private boolean isClosing = false;
     @Override
     public int getTheme() {
 
-         return R.style.NoBackgroundDialogTheme;
+        return R.style.NoBackgroundDialogTheme;
 
 
     }
+
 
     @Nullable
     @Override
@@ -93,7 +83,7 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                 defaultViewHeight = rootLayout.getHeight();
 
                 // Init finger and view position
-                oldY = Y;
+                previousFingerPosition = Y;
                 baseLayoutPosition = (int) rootLayout.getY();
                 break;
 
@@ -122,7 +112,7 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                     int currentYPosition = (int) rootLayout.getY();
 
                     // If we scroll up
-                    if(oldY >Y){
+                    if(previousFingerPosition >Y){
                         // First time android rise an event for "up" move
                         if(!isScrollingUp){
                             isScrollingUp = true;
@@ -130,7 +120,7 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
 
                         // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
                         if(rootLayout.getHeight()<defaultViewHeight){
-                            rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - oldY);
+                            rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - previousFingerPosition);
                             rootLayout.requestLayout();
                         }
                         else {
@@ -142,7 +132,7 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
 
                             //
                         }
-                        rootLayout.setY(rootLayout.getY() + (Y - oldY));
+                        rootLayout.setY(rootLayout.getY() + (Y - previousFingerPosition));
 
                     }
                     // If we scroll down
@@ -161,25 +151,14 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                         }
 
                         // Change base layout size and position (must change position because view anchor is top left corner)
-                        rootLayout.setY(rootLayout.getY() + (Y - oldY));
-                        rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - oldY);
+                        rootLayout.setY(rootLayout.getY() + (Y - previousFingerPosition));
+                        rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - previousFingerPosition);
                         rootLayout.requestLayout();
                     }
 
                     // Update position
-                    oldY = Y;
+                    previousFingerPosition = Y;
                 }
-
-                rootLayoutY = Math.abs(rootLayout.getY());
-                rootLayout.setY( rootLayout.getY() + (Y - oldY));
-
-                if(oldY > Y){
-                    if(!isScrollingUp) isScrollingUp = true;
-                } else{
-                    if(!isScrollingDown) isScrollingDown = true;
-                }
-                oldY = Y;
-
                 break;
         }
         return true;
