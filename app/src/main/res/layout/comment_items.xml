@@ -26,9 +26,9 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:paddingLeft="4dp"
-        android:paddingTop="3dp"
+        android:paddingTop="6dp"
         android:paddingRight="4dp"
-        android:paddingBottom="3dp"
+        android:paddingBottom="6dp"
         android:background="@color/main_activity_tan_background_"
         android:layout_height="wrap_content">
 
