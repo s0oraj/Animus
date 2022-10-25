@@ -3,12 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1D90EC"
+    android:theme="@style/NoBackgroundDialogTheme"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/linearDialogLayout"
-        android:layout_width="300dp"
-        android:layout_height="440dp"
+        android:layout_width="?screen"
+        android:layout_height="match_parent"
         android:background="#1D90EC"
         app:circularflow_radiusInDP="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
