@@ -45,10 +45,6 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrConfig;
-import com.r0adkll.slidr.model.SlidrInterface;
-import com.r0adkll.slidr.model.SlidrPosition;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,12 +105,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        int primary = getResources().getColor(R.color.colorPrimaryDark);
-        int secondary = getResources().getColor(R.color.teal_200);
-        Slidr.attach(this, primary, secondary);
-
 
         init();
 
@@ -249,12 +239,11 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                 */
 
-             //   onShowPopup(popupView);
+               // onShowPopup(popupView);
 
-
-                CoordinatorLayout container = findViewById(R.id.content_container);
+                findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.content_container, Comment.newInstance())
+                        .add(R.id.frameLayout, new Comment())
                         .commit();
             }
         });
@@ -411,15 +400,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     }
     */
 
-
     @Override
     protected void onResume() {
         super.onResume();
         IS_HOME_FRAGMENT = true;
         changeStatusBarColor();
-
-
-         }
+    }
 
     // call this method when required to show popup
     public void onShowPopup(View v){

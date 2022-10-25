@@ -87,6 +87,12 @@
         android:id="@+id/popUp"
         android:visibility="invisible"/>
 
+    <FrameLayout
+        android:visibility="invisible"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frameLayout"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
