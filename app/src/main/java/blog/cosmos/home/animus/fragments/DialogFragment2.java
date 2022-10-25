@@ -68,6 +68,8 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
         rootLayout = view.findViewById(R.id.linearDialogLayout);
         rootLayout.setOnTouchListener(this);
 
+        rootLayout.
+
 
 
     }
