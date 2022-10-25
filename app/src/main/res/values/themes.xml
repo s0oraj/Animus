@@ -24,6 +24,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
     <style name="Theme.Animus.Fullscreen" parent="Theme.Animus">
         <item name="android:actionBarStyle">@style/Widget.Theme.Animus.ActionBar.Fullscreen</item>
         <item name="android:windowActionBarOverlay">true</item>
@@ -34,4 +35,13 @@
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
+
+    <style name="Theme.Animus.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Animus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Animus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
