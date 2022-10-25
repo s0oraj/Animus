@@ -39,6 +39,7 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/ic_send.xml" value="0.2095" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/myrect.xml" value="0.194" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/popup_bg.xml" value="0.2095" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/rounded_background.xml" value="0.2095" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/splash_background.xml" value="0.2095" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/splash_background_image.xml" value="0.2095" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/drawable/splash_background_image2.xml" value="0.2095" />
@@ -55,6 +56,8 @@
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_add.xml" value="0.22" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_comment.xml" value="0.25" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_create_account.xml" value="0.2441123188405797" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_dialog.xml" value="0.26875" />
+        <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_dialog_facebook_comment.xml" value="0.26875" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_forgot_password.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/SWAGAT/Desktop/sooraj doc/Animus/app/src/main/res/layout/fragment_login.xml" value="0.33" />

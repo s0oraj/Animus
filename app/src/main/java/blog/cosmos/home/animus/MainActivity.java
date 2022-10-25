@@ -20,6 +20,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -424,6 +425,17 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         popWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
         popWindow.setAnimationStyle(R.style.PopupAnimation);
+        popWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    popWindow.dismiss();
+                }
+                return true;
+            }
+        });
 
        // findViewById(R.id.popUp).setVisibility(View.VISIBLE);
         // show the popup at bottom of the screen and set some margin at bottom ie,
