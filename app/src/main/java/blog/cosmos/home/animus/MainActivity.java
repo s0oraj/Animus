@@ -37,6 +37,7 @@ import java.util.Calendar;
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
 import blog.cosmos.home.animus.fragments.Comment;
+import blog.cosmos.home.animus.fragments.DialogFragment;
 import blog.cosmos.home.animus.fragments.Home;
 import blog.cosmos.home.animus.fragments.MainScreenFragment;
 import blog.cosmos.home.animus.fragments.Notification;
@@ -222,7 +223,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 //onShowPopup(popupView);
 
 
-               startActivity(new Intent(MainActivity.this, PopUpActivity.class));
+               //startActivity(new Intent(MainActivity.this, PopUpActivity.class));
+
+                DialogFragment dialogFragment=new DialogFragment();
+                dialogFragment.show(getSupportFragmentManager(),"My  Fragment");
             }
         });
     }
