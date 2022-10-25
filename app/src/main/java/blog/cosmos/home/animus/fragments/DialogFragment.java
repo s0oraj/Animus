@@ -43,6 +43,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        baseLayout = view.findViewById(R.id.linearDialogLayout);
         baseLayout.setOnTouchListener(this);
 
 
