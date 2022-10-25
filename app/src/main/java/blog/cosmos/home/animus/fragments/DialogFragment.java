@@ -127,7 +127,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 keyboard.showSoftInput(userMsgEdt, 0);
             }
-        }, 1000);
+        }, 300);
         userMsgEdt.requestFocus();
 
 
