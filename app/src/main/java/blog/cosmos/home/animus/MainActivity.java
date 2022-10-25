@@ -82,12 +82,158 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        frameLayout = findViewById(R.id.frameLayout);
 
-        setFragment(new MainScreenFragment());
+        init();
 
+        //addTabs();
+        clickListener();
+        setupViewPager();
 
     }
+    private void init() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        viewPager = findViewById(R.id.viewpager);
+        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setBackground(null);
+        bottomNavigationView.getMenu().getItem(2).setEnabled(true); // set this to false later if you only want the float button to respond and not area just below it (where add button was previously located)
+
+        //tabLayout = findViewById(R.id.tabLayout);
+        floatingActionButton = findViewById(R.id.fab);
+
+    }
+
+    private void clickListener(){
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.home_navigation_icon:l:
+                            viewPager.setCurrentItem(0);
+                                IS_HOME_FRAGMENT=true;
+                                changeStatusBarColor();
+                                return true;
+                            case R.id.search_navigation_icon:
+                                viewPager.setCurrentItem(1);
+                                IS_HOME_FRAGMENT=false;
+                                changeStatusBarColor();
+                                return true;
+                            case R.id.add_navigation_icon:
+                                viewPager.setCurrentItem(2);
+                                IS_HOME_FRAGMENT=false;
+                                changeStatusBarColor();
+                                return true;
+                            case R.id.notification_navigation_icon:
+                                viewPager.setCurrentItem(3);
+                                IS_HOME_FRAGMENT=false;
+                                changeStatusBarColor();
+                                return true;
+                            case R.id.profile_navigation_icon:
+                                viewPager.setCurrentItem(4);
+                                IS_HOME_FRAGMENT=false;
+                                changeStatusBarColor();
+                                return true;
+
+                        }
+                        return false;
+                    }
+
+
+                });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+              /*  if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                }
+                else
+                {
+                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+                Log.d("page", "onPageSelected: "+position);
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+               */
+
+                switch (position) {
+                    case 0:
+                        bottomNavigationView.getMenu().findItem(R.id.home_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=true;
+                        changeStatusBarColor();
+                        break;
+                    case 1:
+                        bottomNavigationView.getMenu().findItem(R.id.search_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
+                        break;
+                    case 2:
+                        bottomNavigationView.getMenu().findItem(R.id.add_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
+                        break;
+                    case 3:
+                        bottomNavigationView.getMenu().findItem(R.id.notification_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
+                        break;
+                    case 4:
+                        bottomNavigationView.getMenu().findItem(R.id.profile_navigation_icon).setChecked(true);
+                        IS_HOME_FRAGMENT=false;
+                        changeStatusBarColor();
+                        break;
+
+
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(2);
+                IS_HOME_FRAGMENT=false;
+                changeStatusBarColor();
+            }
+        });
+    }
+
+
+
+    private void setupViewPager()
+    {
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        homeFragment=new Home();
+        searchFragment=new Search();
+        addFragment=new Add();
+        notificationFragment= new Notification();
+        profileFragment= new Profile();
+        viewPagerAdapter.addFragment(homeFragment);
+        viewPagerAdapter.addFragment(searchFragment);
+        viewPagerAdapter.addFragment(addFragment);
+        viewPagerAdapter.addFragment(notificationFragment);
+        viewPagerAdapter.addFragment(profileFragment);
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+
     public void setFragment(Fragment fragment){
 
         Fragment currentFragment= fragment;
@@ -183,9 +329,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                    finish();
                     }
 
-        }
 
-        else{
+        }else{
             super.onBackPressed();
         }
 

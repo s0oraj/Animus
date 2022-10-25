@@ -89,18 +89,50 @@ public class ReplacerActivity extends AppCompatActivity implements Search.Ondata
         }
 
         if(fragment instanceof Comment){
-            String id = getIntent().getStringExtra("id");
-            String uid = getIntent().getStringExtra("uid");
+
+            Bundle bundleFromIntent = getIntent().getBundleExtra("commentBundle");
 
             Bundle bundle = new Bundle();
-            bundle.putString("id", id);
-            bundle.putString("uid", uid);
+            bundle.putString("id", bundleFromIntent.getString("id"));
+            bundle.putString("uid", bundleFromIntent.getString("uid"));
             fragment.setArguments(bundle);
         }
 
 
         fragmentTransaction.replace(frameLayout.getId(), fragment);
         fragmentTransaction.commit();
+
+    }
+
+    public void setCommentFragment(Fragment fragment, Bundle bundle){
+
+        Fragment currentFragment= fragment;
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+
+        if(fragment instanceof Comment){
+            String id = bundle.getString("id");
+            String uid = bundle.getString("uid");
+
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("id", id);
+            bundle1.putString("uid", uid);
+            fragment.setArguments(bundle1);
+        }
+
+        if(fragment instanceof Comment){
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.replace(frameLayout.getId(), fragment);
+
+
+        //  activitymainlayout.setVisibility(View.INVISIBLE);
+        //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
+
+        fragmentTransaction.commit();
+
+
 
     }
 

@@ -80,9 +80,11 @@ public class Home extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -172,7 +174,11 @@ public class Home extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", id);
                 bundle.putString("uid", uid);
-               ((MainActivity) getActivity()).setCommentFragment(new Comment(), bundle);
+                Intent intent = new Intent(getActivity(),ReplacerActivity.class);
+                intent.putExtra("commentBundle",bundle);
+                intent.putExtra("isComment",isComment);
+                startActivity(intent);
+               //((ReplacerActivity) getActivity()).setCommentFragment(new Comment(), bundle);
 
             }
 
@@ -236,12 +242,19 @@ public class Home extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", id);
                 bundle.putString("uid", uid);
-                ((MainActivity) getActivity()).setCommentFragment(new Comment(), bundle);
+                Intent intent = new Intent(getActivity(),ReplacerActivity.class);
+                intent.putExtra("commentBundle",bundle);
+                intent.putExtra("isComment",isComment);
+                startActivity(intent);
 
             }
 
 
         });
+        adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        personalAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        //concatAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+
 
     }
 

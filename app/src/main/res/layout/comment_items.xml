@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="6dp"
+    android:orientation="horizontal"
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -13,26 +14,49 @@
         app:civ_border_color="@color/gray_btn_bg_color"
         app:civ_border_width="2dp" />
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:background="@color/main_activity_tan_background_2"
+        app:cardCornerRadius="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="4dp"
+        android:paddingTop="3dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="3dp"
+        android:background="@color/main_activity_tan_background_"
+        android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/nameTV"
         tools:text="Suraj Singh"
         android:textStyle="bold"
+        android:textSize="15sp"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:layout_toEndOf="@id/profileImage"
-        android:layout_toRightOf="@id/profileImage" />
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingTop="3dp"
+      />
 
     <TextView
         android:id="@+id/commentTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        tools:text="Sample text"
-        android:layout_below="@id/nameTV"
-        android:layout_toEndOf="@id/profileImage"
-        android:layout_toRightOf="@id/profileImage" />
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/black"
+        tools:text="Sample text" />
 
+    </LinearLayout>
 
-</RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
