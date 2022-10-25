@@ -2,6 +2,7 @@ package blog.cosmos.home.animus.fragments;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -10,13 +11,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.adapter.CommentAdapter;
+import blog.cosmos.home.animus.model.CommentModel;
 
 
 public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
@@ -25,24 +35,21 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     RelativeLayout rootLayout;
 
 
+    RecyclerView recyclerView;
+    private EditText userMsgEdt;
+    private  boolean isScrollToLastRequired = false;
+    CommentAdapter commentAdapter;
+
+    List<CommentModel> list;
+
     float rootLayoutY=0;
-
-
     private float oldY = 0;
     private float baseLayoutPosition = 0;
     private float defaultViewHeight = 0;
     private boolean isScrollingUp = false;
     private boolean isScrollingDown = false;
 
-   /* private int previousFingerPosition = 0;
-    private int baseLayoutPosition = 0;
-    private int defaultViewHeight;
 
-    private boolean isClosing = false;
-    private boolean isScrollingUp = false;
-    private boolean isScrollingDown = false; */
-
-    private boolean isClosing = false;
     @Override
     public int getTheme() {
 
@@ -65,10 +72,10 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view1, savedInstanceState);
 
-        rootLayout = view.findViewById(R.id.linearDialogLayout);
+        rootLayout = view1.findViewById(R.id.linearDialogLayout);
         rootLayout.setOnTouchListener(this);
 
         rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -77,6 +84,33 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                 defaultViewHeight = rootLayout.getHeight();
             }
         });
+
+
+        recyclerView = view1.findViewById(R.id.commentRecyclerView);
+        list= new ArrayList<>();
+        commentAdapter = new CommentAdapter(getContext(), list);
+        recyclerView.setAdapter(commentAdapter);
+        userMsgEdt = view1.findViewById(R.id.commentET);
+
+        //Setup editText behavior for opening soft keyboard
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+
+        userMsgEdt.setOnTouchListener((view, motionEvent) -> {
+            InputMethodManager keyboard = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (keyboard != null) {
+                isScrollToLastRequired = linearLayoutManager.findLastVisibleItemPosition() == commentAdapter.getItemCount() - 1;
+                keyboard.showSoftInput(view1.findViewById(R.id.sendBtn), InputMethodManager.SHOW_FORCED);
+            }
+            return false;
+        });
+        //Executes recycler view scroll if required.
+        recyclerView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            if (bottom < oldBottom && isScrollToLastRequired) {
+                recyclerView.postDelayed(() -> recyclerView.scrollToPosition(
+                        recyclerView.getAdapter().getItemCount() - 1), 100);
+            }
+        });
+
 
 
 
