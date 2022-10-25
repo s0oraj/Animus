@@ -1,26 +1,10 @@
 package blog.cosmos.home.animus;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,15 +18,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
 import blog.cosmos.home.animus.fragments.Comment;
 import blog.cosmos.home.animus.fragments.DialogFragment;
 import blog.cosmos.home.animus.fragments.Home;
-import blog.cosmos.home.animus.fragments.MainScreenFragment;
 import blog.cosmos.home.animus.fragments.Notification;
 import blog.cosmos.home.animus.fragments.Profile;
 import blog.cosmos.home.animus.fragments.Search;
@@ -76,15 +56,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
 
-    View popupView;
-    private int previousFingerPosition = 0;
-    private int baseLayoutPosition = 0;
-    private int defaultViewHeight;
-
-    private boolean isClosing = false;
-    private boolean isScrollingUp = false;
-    private boolean isScrollingDown = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        popupView = findViewById(R.id.popUp);
+
 
         viewPager = findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
@@ -265,10 +236,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
 
-        if(fragment instanceof MainScreenFragment){
-            fragmentTransaction.addToBackStack(null);
 
-        }
 
 
 

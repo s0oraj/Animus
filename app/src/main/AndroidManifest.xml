@@ -19,14 +19,6 @@
         android:theme="@style/Theme.Animus"
         tools:targetApi="31">
         <activity
-            android:name=".PopUpActivity"
-            android:exported="false"
-            android:label="@string/title_activity_pop_up"
-            android:theme="@style/Theme.Animus.NoActionBar" />
-        <activity
-            android:name=".ExampleActivity"
-            android:exported="false" />
-        <activity
             android:name=".ReplacerActivity"
             android:exported="false" />
         <activity
