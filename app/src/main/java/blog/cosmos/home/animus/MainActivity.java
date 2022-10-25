@@ -38,6 +38,7 @@ import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
 import blog.cosmos.home.animus.fragments.Comment;
 import blog.cosmos.home.animus.fragments.DialogFragment;
+import blog.cosmos.home.animus.fragments.DialogFragment2;
 import blog.cosmos.home.animus.fragments.Home;
 import blog.cosmos.home.animus.fragments.MainScreenFragment;
 import blog.cosmos.home.animus.fragments.Notification;
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                //startActivity(new Intent(MainActivity.this, PopUpActivity.class));
 
-                DialogFragment dialogFragment=new DialogFragment();
+                DialogFragment2 dialogFragment=new DialogFragment2();
                 dialogFragment.show(getSupportFragmentManager(),"My  Fragment");
             }
         });

@@ -17,13 +17,14 @@ import androidx.annotation.Nullable;
 
 import blog.cosmos.home.animus.R;
 
+
 public class DialogFragment2 extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
 
     LinearLayout rootLayout;
 
 
-    int rootLayoutY=0;
+    float rootLayoutY=0;
 
 
     private int oldY = 0;
@@ -40,7 +41,7 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
     private boolean isScrollingUp = false;
     private boolean isScrollingDown = false; */
 
-
+    private boolean isClosing = false;
     @Override
     public int getTheme() {
 
@@ -92,7 +93,7 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                 defaultViewHeight = rootLayout.getHeight();
 
                 // Init finger and view position
-                previousFingerPosition = Y;
+                oldY = Y;
                 baseLayoutPosition = (int) rootLayout.getY();
                 break;
 
@@ -117,57 +118,17 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(!isClosing){
-                    int currentYPosition = (int) rootLayout.getY();
 
-                    // If we scroll up
-                    if(previousFingerPosition >Y){
-                        // First time android rise an event for "up" move
-                        if(!isScrollingUp){
-                            isScrollingUp = true;
-                        }
+                rootLayoutY = Math.abs(rootLayout.getY());
+                rootLayout.setY( rootLayout.getY() + (Y - oldY));
 
-                        // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
-                        if(rootLayout.getHeight()<defaultViewHeight){
-                            rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - previousFingerPosition);
-                            rootLayout.requestLayout();
-                        }
-                        else {
-                            // Has user scroll enough to "auto close" popup ?
-                            if ((baseLayoutPosition - currentYPosition) > defaultViewHeight / 4) {
-                                closeUpAndDismissDialog(currentYPosition);
-                                return true;
-                            }
-
-                            //
-                        }
-                        rootLayout.setY(rootLayout.getY() + (Y - previousFingerPosition));
-
-                    }
-                    // If we scroll down
-                    else{
-
-                        // First time android rise an event for "down" move
-                        if(!isScrollingDown){
-                            isScrollingDown = true;
-                        }
-
-                        // Has user scroll enough to "auto close" popup ?
-                        if (Math.abs(baseLayoutPosition - currentYPosition) > defaultViewHeight / 2)
-                        {
-                            closeDownAndDismissDialog(currentYPosition);
-                            return true;
-                        }
-
-                        // Change base layout size and position (must change position because view anchor is top left corner)
-                        rootLayout.setY(rootLayout.getY() + (Y - previousFingerPosition));
-                        rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - previousFingerPosition);
-                        rootLayout.requestLayout();
-                    }
-
-                    // Update position
-                    previousFingerPosition = Y;
+                if(oldY > Y){
+                    if(!isScrollingUp) isScrollingUp = true;
+                } else{
+                    if(!isScrollingDown) isScrollingDown = true;
                 }
+                oldY = Y;
+
                 break;
         }
         return true;
