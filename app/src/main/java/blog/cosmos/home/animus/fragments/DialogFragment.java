@@ -57,7 +57,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     @Override
     public int getTheme() {
 
-         return R.style.NoBackgroundDialogTheme2;
+         return R.style.NoBackgroundDialogTheme;
 
 
     }
@@ -73,6 +73,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        view.setBackgroundResource(R.drawable.rounded_dialog);
         return view;
     }
 
