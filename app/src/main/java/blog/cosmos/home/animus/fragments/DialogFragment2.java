@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -68,7 +69,12 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
         rootLayout = view.findViewById(R.id.linearDialogLayout);
         rootLayout.setOnTouchListener(this);
 
-        rootLayout.
+        rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                defaultViewHeight = rootLayout.getHeight();
+            }
+        });
 
 
 
