@@ -27,9 +27,9 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
     float rootLayoutY=0;
 
 
-    private int oldY = 0;
-    private int baseLayoutPosition = 0;
-    private int defaultViewHeight = 0;
+    private float oldY = 0;
+    private float baseLayoutPosition = 0;
+    private float defaultViewHeight = 0;
     private boolean isScrollingUp = false;
     private boolean isScrollingDown = false;
 
@@ -98,6 +98,14 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                 break;
 
             case MotionEvent.ACTION_UP:
+
+
+                defaultViewHeight = rootLayout.getHeight();
+                if (rootLayoutY >= defaultViewHeight / 2) {
+                    dismiss();
+                    return true;
+                }
+
                 // If user was doing a scroll up
                 if(isScrollingUp){
                     // Reset baselayout position
@@ -111,64 +119,14 @@ public class DialogFragment2 extends androidx.fragment.app.DialogFragment implem
                     // Reset baselayout position
                     rootLayout.setY(0);
                     // Reset base layout size
-                    rootLayout.getLayoutParams().height = defaultViewHeight;
+                    rootLayout.getLayoutParams().height = (int) defaultViewHeight;
                     rootLayout.requestLayout();
                     // We are not in scrolling down mode anymore
                     isScrollingDown = false;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(!isClosing){
-                    int currentYPosition = (int) rootLayout.getY();
 
-                    // If we scroll up
-                    if(oldY >Y){
-                        // First time android rise an event for "up" move
-                        if(!isScrollingUp){
-                            isScrollingUp = true;
-                        }
-
-                        // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
-                        if(rootLayout.getHeight()<defaultViewHeight){
-                            rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - oldY);
-                            rootLayout.requestLayout();
-                        }
-                        else {
-                            // Has user scroll enough to "auto close" popup ?
-                            if ((baseLayoutPosition - currentYPosition) > defaultViewHeight / 4) {
-                                closeUpAndDismissDialog(currentYPosition);
-                                return true;
-                            }
-
-                            //
-                        }
-                        rootLayout.setY(rootLayout.getY() + (Y - oldY));
-
-                    }
-                    // If we scroll down
-                    else{
-
-                        // First time android rise an event for "down" move
-                        if(!isScrollingDown){
-                            isScrollingDown = true;
-                        }
-
-                        // Has user scroll enough to "auto close" popup ?
-                        if (Math.abs(baseLayoutPosition - currentYPosition) > defaultViewHeight / 2)
-                        {
-                            closeDownAndDismissDialog(currentYPosition);
-                            return true;
-                        }
-
-                        // Change base layout size and position (must change position because view anchor is top left corner)
-                        rootLayout.setY(rootLayout.getY() + (Y - oldY));
-                        rootLayout.getLayoutParams().height = rootLayout.getHeight() - (Y - oldY);
-                        rootLayout.requestLayout();
-                    }
-
-                    // Update position
-                    oldY = Y;
-                }
 
                 rootLayoutY = Math.abs(rootLayout.getY());
                 rootLayout.setY( rootLayout.getY() + (Y - oldY));

@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
                //startActivity(new Intent(MainActivity.this, PopUpActivity.class));
 
-                DialogFragment3 dialogFragment=new DialogFragment3();
+                DialogFragment2 dialogFragment=new DialogFragment2();
                 dialogFragment.show(getSupportFragmentManager(),"My  Fragment");
             }
         });
