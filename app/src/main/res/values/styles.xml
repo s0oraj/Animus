@@ -15,6 +15,10 @@
         <item name="android:windowExitAnimation">@anim/bottom_down</item>
     </style>
 
+    <style name="NoBackgroundDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
     <style name="MyEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorDarkPurple</item>
         <item name="colorControlActivated">@color/colorDarkPurple</item>

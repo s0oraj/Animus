@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 changeStatusBarColor();
 
                 */
+
                 onShowPopup(findViewById(R.id.popUp));
             }
         });
@@ -424,6 +425,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         popWindow.setAnimationStyle(R.style.PopupAnimation);
 
+       // findViewById(R.id.popUp).setVisibility(View.VISIBLE);
         // show the popup at bottom of the screen and set some margin at bottom ie,
         popWindow.showAtLocation(v, Gravity.BOTTOM, 0,100);
     }
