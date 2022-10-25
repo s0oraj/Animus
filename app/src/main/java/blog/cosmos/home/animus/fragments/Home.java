@@ -174,11 +174,18 @@ public class Home extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", id);
                 bundle.putString("uid", uid);
+
+                /*
                 Intent intent = new Intent(getActivity(),ReplacerActivity.class);
                 intent.putExtra("commentBundle",bundle);
                 intent.putExtra("isComment",isComment);
                 startActivity(intent);
-               //((ReplacerActivity) getActivity()).setCommentFragment(new Comment(), bundle);
+
+                 */
+
+                DialogFragment dialogFragment=new DialogFragment();
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(getActivity().getSupportFragmentManager(),"My  Fragment");
 
             }
 
@@ -242,10 +249,19 @@ public class Home extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", id);
                 bundle.putString("uid", uid);
+
+                /*
                 Intent intent = new Intent(getActivity(),ReplacerActivity.class);
                 intent.putExtra("commentBundle",bundle);
                 intent.putExtra("isComment",isComment);
                 startActivity(intent);
+
+                 */
+
+                DialogFragment dialogFragment=new DialogFragment();
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(getActivity().getSupportFragmentManager(),"My  Fragment");
+
 
             }
 
