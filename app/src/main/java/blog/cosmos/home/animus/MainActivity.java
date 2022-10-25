@@ -2,6 +2,7 @@ package blog.cosmos.home.animus;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -392,203 +394,11 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         changeStatusBarColor();
     }
 
-    // call this method when required to show popup
-    public void onShowPopup(View v){
-
-        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
 
-        // inflate the custom popup layout
-       View inflatedView = layoutInflater.inflate(R.layout.popup_layout, null,false);
-        RelativeLayout rootLayout = (RelativeLayout) inflatedView.findViewById(R.id.popUpRoot);
-                // find the ListView in the popup layout
-        ListView listView = (ListView)inflatedView.findViewById(R.id.commentsListView);
-        LinearLayout headerView = (LinearLayout)inflatedView.findViewById(R.id.headerLayout);
-        // get device size
-        Display display = getWindowManager().getDefaultDisplay();
-        final Point size = new Point();
-        display.getSize(size);
-//        mDeviceHeight = size.y;
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
 
 
-        // fill the data to the list items
-        setSimpleList(listView);
-
-
-        // set height depends on the device size
-        PopupWindow popWindow = new PopupWindow(inflatedView, width,height-50, true );
-        // set a background drawable with rounders corners
-        popWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.popup_bg));
-
-        popWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
-        popWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-
-        popWindow.setAnimationStyle(R.style.PopupAnimation);
-        popWindow.setTouchInterceptor(new View.OnTouchListener() {
-            LinearLayout rootLayout;
-
-
-            float rootLayoutY=0;
-
-
-            private float oldY = 0;
-            private float baseLayoutPosition = 0;
-            private float defaultViewHeight = 0;
-            private boolean isScrollingUp = false;
-            private boolean isScrollingDown = false;
-
-            public boolean onTouch(View view, MotionEvent event) {
-
-                // Get finger position on screen
-                final int Y = (int) event.getRawY();
-
-                // Switch on motion event type
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        // save default base layout height
-                        defaultViewHeight = popupView.getHeight();
-
-                        // Init finger and view position
-                        oldY = Y;
-                        baseLayoutPosition = (int) popupView.getY();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-
-
-                        defaultViewHeight = popupView.getHeight();
-                        if (rootLayoutY >= defaultViewHeight / 2) {
-                            popWindow.dismiss();
-                            return true;
-                        }
-
-                        // If user was doing a scroll up
-                        if(isScrollingUp){
-                            // Reset baselayout position
-                            popupView.setY(0);
-                            // We are not in scrolling up mode anymore
-                            isScrollingUp = false;
-                        }
-
-                        // If user was doing a scroll down
-                        if(isScrollingDown){
-                            // Reset baselayout position
-                            popupView.setY(0);
-                            // Reset base layout size
-                            popupView.getLayoutParams().height = (int) defaultViewHeight;
-                            popupView.requestLayout();
-                            // We are not in scrolling down mode anymore
-                            isScrollingDown = false;
-                        }
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-
-
-                        rootLayoutY = Math.abs(popupView.getY());
-                        popupView.setY( popupView.getY() + (Y - oldY));
-
-                        if(oldY > Y){
-                            if(!isScrollingUp) isScrollingUp = true;
-                        } else{
-                            if(!isScrollingDown) isScrollingDown = true;
-                        }
-                        oldY = Y;
-
-                        break;
-                }
-                return true;
-            }
-        });
-
-       // findViewById(R.id.popUp).setVisibility(View.VISIBLE);
-        // show the popup at bottom of the screen and set some margin at bottom ie,
-        popWindow.showAtLocation(v, Gravity.BOTTOM, 0,100);
-    }
-    void setSimpleList(ListView listView){
-
-        ArrayList<String> contactsList = new ArrayList<String>();
-
-        for (int index = 0; index < 10; index++) {
-            contactsList.add("I am @ index " + index + " today " + Calendar.getInstance().getTime().toString());
-        }
-
-       // listView.setAdapter(new ArrayAdapter<String>(MainActivity.this,
-           //     R.layout.popup_list_item, android.R.id.text1, contactsList));
-    }
-
-
-    public void closeUpAndDismissDialog(int currentPosition){
-        isClosing = true;
-        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(popupView, "y", currentPosition, -popupView.getHeight());
-        positionAnimator.setDuration(300);
-        positionAnimator.addListener(new Animator.AnimatorListener()
-        {
-
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator)
-            {
-                finish();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-
-        });
-        positionAnimator.start();
-    }
-
-    public void closeDownAndDismissDialog(int currentPosition){
-        isClosing = true;
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int screenHeight = size.y;
-        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(popupView, "y", currentPosition, screenHeight+popupView.getHeight());
-        positionAnimator.setDuration(300);
-        positionAnimator.addListener(new Animator.AnimatorListener()
-        {
-
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator)
-            {
-                finish();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-
-        });
-        positionAnimator.start();
-    }
 
 
 

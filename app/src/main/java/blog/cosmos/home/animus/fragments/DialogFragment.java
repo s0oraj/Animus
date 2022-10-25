@@ -35,9 +35,8 @@ import blog.cosmos.home.animus.model.CommentModel;
  */
 public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
-
     RelativeLayout rootLayout;
-
+    View viewReference;
 
     RecyclerView recyclerView;
     private EditText userMsgEdt;
@@ -53,12 +52,9 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     private boolean isScrollingUp = false;
     private boolean isScrollingDown = false;
 
-
     @Override
     public int getTheme() {
-
          return R.style.NoBackgroundDialogTheme;
-
 
     }
 
@@ -86,8 +82,23 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     @Override
     public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
+        init(view1);
+        clickListener(view1);
 
-        rootLayout = view1.findViewById(R.id.linearDialogLayout);
+
+    }
+    private void init(View view) {
+        viewReference= view;
+        rootLayout = view.findViewById(R.id.linearDialogLayout);
+        recyclerView = view.findViewById(R.id.commentRecyclerView);
+
+        list= new ArrayList<>();
+        commentAdapter = new CommentAdapter(getContext(), list);
+        recyclerView.setAdapter(commentAdapter);
+        userMsgEdt = view.findViewById(R.id.commentET);
+
+    }
+    private void clickListener(View view1) {
         rootLayout.setOnTouchListener(this);
 
         rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -98,31 +109,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         });
 
 
-        recyclerView = view1.findViewById(R.id.commentRecyclerView);
-        list= new ArrayList<>();
-        commentAdapter = new CommentAdapter(getContext(), list);
-        recyclerView.setAdapter(commentAdapter);
-        userMsgEdt = view1.findViewById(R.id.commentET);
-
-        //Setup editText behavior for opening soft keyboard
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-
-        userMsgEdt.setOnTouchListener((view, motionEvent) -> {
-            InputMethodManager keyboard = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (keyboard != null) {
-                isScrollToLastRequired = linearLayoutManager.findLastVisibleItemPosition() == commentAdapter.getItemCount() - 1;
-                keyboard.showSoftInput(view1.findViewById(R.id.sendBtn), InputMethodManager.SHOW_FORCED);
-            }
-            return false;
-        });
-        //Executes recycler view scroll if required.
-        recyclerView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            if (bottom < oldBottom && isScrollToLastRequired) {
-                recyclerView.postDelayed(() -> recyclerView.scrollToPosition(
-                        recyclerView.getAdapter().getItemCount() - 1), 100);
-            }
-        });
-
+        setUpKeyboard();
 
         userMsgEdt.postDelayed(new Runnable() {
             @Override
@@ -135,8 +122,10 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         userMsgEdt.requestFocus();
 
 
-
     }
+
+
+
     public boolean onTouch(View view, MotionEvent event) {
 
         // Get finger position on screen
@@ -200,5 +189,30 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         return true;
     }
 
+    private void setUpKeyboard(){
+        //Setup editText behavior for opening soft keyboard
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
 
+        userMsgEdt.setOnTouchListener((view, motionEvent) -> {
+            InputMethodManager keyboard = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (keyboard != null) {
+                isScrollToLastRequired = linearLayoutManager.findLastVisibleItemPosition() == commentAdapter.getItemCount() - 1;
+                keyboard.showSoftInput(viewReference.findViewById(R.id.sendBtn), InputMethodManager.SHOW_FORCED);
+            }
+            return false;
+        });
+        //Executes recycler view scroll if required.
+        recyclerView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            if (bottom < oldBottom && isScrollToLastRequired) {
+                recyclerView.postDelayed(() -> recyclerView.scrollToPosition(
+                        recyclerView.getAdapter().getItemCount() - 1), 100);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+       setUpKeyboard();
+    }
 }
