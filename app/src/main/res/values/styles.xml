@@ -9,6 +9,11 @@
 
     </style>
 
+    <!-- PopuP Enter Exit Animation -->
+    <style name="PopupAnimation" parent="Widget.AppCompat.PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/bottom_up</item>
+        <item name="android:windowExitAnimation">@anim/bottom_down</item>
+    </style>
 
     <style name="MyEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorDarkPurple</item>
