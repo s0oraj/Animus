@@ -9,6 +9,6 @@
         android:color="@color/colorDarkPurple"
         android:width="2dp"/>
     <solid
-        android:color="@color/gray_btn_bg_color"/>
+        android:color="#E6E4E4"/>
 
 </shape>
