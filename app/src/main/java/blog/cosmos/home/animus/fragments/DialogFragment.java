@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +22,7 @@ import blog.cosmos.home.animus.R;
 public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
 
-    LinearLayout rootLayout;
+    RelativeLayout rootLayout;
 
 
     float rootLayoutY=0;
