@@ -36,14 +36,14 @@
                 android:layout_margin="12dp"
                 android:background="@drawable/back_button"
                 android:contentDescription="null"
-                android:id="@+id/commentBackBtn"/>
+                android:id="@+id/dialogBackBtn"/>
 
 
             <TextView
                 android:id="@+id/toolbarNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/commentBackBtn"
+                android:layout_toRightOf="@id/dialogBackBtn"
                 android:text="Comments"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="24dp"

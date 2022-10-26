@@ -188,19 +188,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             @Override
             public void onClick(View view) {
 
-               /* viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2);
                 IS_HOME_FRAGMENT=false;
                 changeStatusBarColor();
 
-                */
-
-                //onShowPopup(popupView);
-
-
-               //startActivity(new Intent(MainActivity.this, PopUpActivity.class));
-
-                DialogFragment dialogFragment=new DialogFragment();
-                dialogFragment.show(getSupportFragmentManager(),"My  Fragment");
 
 
             }

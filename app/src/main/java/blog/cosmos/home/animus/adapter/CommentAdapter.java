@@ -78,4 +78,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         }
     }
 
+    public List<CommentModel> getList() {
+        return list;
+    }
+
 }

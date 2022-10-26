@@ -1,12 +1,8 @@
 package blog.cosmos.home.animus.fragments;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,18 +12,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -38,9 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
@@ -50,7 +40,7 @@ import blog.cosmos.home.animus.model.CommentModel;
  *  Source https://stackoverflow.com/questions/27246981/android-floating-activity-with-dismiss-on-swipe
  *  a combination of two answers were used here. Answers from Gaëtan Maisse and Zain
  */
-public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
+public class DialogFragment2 extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
     RelativeLayout rootLayout;
     View viewReference;
@@ -67,7 +57,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     Activity activity;
     EditText commentEt;
     ImageButton sendBtn;
-    ImageView dialogBackButton;
     FirebaseUser user;
     String id,uid;
     CollectionReference reference;
@@ -78,7 +67,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     CommentAdapter commentAdapter;
     List<CommentModel> list;
 
-    public DialogFragment() {
+    public DialogFragment2() {
         // Required empty public constructor
     }
 
@@ -133,7 +122,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
         commentEt = view.findViewById(R.id.commentET);
         sendBtn = view.findViewById(R.id.sendBtn);
-        dialogBackButton = view.findViewById(R.id.dialogBackBtn);
 
         user= FirebaseAuth.getInstance().getCurrentUser();
 
@@ -162,12 +150,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
     }
     private void clickListener(View view1) {
-        dialogBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
         rootLayout.setOnTouchListener(this);
 
         rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -190,54 +172,82 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         }, 300);
         userMsgEdt.requestFocus();
 
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+
+            RecyclerView rootLayout;
+            float rootLayoutY=0;
+            private float oldY = 0;
+            private float baseLayoutPosition = 0;
+
+            private float defaultViewHeight = 0;
+            private boolean isScrollingUp = false;
+            private boolean isScrollingDown = false;
+
             @Override
-            public void onClick(View view) {
-                String comment = commentEt.getText().toString();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if (comment.isEmpty() || comment.equals(" ")) {
-                    Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
-                    return;
+                rootLayout = viewReference.findViewById(R.id.commentRecyclerView);
+                // Get finger position on screen
+                final int Y = (int) motionEvent.getRawY();
+
+                // Switch on motion event type
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        // save default base layout height
+                        defaultViewHeight = rootLayout.getHeight();
+
+                        // Init finger and view position
+                        oldY = Y;
+                        baseLayoutPosition = (int) rootLayout.getY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+
+
+                        defaultViewHeight = rootLayout.getHeight();
+                        if (rootLayoutY >= defaultViewHeight / 2) {
+                            dismiss();
+                            return true;
+                        }
+
+                        // If user was doing a scroll up
+                        if(isScrollingUp){
+                            // Reset baselayout position
+                            rootLayout.setY(0);
+                            // We are not in scrolling up mode anymore
+                            isScrollingUp = false;
+                        }
+
+                        // If user was doing a scroll down
+                        if(isScrollingDown){
+                            // Reset baselayout position
+                            rootLayout.setY(0);
+                            // Reset base layout size
+                            rootLayout.getLayoutParams().height = (int) defaultViewHeight;
+                            rootLayout.requestLayout();
+                            // We are not in scrolling down mode anymore
+                            isScrollingDown = false;
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+
+
+                        rootLayoutY = Math.abs(rootLayout.getY());
+                        rootLayout.setY( rootLayout.getY() + (Y - oldY));
+
+                        if(oldY > Y){
+                            if(!isScrollingUp) isScrollingUp = true;
+                        } else{
+                            if(!isScrollingDown) isScrollingDown = true;
+                        }
+                        oldY = Y;
+
+                        break;
                 }
-
-
-                String commentID = reference.document().getId();
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("uid", user.getUid());
-                map.put("comment", comment);
-                map.put("commentID", commentID);
-                map.put("postID", id);
-                map.put("name", user.getDisplayName());
-                map.put("profileImageUrl", user.getPhotoUrl().toString());
-
-
-                reference.document(commentID)
-                        .set(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                                if (task.isSuccessful()) {
-                                    commentEt.setText("");
-                                    list = commentAdapter.getList();
-                                } else {
-                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-
-                            }
-                        });
-
-
-
-
-
+                return true;
             }
         });
-
-
 
     }
 
