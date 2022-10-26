@@ -293,7 +293,8 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                     });
 
                 }
-                commentAdapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                commentAdapter.addAll(list);
+                //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                 // therefore custom addAll() method of adapter fixes this
 
 
