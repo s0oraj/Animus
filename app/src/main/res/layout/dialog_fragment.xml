@@ -69,11 +69,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:orientation="horizontal"
         >
 
         <LinearLayout
-            android:elevation="4dp"
             android:padding="6dp"
             android:id="@+id/commentLayout"
             android:layout_width="match_parent"
@@ -98,14 +98,13 @@
 
             <ImageButton
                 android:id="@+id/sendBtn"
-                android:layout_width="34dp"
-                android:layout_height="33dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:background="@drawable/ic_circle"
-                android:backgroundTint="@color/colorAccent2"
                 android:elevation="1dp"
                 android:foregroundTint="@color/gray_btn_bg_color"
-                android:src="@drawable/ic_send_white"
+                android:src="@drawable/ic_send"
                 />
 
         </LinearLayout>

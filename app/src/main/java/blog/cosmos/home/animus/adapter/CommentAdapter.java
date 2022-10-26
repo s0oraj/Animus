@@ -51,6 +51,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
 
 
+
     }
 
     @Override
@@ -64,6 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
          CircleImageView profileImage;
          TextView nameTv, commentTv;
 
+         TextView commentTimeTv;
 
 
         public CommentHolder(@NonNull View itemView) {
@@ -73,6 +75,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
             profileImage = itemView.findViewById(R.id.profileImage);
             nameTv = itemView.findViewById(R.id.nameTV);
             commentTv = itemView.findViewById(R.id.commentTV);
+            commentTimeTv = itemView.findViewById(R.id.commentTimeTV);
 
 
 

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:layout_width="match_parent"
     android:padding="6dp"
     android:orientation="horizontal"
     android:layout_height="wrap_content">
@@ -11,6 +19,7 @@
         android:id="@+id/profileImage"
         android:layout_width="52dp"
         android:layout_height="52dp"
+        tools:src="@drawable/ic_person"
         app:civ_border_color="@color/gray_btn_bg_color"
         app:civ_border_width="2dp" />
 
@@ -58,5 +67,15 @@
     </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/commentTimeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="37m"
+        android:layout_marginLeft="84dp"
+        android:textStyle="bold"/>
 
 </LinearLayout>
