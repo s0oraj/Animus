@@ -1,6 +1,7 @@
 package blog.cosmos.home.animus.adapter;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import blog.cosmos.home.animus.R;
@@ -20,6 +24,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder> {
 
+
+    public static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     Context context;
     List<CommentModel> list;
@@ -48,6 +54,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
         holder.nameTv.setText(list.get(position).getName());
         holder.commentTv.setText(list.get(position).getComment());
+
+
+
+
+        Date date = list.get(position).getTimestamp();
+        if(date != null){
+            String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+
+
+            holder.commentTimeTv.setText(niceDateStr);
+        }
+          else{
+            holder.commentTimeTv.setText("");
+        }
 
 
 
