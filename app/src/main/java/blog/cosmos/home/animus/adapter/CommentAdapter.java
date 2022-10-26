@@ -15,6 +15,7 @@ import java.util.List;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.CommentModel;
+import blog.cosmos.home.animus.model.HomeModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder> {
@@ -75,6 +76,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
 
 
+        }
+    }
+
+    /**
+     * Updates the adapter with new data
+     **/
+    public void addAll(List<CommentModel> data) {
+        if (data != null && !data.isEmpty()) {
+            // If new data is not empty then update allPosts List
+            list = data;
+            //Notify the adapter for the change in dataset
+            notifyDataSetChanged();
         }
     }
 

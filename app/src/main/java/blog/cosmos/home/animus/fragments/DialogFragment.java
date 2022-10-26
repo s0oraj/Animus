@@ -38,13 +38,18 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
 import blog.cosmos.home.animus.model.CommentModel;
+import blog.cosmos.home.animus.model.HomeModel;
 
 /**
  *  Source https://stackoverflow.com/questions/27246981/android-floating-activity-with-dismiss-on-swipe
@@ -221,6 +226,33 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                                 if (task.isSuccessful()) {
                                     commentEt.setText("");
                                     list = commentAdapter.getList();
+
+                                    Set<CommentModel> s= new HashSet<CommentModel>();
+                                    s.addAll(list);
+                                    list = new ArrayList<CommentModel>();
+                                    list.addAll(s);
+
+                                    //Sorting comments from latest to oldest
+                                    Collections.sort(list, new Comparator<CommentModel>() {
+                                        @Override
+                                        public int compare(CommentModel commentModel, CommentModel t1) {
+
+                                            if( t1== null || commentModel == null ||
+                                                    t1.getCommentID() == null ||
+                                                    commentModel.getCommentID() == null
+                                            ){
+                                                return 0;
+                                            } else {
+                                                return t1.getCommentID().compareTo(commentModel.getCommentID());
+                                            }
+                                        }
+                                    });
+                                    commentAdapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                                    // therefore custom addAll() method of adapter fixes this
+
+
+
+
                                 } else {
                                     Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
