@@ -200,6 +200,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
             @Override
             public void onClick(View view) {
                 String comment = commentEt.getText().toString();
+                commentEt.setText("");
 
                 if (comment.isEmpty() || comment.equals(" ")) {
                     Toast.makeText(getContext(), "Can not send empty comment", Toast.LENGTH_SHORT).show();
@@ -232,6 +233,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
 
                                 } else {
+                                    commentEt.setText(comment);
                                     Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 }
