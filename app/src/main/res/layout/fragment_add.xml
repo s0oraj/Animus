@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/main_activity_tan_background_"
     android:padding="8dp"
+    android:theme="@style/CustomNoStatusBarTheme"
     tools:context=".fragments.Add"
     tools:ignore="UnusedAttribute"
     tools:targetApi="m">
