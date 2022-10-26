@@ -29,6 +29,13 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
@@ -64,7 +71,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         holder.userNameTv.setText(list.get(position).getName());
-        holder.timeTv.setText("" + list.get(position).getTimestamp());
+
+
+
+        holder.timeTv.setText("" + getRelativeDateTimeString(list.get(position).getTimestamp()));
 
         List<String> likeList = list.get(position).getLikes();
 
@@ -240,6 +250,32 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     public List<HomeModel> getList() {
         return list;
+    }
+
+
+
+    private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy");
+    private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" 'at' h:mm aa");
+    public static String getRelativeDateTimeString(Date dateStart) {
+
+        Calendar startDateCalendar = new GregorianCalendar();
+        startDateCalendar.setTime(dateStart);
+
+        if (startDateCalendar == null) return null;
+
+        DateTime startDate = new DateTime(startDateCalendar.getTimeInMillis());
+        DateTime today = new DateTime();
+        int days = Days.daysBetween(today.withTimeAtStartOfDay(), startDate.withTimeAtStartOfDay()).getDays();
+
+        String date;
+        switch (days) {
+            case -1: date = "Yesterday"; break;
+            case 0: date = "Today"; break;
+            case 1: date = "Tomorrow"; break;
+            default: date = DATE_FORMAT.format(startDateCalendar.getTime()); break;
+        }
+        String time = TIME_FORMAT.format(startDateCalendar.getTime());
+        return date + time;
     }
 
 

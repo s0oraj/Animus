@@ -47,17 +47,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import blog.cosmos.home.animus.MainActivity;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
-import blog.cosmos.home.animus.adapter.HomePersonalAdapter;
 import blog.cosmos.home.animus.model.HomeModel;
 
 public class Home extends Fragment {
 
-    HomeAdapter adapter;
-    HomePersonalAdapter personalAdapter;
+    HomeAdapter adapter,personalAdapter;
     ConcatAdapter concatAdapter;
     private RecyclerView recyclerView;
     private List<HomeModel> list;
@@ -106,7 +103,7 @@ public class Home extends Fragment {
 
 
         adapter = new HomeAdapter(followingUsersList, getActivity());
-        personalAdapter = new HomePersonalAdapter(personalList, getActivity());
+        personalAdapter = new HomeAdapter(personalList, getActivity());
          concatAdapter = new ConcatAdapter(adapter,personalAdapter);
 
         recyclerView.setAdapter(concatAdapter);
@@ -191,7 +188,7 @@ public class Home extends Fragment {
 
 
         });
-        personalAdapter.OnPressed(new HomePersonalAdapter.OnPressed() {
+        personalAdapter.OnPressed(new HomeAdapter.OnPressed() {
             @Override
             public void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked) {
                 DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
