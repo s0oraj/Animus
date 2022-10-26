@@ -282,12 +282,12 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                         public int compare(CommentModel commentModel, CommentModel t1) {
 
                             if( t1== null || commentModel == null ||
-                                    t1.getCommentID() == null ||
-                                    commentModel.getCommentID() == null
+                                    t1.getTimestamp() == null ||
+                                    commentModel.getTimestamp() == null
                             ){
                                 return 0;
                             } else {
-                                return t1.getCommentID().compareTo(commentModel.getCommentID());
+                                return t1.getTimestamp().compareTo(commentModel.getTimestamp());
                             }
                         }
                     });
