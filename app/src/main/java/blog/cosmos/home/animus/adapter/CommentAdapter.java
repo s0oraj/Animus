@@ -61,8 +61,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         Date date = list.get(position).getTimestamp();
         if(date != null){
             String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
-
-
             holder.commentTimeTv.setText(niceDateStr);
         }
           else{
