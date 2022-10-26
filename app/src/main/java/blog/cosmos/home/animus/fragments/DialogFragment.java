@@ -265,11 +265,12 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                     return;
                 }
 
-                list.clear();
+               list.clear();
 
                 for(DocumentSnapshot snapshot: value){
                     CommentModel model = snapshot.toObject(CommentModel.class);
 
+                    list=commentAdapter.getList();
                     list.add(model);
                     Set<CommentModel> s= new HashSet<CommentModel>();
                     s.addAll(list);
