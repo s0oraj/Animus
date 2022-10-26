@@ -69,6 +69,7 @@ public class Home extends Fragment {
 
 
     private ImageView searchButton;
+
     private ImageView sendButton;
 
 
