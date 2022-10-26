@@ -19,8 +19,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +48,7 @@ import blog.cosmos.home.animus.model.CommentModel;
  */
 public class DialogFragment extends androidx.fragment.app.DialogFragment implements View.OnTouchListener{
 
-    RelativeLayout rootLayout;
+    Toolbar rootLayout;
     View viewReference;
     float rootLayoutY=0;
     private float oldY = 0;
@@ -56,6 +58,8 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
     private boolean isScrollingDown = false;
 
 
+
+    public float rawY;
 
     RecyclerView recyclerView;
     Activity activity;
@@ -132,7 +136,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
 
         viewReference= view;
-        rootLayout = view.findViewById(R.id.linearDialogLayout);
+        rootLayout = view.findViewById(R.id.toolbar);
         recyclerView = view.findViewById(R.id.commentRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -177,6 +181,76 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         userMsgEdt.requestFocus();
 
 
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                return setUpSwipe(view,motionEvent);
+            }
+        });
+
+    }
+
+    private boolean setUpSwipe(View view, MotionEvent motionEvent){
+        // Get finger position on screen
+        final int Y = (int)rawY;
+
+        // Switch on motion event type
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+
+            case MotionEvent.ACTION_DOWN:
+                // save default base layout height
+                defaultViewHeight = rootLayout.getHeight();
+
+                // Init finger and view position
+                oldY = Y;
+                baseLayoutPosition = (int) rootLayout.getY();
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+
+                defaultViewHeight = rootLayout.getHeight();
+                if (rootLayoutY >= defaultViewHeight / 2) {
+                    dismiss();
+                    return true;
+                }
+
+                // If user was doing a scroll up
+                if(isScrollingUp){
+                    // Reset baselayout position
+                    rootLayout.setY(0);
+                    // We are not in scrolling up mode anymore
+                    isScrollingUp = false;
+                }
+
+                // If user was doing a scroll down
+                if(isScrollingDown){
+                    // Reset baselayout position
+                    rootLayout.setY(0);
+                    // Reset base layout size
+                    rootLayout.getLayoutParams().height = (int) defaultViewHeight;
+                    rootLayout.requestLayout();
+                    // We are not in scrolling down mode anymore
+                    isScrollingDown = false;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+
+
+                rootLayoutY = Math.abs(rootLayout.getY());
+                rootLayout.setY( rootLayout.getY() + (Y - oldY));
+
+                if(oldY > Y){
+                    if(!isScrollingUp) isScrollingUp = true;
+                } else{
+                    if(!isScrollingDown) isScrollingDown = true;
+                }
+                oldY = Y;
+
+                break;
+        }
+        return true;
     }
 
     private void loadCommentData() {
@@ -204,6 +278,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
         // Get finger position on screen
         final int Y = (int) event.getRawY();
+        rawY= Y;
 
         // Switch on motion event type
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
