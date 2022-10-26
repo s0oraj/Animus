@@ -4,21 +4,21 @@ public class CommentModel {
 
 
 
-    String comment, commentID, postID, uid, name, profileImageUrl;
+    String comment, commentID, postID, uid, name, profileImageUrl, timestamp;
 
 
     public CommentModel(){
 
     }
 
-
-    public CommentModel(String comment, String commentID, String postID, String uid, String name, String profileImageUrl) {
+    public CommentModel(String comment, String commentID, String postID, String uid, String name, String profileImageUrl, String timestamp) {
         this.comment = comment;
         this.commentID = commentID;
         this.postID = postID;
         this.uid = uid;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
+        this.timestamp = timestamp;
     }
 
     public String getComment() {
@@ -69,7 +69,13 @@ public class CommentModel {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
 
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     // Overriding of equals and hashcode so that we can eliminate duplicate items in a list.
     // Source of code fix https://stackoverflow.com/questions/6680157/how-to-remove-duplicate-objects-in-a-listmyobject-without-equals-hashcode
