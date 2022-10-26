@@ -227,30 +227,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
                                 if (task.isSuccessful()) {
                                     commentEt.setText("");
-                                    list = commentAdapter.getList();
-
-                                    Set<CommentModel> s= new HashSet<CommentModel>();
-                                    s.addAll(list);
-                                    list = new ArrayList<CommentModel>();
-                                    list.addAll(s);
-
-                                    //Sorting comments from latest to oldest
-                                    Collections.sort(list, new Comparator<CommentModel>() {
-                                        @Override
-                                        public int compare(CommentModel commentModel, CommentModel t1) {
-
-                                            if( t1== null || commentModel == null ||
-                                                    t1.getCommentID() == null ||
-                                                    commentModel.getCommentID() == null
-                                            ){
-                                                return 0;
-                                            } else {
-                                                return t1.getCommentID().compareTo(commentModel.getCommentID());
-                                            }
-                                        }
-                                    });
-                                    commentAdapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
-                                    // therefore custom addAll() method of adapter fixes this
 
 
 
@@ -289,9 +265,35 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
                 for(DocumentSnapshot snapshot: value){
                     CommentModel model = snapshot.toObject(CommentModel.class);
+
+                    list = commentAdapter.getList();
                     list.add(model);
+
+                    Set<CommentModel> s= new HashSet<CommentModel>();
+                    s.addAll(list);
+                    list = new ArrayList<CommentModel>();
+                    list.addAll(s);
+
+                    //Sorting comments from latest to oldest
+                    Collections.sort(list, new Comparator<CommentModel>() {
+                        @Override
+                        public int compare(CommentModel commentModel, CommentModel t1) {
+
+                            if( t1== null || commentModel == null ||
+                                    t1.getCommentID() == null ||
+                                    commentModel.getCommentID() == null
+                            ){
+                                return 0;
+                            } else {
+                                return t1.getCommentID().compareTo(commentModel.getCommentID());
+                            }
+                        }
+                    });
+                    commentAdapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                    // therefore custom addAll() method of adapter fixes this
+
                 }
-                commentAdapter.notifyDataSetChanged();
+
             }
         });
     }
