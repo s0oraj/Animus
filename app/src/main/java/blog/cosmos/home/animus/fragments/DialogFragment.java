@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -215,6 +216,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                 map.put("postID", id);
                 map.put("name", user.getDisplayName());
                 map.put("profileImageUrl", user.getPhotoUrl().toString());
+                map.put("timestamp", FieldValue.serverTimestamp());
 
 
                 reference.document(commentID)
