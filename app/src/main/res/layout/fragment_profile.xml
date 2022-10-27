@@ -7,9 +7,10 @@
     tools:context=".fragments.Profile">
 
     <androidx.appcompat.widget.Toolbar
+        android:paddingTop="40dp"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@android:color/white"
         android:elevation="2dp"

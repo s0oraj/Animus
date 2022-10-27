@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/main_activity_tan_background_2"
+    android:background="@color/colorAccent2Dark"
     tools:context=".fragments.Home">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
         android:background="@color/colorAccent2Dark"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:elevation="2dp"
@@ -63,6 +64,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/main_activity_tan_background_2"
         android:layout_width="match_parent"
         android:layout_below="@+id/toolbar"
         android:layout_height="match_parent"

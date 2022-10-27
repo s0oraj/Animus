@@ -256,6 +256,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy");
     private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" 'at' h:mm aa");
+
     public static String getRelativeDateTimeString(Date dateStart) {
 
         Calendar startDateCalendar = new GregorianCalendar();

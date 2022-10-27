@@ -1,9 +1,11 @@
 package blog.cosmos.home.animus;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -60,6 +62,13 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+       getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+
 
         init();
 
@@ -289,7 +298,8 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     @Override
     public void onBackPressed() {
 
-        if (getSupportFragmentManager().getBackStackEntryCount() ==1) {
+
+
                if (viewPager.getCurrentItem() == 4) {
                   IS_SEARCHED_USER = false;
 
@@ -298,42 +308,46 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                    changeStatusBarColor();
 
 
-                 } else if(viewPager.getCurrentItem() == 3 ||
+                 }
+               else if(viewPager.getCurrentItem() == 3 ||
                     viewPager.getCurrentItem() == 2 ||
-                    viewPager.getCurrentItem() == 1){
+                    viewPager.getCurrentItem() == 1)
+               {
                     viewPager.setCurrentItem(0);
                    IS_HOME_FRAGMENT=true;
                    changeStatusBarColor();
 
                 } else{
-                   finish();
+                   super.onBackPressed();
                     }
 
 
-        }else{
-            super.onBackPressed();
+
+
         }
 
 
-    }
+
 
     public void changeStatusBarColor() {
 
-        View decorView = MainActivity.this.getWindow().getDecorView();
+       View decorView = MainActivity.this.getWindow().getDecorView();
 
         if (IS_HOME_FRAGMENT) {
 
-            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+           // MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
             // Draw light icons on a dark background color
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         } else {
-            MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+          //  MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
 
             // Draw dark icons on a light background color
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         }
+
+
 
     }
 
