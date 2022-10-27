@@ -73,7 +73,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         holder.userNameTv.setText(list.get(position).getName());
 
 
-
         holder.timeTv.setText("" + getRelativeDateTimeString(list.get(position).getTimestamp()));
 
         List<String> likeList = list.get(position).getLikes();
@@ -276,6 +275,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             default: date = DATE_FORMAT.format(startDateCalendar.getTime()); break;
         }
         String time = TIME_FORMAT.format(startDateCalendar.getTime());
+
+       String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        date = date.replace(currentYear,"");
+
         return date + time;
     }
 
