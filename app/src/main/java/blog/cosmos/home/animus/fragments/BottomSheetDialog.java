@@ -18,33 +18,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.bottom_sheet_layout,
+
+
+        return inflater.inflate(R.layout.bottom_sheet_layout,
                 container, false);
-
-        Button algo_button = v.findViewById(R.id.algo_button);
-        Button course_button = v.findViewById(R.id.course_button);
-
-        algo_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(getActivity(),
-                                "Algorithm Shared", Toast.LENGTH_SHORT)
-                        .show();
-                dismiss();
-            }
-        });
-
-        course_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(getActivity(),
-                                "Course Shared", Toast.LENGTH_SHORT)
-                        .show();
-                dismiss();
-            }
-        });
-        return v;
     }
 }

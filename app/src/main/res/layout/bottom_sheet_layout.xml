@@ -1,30 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".fragments.BottomSheetDialog">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is a Modal BottomSheet"
-        android:textSize="25sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:behavior_peekHeight="800dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <Button
-        android:layout_margin="10dp"
-        android:id="@+id/algo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share this Algorithm" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-    <Button
-        android:layout_margin="10dp"
-        android:id="@+id/course_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share this Course" />
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:text="Comments section"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_search" />
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/back_button" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#C8C8C8" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
