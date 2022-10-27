@@ -12,9 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import blog.cosmos.home.animus.R;
@@ -60,8 +64,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
         Date date = list.get(position).getTimestamp();
         if(date != null){
-            String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
-            holder.commentTimeTv.setText(niceDateStr);
+            holder.commentTimeTv.setText(getRelativeDateTimeString(date));
         }
           else{
             holder.commentTimeTv.setText("");
@@ -114,6 +117,50 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
     public List<CommentModel> getList() {
         return list;
+    }
+
+
+    private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy");
+    private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" 'at' h:mm aa");
+    public static String getRelativeDateTimeString(Date dateStart) {
+
+        Calendar startDateCalendar = new GregorianCalendar();
+        startDateCalendar.setTime(dateStart);
+
+        if (startDateCalendar == null) return null;
+
+        DateTime startDate = new DateTime(startDateCalendar.getTimeInMillis());
+        DateTime today = new DateTime();
+        int days = Days.daysBetween(today.withTimeAtStartOfDay(), startDate.withTimeAtStartOfDay()).getDays();
+
+
+        String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(dateStart.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+        String time = TIME_FORMAT.format(startDateCalendar.getTime());
+        time = time.replace(" at","");
+        String date;
+
+        switch (days) {
+            case -1: date = "Yesterday,";
+
+            return date + time;
+
+            case 0: date = "Today,";
+                return niceDateStr;
+
+            case 1: date = "Tomorrow,";
+                return niceDateStr;
+
+            default: date = DATE_FORMAT.format(startDateCalendar.getTime()); break;
+        }
+
+
+        String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+
+        date = date.replace(" "+currentYear,"");
+
+
+       // return date + time;
+        return date;
     }
 
 }

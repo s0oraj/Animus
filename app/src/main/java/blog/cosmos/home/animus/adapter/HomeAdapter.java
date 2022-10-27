@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -267,18 +268,29 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         DateTime today = new DateTime();
         int days = Days.daysBetween(today.withTimeAtStartOfDay(), startDate.withTimeAtStartOfDay()).getDays();
 
+
+        String niceDateStr = (String) DateUtils.getRelativeTimeSpanString(dateStart.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+
         String date;
         switch (days) {
-            case -1: date = "Yesterday"; break;
-            case 0: date = "Today"; break;
-            case 1: date = "Tomorrow"; break;
+            case -1: date = "Yesterday,";
+            break;
+
+            case 0: date = "Today,";
+                return niceDateStr;
+
+            case 1: date = "Tomorrow,";
+                return niceDateStr;
+
             default: date = DATE_FORMAT.format(startDateCalendar.getTime()); break;
         }
         String time = TIME_FORMAT.format(startDateCalendar.getTime());
 
        String currentYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        date = date.replace(currentYear,"");
 
+        date = date.replace(" "+currentYear,"");
+
+        time = time.replace(" at","");
         return date + time;
     }
 

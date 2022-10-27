@@ -22,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
+import blog.cosmos.home.animus.fragments.BottomSheetDialog;
 import blog.cosmos.home.animus.fragments.Comment;
 import blog.cosmos.home.animus.fragments.DialogFragment;
 import blog.cosmos.home.animus.fragments.Home;
@@ -197,11 +198,13 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             @Override
             public void onClick(View view) {
 
-                viewPager.setCurrentItem(2);
+             /*   viewPager.setCurrentItem(2);
                 IS_HOME_FRAGMENT=false;
-                changeStatusBarColor();
+                changeStatusBarColor(); */
 
-
+                BottomSheetDialog bottomSheet = new BottomSheetDialog();
+                bottomSheet.show(getSupportFragmentManager(),
+                        "ModalBottomSheet");
 
             }
         });
