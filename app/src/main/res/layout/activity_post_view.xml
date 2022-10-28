@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_activity_tan_background_2"
     tools:context=".PostViewActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -62,6 +63,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
     <ImageView
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
