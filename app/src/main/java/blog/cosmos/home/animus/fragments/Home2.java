@@ -52,7 +52,7 @@ import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
 import blog.cosmos.home.animus.model.HomeModel;
 
-public class Home extends Fragment {
+public class Home2 extends Fragment {
 
     HomeAdapter adapter,personalAdapter;
     ConcatAdapter concatAdapter;
@@ -73,7 +73,7 @@ public class Home extends Fragment {
     private ImageView sendButton;
 
 
-    public Home() {
+    public Home2() {
         // Required empty public constructor
     }
 
@@ -546,13 +546,10 @@ public class Home extends Fragment {
                                                         list = tempList; */
 
                                                         //Deleting repetitive posts (refer to homemodel @override equals for details)
-
-                                                        List<HomeModel> tempList = new ArrayList<>(followingUsersList);
                                                         Set<HomeModel> s= new HashSet<HomeModel>();
-                                                        s.addAll(tempList);
+                                                        s.addAll(followingUsersList);
                                                         followingUsersList = new ArrayList<HomeModel>();
                                                         followingUsersList.addAll(s);
-
 
                                                         //Sorting posts from latest to oldest
                                                         Collections.sort(followingUsersList, new Comparator<HomeModel>() {
