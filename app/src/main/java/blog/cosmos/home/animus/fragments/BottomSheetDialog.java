@@ -76,6 +76,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     CircleImageView userProfileImage;
 
+    LinearLayout addAComment;
+
 
     private EditText userMsgEdt;
     private  boolean isScrollToLastRequired = false;
@@ -148,6 +150,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     private void init(View view) {
 
 
+        addAComment = view.findViewById(R.id.comment_section);
         activity= getActivity();
 
         commentEt = view.findViewById(R.id.commentET);
@@ -221,7 +224,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         */
 
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+        addAComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
