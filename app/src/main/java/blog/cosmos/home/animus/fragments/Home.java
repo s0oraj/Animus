@@ -64,12 +64,10 @@ public class Home extends Fragment {
     private final MutableLiveData<Bundle> commentCount = new MutableLiveData<>();
     Bundle commentsCountBundle;
 
-
-
     private ImageView searchButton;
-
     private ImageView sendButton;
 
+    private RecyclerView storiesRecyclerView;
 
     public Home() {
         // Required empty public constructor
@@ -221,6 +219,10 @@ public class Home extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        storiesRecyclerView = view.findViewById(R.id.storiesRecyclerView);
+        storiesRecyclerView.setHasFixedSize(true);
+        storiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();

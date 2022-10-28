@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorAccent2Dark"
     tools:context=".fragments.Home">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,8 +12,8 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/colorAccent2Dark"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:elevation="2dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp">
 
@@ -32,14 +31,14 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/search_bar_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:layout_toLeftOf="@id/sendButton"
                 android:background="@drawable/ic_search"
                 android:backgroundTint="@color/white"
-                android:layout_toLeftOf="@id/sendButton"
-                android:layout_marginRight="24dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/search_bar_button"
 
                 />
 
@@ -61,11 +60,18 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/storiesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/storiesRecyclerView"
         android:background="@color/main_activity_tan_background_2" />
 
 </RelativeLayout>
