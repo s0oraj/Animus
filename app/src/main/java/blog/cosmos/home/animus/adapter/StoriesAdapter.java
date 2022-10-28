@@ -1,10 +1,14 @@
 package blog.cosmos.home.animus.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.helper.widget.Layer;
 import androidx.recyclerview.widget.RecyclerView;
+
+import blog.cosmos.home.animus.R;
 
 public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesHolder> {
 
@@ -13,6 +17,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
     public StoriesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stories_layout,parent,false);
         return null;
     }
 
