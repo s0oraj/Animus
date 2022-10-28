@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,6 +34,15 @@ public class PostViewActivity extends AppCompatActivity {
 
         try {
             URL url = new URL(scheme + "://" + host+ path.replace("Post Images", "Post%20Images")+"?"+query);
+
+            ImageView imageView = findViewById(R.id.imageView);
+
+            Glide.with(PostViewActivity.this)
+                    .load(url.toString())
+                    .timeout(6500)
+                    .into(imageView);
+
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

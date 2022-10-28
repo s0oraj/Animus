@@ -232,6 +232,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, imageUrl);
+                    intent.setType("text/*");
                     context.startActivity(Intent.createChooser(intent, "Share link using..."));
                 }
             });
