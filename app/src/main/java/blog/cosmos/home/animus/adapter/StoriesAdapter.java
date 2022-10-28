@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.adapter;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.helper.widget.Layer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.model.StoriesModel;
 
 public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesHolder> {
+
+    List<StoriesModel> list;
+    Activity activity;
+
+    public StoriesAdapter(List<StoriesModel> list, Activity activity) {
+        this.list = list;
+        this.activity = activity;
+    }
 
     @NonNull
     @Override
@@ -18,7 +30,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
 
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stories_layout,parent,false);
-        return null;
+        return new StoriesHolder(view);
     }
 
     @Override
@@ -28,7 +40,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     static class StoriesHolder extends RecyclerView.ViewHolder{
