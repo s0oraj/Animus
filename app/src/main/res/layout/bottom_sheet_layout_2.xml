@@ -74,8 +74,10 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxHeight="40dp"
+            android:maxHeight="50dp"
             android:minHeight="30dp"
+            android:minWidth="30dp"
+            android:maxWidth="50dp"
             android:layout_marginStart="16dp"
             android:layout_gravity="center"
             tools:src="@drawable/ic_person"
