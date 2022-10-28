@@ -165,7 +165,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         Glide.with(getActivity())
                 .load(user.getPhotoUrl())
-                .placeholder(R.drawable.ic_person)
+
                 .into(userProfileImage);
 
         viewReference= view;
