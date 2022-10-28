@@ -50,6 +50,7 @@ import java.util.Set;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
 import blog.cosmos.home.animus.model.CommentModel;
+import blog.cosmos.home.animus.model.HomeModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
@@ -241,10 +242,15 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                     CommentModel model = snapshot.toObject(CommentModel.class);
 
                     list.add(model);
+
+                    List<CommentModel> tempList = new ArrayList<>(list);
                     Set<CommentModel> s= new HashSet<CommentModel>();
-                    s.addAll(list);
-                    list = new ArrayList<CommentModel>();
-                    list.addAll(s);
+                    s.addAll(tempList);
+                    tempList = new ArrayList<CommentModel>();
+                    tempList.addAll(s);
+
+                    list.clear();
+                    list.addAll(tempList);
 
                     boolean areAllTimeStampsNotNull= true;
                     for(int i =0; i<list.size(); i++){
