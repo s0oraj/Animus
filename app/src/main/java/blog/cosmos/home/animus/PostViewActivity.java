@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,21 +35,36 @@ public class PostViewActivity extends AppCompatActivity {
         String path = uri.getPath();
         String query = uri.getQuery();
 
-        try {
-            URL url = new URL(scheme + "://" + host+ path.replace("Post Images", "Post%20Images")+"?"+query);
 
-            ImageView imageView = findViewById(R.id.imageView);
-
-            Glide.with(PostViewActivity.this)
-                    .load(url.toString())
-                    .timeout(6500)
-                    .into(imageView);
+        //    URL url = new URL(scheme + "://" + host+ path.replace("Post Images", "Post%20Images")+"?"+query);
 
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            FirebaseStorage.getInstance().getReference().child(uri.getLastPathSegment())
+                    .getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            ImageView imageView = findViewById(R.id.imageView);
+
+                            Glide.with(PostViewActivity.this)
+                                    .load(uri.toString())
+                                    .timeout(6500)
+                                    .into(imageView);
+                        }
+                    });
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            startActivity( new Intent(PostViewActivity.this, MainActivity.class));
+        } else{
+            startActivity(new Intent(PostViewActivity.this, ReplacerActivity.class));
         }
-
-
     }
 }
