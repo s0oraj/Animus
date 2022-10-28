@@ -64,10 +64,13 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+         */
 
 
 
@@ -342,12 +345,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         if (IS_HOME_FRAGMENT) {
 
-           // MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
+           MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent2Dark));
             // Draw light icons on a dark background color
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         } else {
-          //  MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+           MainActivity.this.getWindow().setStatusBarColor(getResources().getColor(R.color.white));
 
             // Draw dark icons on a light background color
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp"
         android:background="@color/colorAccent2Dark"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:elevation="2dp"

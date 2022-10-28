@@ -86,17 +86,18 @@ public class Add extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        /* transparent statusbar dynamically
+        /* steps to set transparent statusbar
 
-
+        step 1 first add this code in root layout android:theme="@style/CustomNoStatusBarTheme"
          <style name="CustomNoStatusBarTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-
+           step 2 then make a new theme
         <item name="android:windowTranslucentStatus">true</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+      step 3
     and  put this in oncreate() or oncreateview or onviewcreated for activities and fragments
          */
        /* getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
