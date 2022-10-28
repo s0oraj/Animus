@@ -160,10 +160,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         userProfileImage =  view.findViewById(R.id.user_image);
 
 
-                Glide.with(getActivity())
+        Glide.with(getActivity())
                 .load(user.getPhotoUrl())
-                .placeholder(R.id.)
-                .into(holder.profileImage);
+                .placeholder(R.drawable.ic_person)
+                .into(userProfileImage);
 
         viewReference= view;
         rootLayout = view.findViewById(R.id.linearDialogLayout);
