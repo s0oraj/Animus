@@ -181,9 +181,17 @@ public class Home extends Fragment {
 
                  */
 
-                DialogFragment dialogFragment=new DialogFragment();
+                /*DialogFragment dialogFragment=new DialogFragment();
                 dialogFragment.setArguments(bundle);
                 dialogFragment.show(getActivity().getSupportFragmentManager(),"My  Fragment");
+
+                 */
+
+
+                BottomSheetDialog bottomSheet = new BottomSheetDialog();
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ModalBottomSheet");
 
             }
 

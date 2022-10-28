@@ -150,6 +150,15 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
         recyclerView = view.findViewById(R.id.commentRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
         list= new ArrayList<>();
         commentAdapter = new CommentAdapter(getContext(), list);
         recyclerView.setAdapter(commentAdapter);
