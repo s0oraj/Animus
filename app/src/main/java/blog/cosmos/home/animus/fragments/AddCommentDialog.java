@@ -3,8 +3,6 @@ package blog.cosmos.home.animus.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -128,7 +126,8 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
             public void onClick(View view) {
 
 
-               // commentEt.setInputType(InputType.TYPE_NULL);
+
+
                 String comment = commentEt.getText().toString();
                 commentEt.setText("");
 
@@ -157,15 +156,11 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                             public void onComplete(@NonNull Task<Void> task) {
 
                                 if (task.isSuccessful()) {
-
-
                                     commentEt.setText("");
-                                    commentEt.setInputType(InputType.TYPE_NULL);
+                                    dismiss();
+                                    Toast.makeText(getContext(), "Comment added " + task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
 
-                                    new Handler().postDelayed(() -> {
-
-                                        dismiss();
-                                    }, 100);
 
 
                                 } else {

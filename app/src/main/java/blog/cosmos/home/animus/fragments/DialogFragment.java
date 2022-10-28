@@ -384,7 +384,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
 
     private void setUpKeyboard(){
         //Setup editText behavior for opening soft keyboard
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+       /* LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
 
         userMsgEdt.setOnTouchListener((view, motionEvent) -> {
             InputMethodManager keyboard = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -401,6 +401,8 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                         recyclerView.getAdapter().getItemCount() - 1), 100);
             }
         });
+
+        */
     }
 
     @Override

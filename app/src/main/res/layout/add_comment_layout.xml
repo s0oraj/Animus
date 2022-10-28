@@ -22,7 +22,12 @@
             app:layout_constraintEnd_toStartOf="@+id/sendBtn"
             android:hint="Enter your comment here" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,5 +37,11 @@
             android:foregroundTint="@color/gray_btn_bg_color"
             android:src="@drawable/ic_send"
             />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     </LinearLayout>

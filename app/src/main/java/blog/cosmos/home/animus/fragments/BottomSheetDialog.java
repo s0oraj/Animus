@@ -91,8 +91,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 container, false);
         userMsgEdt = view.findViewById(R.id.commentET);
 
-        getDialog().getWindow().setSoftInputMode(
+     /*   getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                
+      */
         view.setBackgroundResource(R.drawable.rounded_dialog);
 
         return view;
@@ -292,21 +294,32 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                     list = new ArrayList<CommentModel>();
                     list.addAll(s);
 
-                    //Sorting comments from latest to oldest
-                    Collections.sort(list, new Comparator<CommentModel>() {
-                        @Override
-                        public int compare(CommentModel commentModel, CommentModel t1) {
-
-                            if( t1== null || commentModel == null ||
-                                    t1.getTimestamp() == null ||
-                                    commentModel.getTimestamp() == null
-                            ){
-                                return 0;
-                            } else {
-                                return t1.getTimestamp().compareTo(commentModel.getTimestamp());
-                            }
+                    boolean areAllTimeStampsNotNull= true;
+                    for(int i =0; i<list.size(); i++){
+                        if(list.get(i).getTimestamp() == null){
+                            areAllTimeStampsNotNull = false;
+                            break;
                         }
-                    });
+                    }
+
+                    if(areAllTimeStampsNotNull){
+                        //Sorting comments from latest to oldest
+                        Collections.sort(list, new Comparator<CommentModel>() {
+                            @Override
+                            public int compare(CommentModel commentModel, CommentModel t1) {
+
+                                if( t1== null || commentModel == null ||
+                                        t1.getTimestamp() == null ||
+                                        commentModel.getTimestamp() == null
+                                ){
+                                    return 0;
+                                } else {
+                                    return t1.getTimestamp().compareTo(commentModel.getTimestamp());
+                                }
+                            }
+                        });
+                    }
+
 
                 }
                 commentAdapter.addAll(list);
