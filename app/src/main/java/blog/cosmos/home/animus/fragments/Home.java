@@ -64,8 +64,13 @@ public class Home extends Fragment {
     private final MutableLiveData<Integer> commentCount = new MutableLiveData<>();
 
 
-    private final MutableLiveData<Integer> personalPostsCommentCount = new MutableLiveData<>();
-    private final MutableLiveData<Integer> followingPostsCommentCount = new MutableLiveData<>();
+    private final MutableLiveData<Bundle> personalPostsCommentCount = new MutableLiveData<>();
+    private final MutableLiveData<Bundle> followingPostsCommentCount = new MutableLiveData<>();
+
+
+    Bundle followingPostsBundle;
+    Bundle personalPostsBundle;
+
 
 
     private ImageView searchButton;
@@ -97,6 +102,8 @@ public class Home extends Fragment {
 
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
+        followingPostsBundle = new Bundle();
+        personalPostsBundle = new Bundle();
 
         list = new ArrayList<>();
         personalList = new ArrayList<>();
@@ -140,20 +147,20 @@ public class Home extends Fragment {
 
 
             @Override
-            public void setCommentCount(TextView textView) {
+            public void setCommentCount(TextView textView, String id) {
                 Activity activity = getActivity();
-                followingPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
+                followingPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Bundle>() {
                     @Override
-                    public void onChanged(Integer integer) {
+                    public void onChanged(Bundle bundle) {
 
                             assert followingPostsCommentCount.getValue() != null;
-                            if(followingPostsCommentCount.getValue()==0){
+                            if(followingPostsCommentCount.getValue().getInt(id)==0){
                                 textView.setVisibility(View.GONE);
                             } else {
                                 textView.setVisibility(View.VISIBLE);
                                 StringBuilder builder = new StringBuilder();
                                 builder.append("See all ")
-                                        .append(followingPostsCommentCount.getValue())
+                                        .append(followingPostsCommentCount.getValue().getInt(id))
                                         .append(" comments");
 
                                 textView.setText(builder); }
@@ -223,20 +230,20 @@ public class Home extends Fragment {
             }
 
             @Override
-            public void setCommentCount(TextView textView) {
+            public void setCommentCount(TextView textView, String id) {
                 Activity activity = getActivity();
-                personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Integer>() {
+                personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Bundle>() {
                     @Override
-                    public void onChanged(Integer integer) {
+                    public void onChanged(Bundle bundle) {
 
                         assert personalPostsCommentCount.getValue() != null;
-                        if(personalPostsCommentCount.getValue()==0){
+                        if(personalPostsCommentCount.getValue().getInt(id)==0){
                             textView.setVisibility(View.GONE);
                         } else {
                             textView.setVisibility(View.VISIBLE);
                             StringBuilder builder = new StringBuilder();
                             builder.append("See all ")
-                                    .append(personalPostsCommentCount.getValue())
+                                    .append(personalPostsCommentCount.getValue().getInt(id))
                                     .append(" comments");
 
                             textView.setText(builder); }
@@ -399,13 +406,17 @@ public class Home extends Fragment {
 
                                 if (task.isSuccessful()) {
 
-                                    Map<String, Object> map = new HashMap<>();
-                                    for (QueryDocumentSnapshot commentSnapshot : task
-                                            .getResult()) {
-                                        map = commentSnapshot.getData();
+                                    Map<Integer, Map<String, Object>> map = new HashMap<>();
+                                    int i=0;
+                                    for (QueryDocumentSnapshot commentSnapshot : task.getResult()) {
+                                      //  map = commentSnapshot.getData();
+                                        map.put(i,commentSnapshot.getData());
+                                        i++;
                                     }
 
-                                    personalPostsCommentCount.setValue(map.size());
+
+                                    personalPostsBundle.putInt(model.getId(),map.size());
+                                    personalPostsCommentCount.setValue(personalPostsBundle);
 
                                 }
 
@@ -527,14 +538,17 @@ public class Home extends Fragment {
                                                                 .addOnCompleteListener(task -> {
 
                                                                     if (task.isSuccessful()) {
-
-                                                                        Map<String, Object> map = new HashMap<>();
-                                                                        for (QueryDocumentSnapshot commentSnapshot : task
-                                                                                .getResult()) {
-                                                                            map = commentSnapshot.getData();
+                                                                        Map<Integer, Map<String, Object>> map = new HashMap<>();
+                                                                        int i=0;
+                                                                        for (QueryDocumentSnapshot commentSnapshot : task.getResult()) {
+                                                                            //  map = commentSnapshot.getData();
+                                                                            map.put(i,commentSnapshot.getData());
+                                                                            i++;
                                                                         }
 
-                                                                        followingPostsCommentCount.setValue(map.size());
+
+                                                                        followingPostsBundle.putInt(model.getId(),map.size());
+                                                                        followingPostsCommentCount.setValue(followingPostsBundle);
 
                                                                     }
 
@@ -550,9 +564,11 @@ public class Home extends Fragment {
                                                         List<HomeModel> tempList = new ArrayList<>(followingUsersList);
                                                         Set<HomeModel> s= new HashSet<HomeModel>();
                                                         s.addAll(tempList);
-                                                        followingUsersList = new ArrayList<HomeModel>();
-                                                        followingUsersList.addAll(s);
+                                                        tempList = new ArrayList<HomeModel>();
+                                                        tempList.addAll(s);
 
+                                                        followingUsersList.clear();
+                                                        followingUsersList.addAll(tempList);
 
                                                         //Sorting posts from latest to oldest
                                                         Collections.sort(followingUsersList, new Comparator<HomeModel>() {
@@ -571,9 +587,6 @@ public class Home extends Fragment {
                                                         });
                                                         adapter.addAll(followingUsersList); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                                                         // therefore custom addAll() method of adapter fixes this
-
-
-
 
 
                                                     }

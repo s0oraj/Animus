@@ -73,6 +73,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         holder.userNameTv.setText(list.get(position).getName());
 
+        onPressed.setCommentCount(holder.commentTV,list.get(position).getId());
+
 
         holder.timeTv.setText("" + getRelativeDateTimeString(list.get(position).getTimestamp()));
 
@@ -142,7 +144,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         // void onComment(int position, String id, String uid, String comment, LinearLayout commentLayout, EditText commentET);
 
-        void setCommentCount(TextView textView);
+        void setCommentCount(TextView textView, String id);
 
         void onCommentBtnPressed(String id, String uid, boolean isComment);
 
@@ -175,7 +177,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
             commentTV = itemView.findViewById(R.id.commentTV);
 
-            onPressed.setCommentCount(commentTV);
+          //  onPressed.setCommentCount(commentTV);
 
 
             /*likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
