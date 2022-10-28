@@ -109,6 +109,16 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
+        LinearLayout commentLayout = view1.findViewById(R.id.comment_section);
+        commentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddCommentDialog bottomSheet = new AddCommentDialog();
+
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ModalBottomSheet");
+            }
+        });
 
         init(view1);
         clickListener(view1);
@@ -196,6 +206,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
+
                 String comment = commentEt.getText().toString();
                 commentEt.setText("");
 
