@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
+
         init();
 
         //addTabs();
