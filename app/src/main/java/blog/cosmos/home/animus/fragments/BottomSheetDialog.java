@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -49,6 +50,7 @@ import java.util.Set;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
 import blog.cosmos.home.animus.model.CommentModel;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
 
@@ -71,6 +73,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     FirebaseUser user;
     String id,uid;
     CollectionReference reference;
+
+    CircleImageView userProfileImage;
 
 
     private EditText userMsgEdt;
@@ -153,6 +157,13 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         user= FirebaseAuth.getInstance().getCurrentUser();
 
 
+        userProfileImage =  view.findViewById(R.id.user_image);
+
+
+                Glide.with(getActivity())
+                .load(user.getPhotoUrl())
+                .placeholder(R.id.)
+                .into(holder.profileImage);
 
         viewReference= view;
         rootLayout = view.findViewById(R.id.linearDialogLayout);
