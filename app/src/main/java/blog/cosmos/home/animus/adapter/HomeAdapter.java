@@ -122,7 +122,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 list.get(position).getId(),
                 list.get(position).getName(),
                 list.get(position).getUid(),
-                list.get(position).getLikes()
+                list.get(position).getLikes(),
+                list.get(position).getImageUrl()
 
         );
 
@@ -189,7 +190,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
         }
 
-        public void clickListener(int position, final String id, String name, String uid, List<String> likes) {
+        public void clickListener(int position, final String id, String name, String uid, List<String> likes, String imageUrl) {
 
 
             commentBtn.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +224,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                     onPressed.onLiked(position, id, uid, likes, b);
+                }
+            });
+
+            shareBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, imageUrl);
+                    context.startActivity(Intent.createChooser(intent, "Share link using..."));
                 }
             });
 
