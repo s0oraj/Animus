@@ -94,7 +94,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         View view = inflater.inflate(R.layout.bottom_sheet_layout_2,
                 container, false);
-        userMsgEdt = view.findViewById(R.id.commentET);
 
      /*   getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -162,7 +161,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         list= new ArrayList<>();
         commentAdapter = new CommentAdapter(getContext(), list);
         recyclerView.setAdapter(commentAdapter);
-        userMsgEdt = view.findViewById(R.id.commentET);
+
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -214,17 +213,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         setUpKeyboard();
 
-       /* userMsgEdt.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager keyboard = (InputMethodManager) getActivity()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                keyboard.showSoftInput(userMsgEdt, 0);
-            }
-        }, 300);
-        userMsgEdt.requestFocus();
 
-        */
+
+
 
 
 

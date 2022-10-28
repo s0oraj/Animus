@@ -401,7 +401,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment impleme
                         recyclerView.getAdapter().getItemCount() - 1), 100);
             }
         });
-
         */
     }
 

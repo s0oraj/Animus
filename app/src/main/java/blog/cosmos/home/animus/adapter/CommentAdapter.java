@@ -159,8 +159,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         date = date.replace(" "+currentYear,"");
 
 
-       // return date + time;
-        return date;
+       return date + time;
     }
 
 }

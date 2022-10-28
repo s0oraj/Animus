@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
 
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+      //  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
 
@@ -205,13 +205,11 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             @Override
             public void onClick(View view) {
 
-             /*   viewPager.setCurrentItem(2);
+              viewPager.setCurrentItem(2);
                 IS_HOME_FRAGMENT=false;
-                changeStatusBarColor(); */
+                changeStatusBarColor();
 
-                BottomSheetDialog bottomSheet = new BottomSheetDialog();
-                bottomSheet.show(getSupportFragmentManager(),
-                        "ModalBottomSheet");
+
 
             }
         });
@@ -375,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         super.onResume();
         IS_HOME_FRAGMENT = true;
         changeStatusBarColor();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+       // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
 
