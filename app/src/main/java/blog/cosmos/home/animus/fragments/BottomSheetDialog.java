@@ -75,8 +75,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     CollectionReference reference;
 
     CircleImageView userProfileImage;
-
-    LinearLayout addAComment;
+    LinearLayout commentLayout;
 
 
     private EditText userMsgEdt;
@@ -117,7 +116,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
-        LinearLayout commentLayout = view1.findViewById(R.id.comment_section);
+
         commentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,7 +149,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     private void init(View view) {
 
 
-        addAComment = view.findViewById(R.id.comment_section);
+        commentLayout = view.findViewById(R.id.comment_section);
         activity= getActivity();
 
         commentEt = view.findViewById(R.id.commentET);
@@ -165,7 +164,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         Glide.with(getActivity())
                 .load(user.getPhotoUrl())
-
+                .placeholder(R.drawable.ic_person)
                 .into(userProfileImage);
 
         viewReference= view;
@@ -224,7 +223,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         */
 
-        addAComment.setOnClickListener(new View.OnClickListener() {
+        sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
