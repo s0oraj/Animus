@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import blog.cosmos.home.animus.R;
 
 public class PostViewActivity extends AppCompatActivity {
@@ -26,7 +29,11 @@ public class PostViewActivity extends AppCompatActivity {
         String path = uri.getPath();
         String query = uri.getQuery();
 
-        URL url =
+        try {
+            URL url = new URL(scheme + "://" + host+ path.replace("Post Images", "Post%20Images")+"?"+query);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
 
     }
