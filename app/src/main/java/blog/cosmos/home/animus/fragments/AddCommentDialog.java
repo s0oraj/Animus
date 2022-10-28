@@ -3,6 +3,7 @@ package blog.cosmos.home.animus.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -148,6 +150,14 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                 map.put("profileImageUrl", user.getPhotoUrl().toString());
                 map.put("timestamp", FieldValue.serverTimestamp());
 
+                SpinKitView spinKitView = getView().findViewById(R.id.spin_kit);
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        // yourMethod();
+                        spinKitView.setVisibility(View.VISIBLE);
+                        sendBtn.setVisibility(View.GONE);
+                    }
+                }, 1000);
 
                 reference.document(commentID)
                         .set(map)
@@ -158,8 +168,11 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                                 if (task.isSuccessful()) {
                                     commentEt.setText("");
                                     dismiss();
+                                    spinKitView.setVisibility(View.GONE);
+                                    sendBtn.setVisibility(View.VISIBLE);
                                     Toast.makeText(getContext(), "Comment added " + task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
+
 
 
 
