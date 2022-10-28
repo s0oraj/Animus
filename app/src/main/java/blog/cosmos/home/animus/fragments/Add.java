@@ -3,6 +3,8 @@ package blog.cosmos.home.animus.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import static blog.cosmos.home.animus.MainActivity.viewPager;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
@@ -57,6 +59,7 @@ import java.util.Map;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.GalleryAdapter;
 import blog.cosmos.home.animus.model.GalleryImages;
+import blog.cosmos.home.animus.MainActivity;
 
 
 public class Add extends Fragment {
@@ -235,6 +238,9 @@ public class Add extends Fragment {
                         if (task.isSuccessful()) {
                             System.out.println();
                             Toast.makeText(getContext(),"Uploaded", Toast.LENGTH_SHORT).show();
+                            descET.setText("");
+                            viewPager.setCurrentItem(0);
+
                         } else {
                             Toast.makeText(getContext(), "Error: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
