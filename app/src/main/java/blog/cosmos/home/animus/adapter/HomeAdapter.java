@@ -210,6 +210,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 }
             });
 
+            commentTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    onPressed.onCommentBtnPressed(id,uid,true);
+                }
+            });
 
             likeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
