@@ -1,12 +1,14 @@
 package blog.cosmos.home.animus.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -84,6 +86,8 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
 
         View view = inflater.inflate(R.layout.add_comment_layout,
                 container, false);
+        userMsgEdt = view.findViewById(R.id.commentET);
+
 
         return view;
     }
@@ -99,7 +103,53 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
 
+        init();
+        clickListener();
 
+
+    }
+
+    private void clickListener() {
+        userMsgEdt.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager keyboard = (InputMethodManager) getActivity()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                keyboard.showSoftInput(userMsgEdt, 0);
+            }
+        }, 300);
+        userMsgEdt.requestFocus();
+    }
+
+    private void init() {
+        userMsgEdt = getView().findViewById(R.id.commentET);
+    }
+
+
+    private void setUpKeyboard(){
+       //Setup editText behavior for opening soft keyboard
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+
+
+
+        /*
+        userMsgEdt.setOnTouchListener((view, motionEvent) -> {
+            InputMethodManager keyboard = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (keyboard != null) {
+                keyboard.showSoftInput(getView().findViewById(R.id.sendBtn), InputMethodManager.SHOW_FORCED);
+            }
+            return false;
+        });
+
+
+         */
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpKeyboard();
     }
 
 
