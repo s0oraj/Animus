@@ -117,20 +117,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view1, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
 
-        commentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddCommentDialog bottomSheet = new AddCommentDialog();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("id", id);
-                bundle.putString("uid", uid);
-
-                bottomSheet.setArguments(bundle);
-                bottomSheet.show(getActivity().getSupportFragmentManager(),
-                        "ModalBottomSheet");
-            }
-        });
 
         init(view1);
         clickListener(view1);
@@ -199,6 +186,22 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     }
 
     private void clickListener(View view1) {
+
+
+    commentLayout.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AddCommentDialog bottomSheet = new AddCommentDialog();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id);
+            bundle.putString("uid", uid);
+
+            bottomSheet.setArguments(bundle);
+            bottomSheet.show(getActivity().getSupportFragmentManager(),
+                    "ModalBottomSheet");
+        }
+    });
         dialogBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
