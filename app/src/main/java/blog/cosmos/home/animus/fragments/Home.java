@@ -54,22 +54,15 @@ import blog.cosmos.home.animus.model.HomeModel;
 
 public class Home extends Fragment {
 
-    HomeAdapter adapter,personalAdapter;
-    ConcatAdapter concatAdapter;
+    HomeAdapter adapter;
     private RecyclerView recyclerView;
     private List<HomeModel> list;
     private FirebaseUser user;
     private List<HomeModel> personalList;
     private List<HomeModel> followingUsersList;
-    private final MutableLiveData<Integer> commentCount = new MutableLiveData<>();
 
-
-    private final MutableLiveData<Bundle> personalPostsCommentCount = new MutableLiveData<>();
-    private final MutableLiveData<Bundle> followingPostsCommentCount = new MutableLiveData<>();
-
-
-    Bundle followingPostsBundle;
-    Bundle personalPostsBundle;
+    private final MutableLiveData<Bundle> commentCount = new MutableLiveData<>();
+    Bundle commentsCountBundle;
 
 
 
@@ -102,19 +95,16 @@ public class Home extends Fragment {
 
         //  reference = FirebaseFirestore.getInstance().collection("Posts").document(user.getUid());
 
-        followingPostsBundle = new Bundle();
-        personalPostsBundle = new Bundle();
+        commentsCountBundle = new Bundle();
 
         list = new ArrayList<>();
         personalList = new ArrayList<>();
         followingUsersList = new ArrayList<>();
 
 
-        adapter = new HomeAdapter(followingUsersList, getActivity());
-        personalAdapter = new HomeAdapter(personalList, getActivity());
-         concatAdapter = new ConcatAdapter(adapter,personalAdapter);
+        adapter = new HomeAdapter(list, getActivity());
 
-        recyclerView.setAdapter(concatAdapter);
+        recyclerView.setAdapter(adapter);
 
         loadDataFromFireStore();
 
@@ -149,18 +139,18 @@ public class Home extends Fragment {
             @Override
             public void setCommentCount(TextView textView, String id) {
                 Activity activity = getActivity();
-                followingPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Bundle>() {
+                commentCount.observe((LifecycleOwner) activity, new Observer<Bundle>() {
                     @Override
                     public void onChanged(Bundle bundle) {
 
-                            assert followingPostsCommentCount.getValue() != null;
-                            if(followingPostsCommentCount.getValue().getInt(id)==0){
+                            assert commentCount.getValue() != null;
+                            if(commentCount.getValue().getInt(id)==0){
                                 textView.setVisibility(View.GONE);
                             } else {
                                 textView.setVisibility(View.VISIBLE);
                                 StringBuilder builder = new StringBuilder();
                                 builder.append("See all ")
-                                        .append(followingPostsCommentCount.getValue().getInt(id))
+                                        .append(commentCount.getValue().getInt(id))
                                         .append(" comments");
 
                                 textView.setText(builder); }
@@ -204,84 +194,9 @@ public class Home extends Fragment {
 
 
         });
-        personalAdapter.OnPressed(new HomeAdapter.OnPressed() {
-            @Override
-            public void onLiked(int position, String id, String uid, List<String> likeList, boolean isChecked) {
-                DocumentReference reference = FirebaseFirestore.getInstance().collection("Users")
-                        .document(uid)
-                        .collection("Post Images")
-                        .document(id);
 
-                if (likeList.contains(user.getUid())) {
-                    likeList.remove(user.getUid()); //unlike
-                } else {
-                    likeList.add(user.getUid()); // like
-                }
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("likes", likeList);
-
-                reference.update(map);
-                //adapter.notifyItemChanged(position);
-
-
-
-
-            }
-
-            @Override
-            public void setCommentCount(TextView textView, String id) {
-                Activity activity = getActivity();
-                personalPostsCommentCount.observe((LifecycleOwner) activity, new Observer<Bundle>() {
-                    @Override
-                    public void onChanged(Bundle bundle) {
-
-                        assert personalPostsCommentCount.getValue() != null;
-                        if(personalPostsCommentCount.getValue().getInt(id)==0){
-                            textView.setVisibility(View.GONE);
-                        } else {
-                            textView.setVisibility(View.VISIBLE);
-                            StringBuilder builder = new StringBuilder();
-                            builder.append("See all ")
-                                    .append(personalPostsCommentCount.getValue().getInt(id))
-                                    .append(" comments");
-
-                            textView.setText(builder); }
-
-                        //textView.setText("See all "+ commentCount.getValue()+ " comments");
-
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCommentBtnPressed(String id, String uid, boolean isComment) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("id", id);
-                bundle.putString("uid", uid);
-
-                /*
-                Intent intent = new Intent(getActivity(),ReplacerActivity.class);
-                intent.putExtra("commentBundle",bundle);
-                intent.putExtra("isComment",isComment);
-                startActivity(intent);
-
-                 */
-
-                DialogFragment dialogFragment=new DialogFragment();
-                dialogFragment.setArguments(bundle);
-                dialogFragment.show(getActivity().getSupportFragmentManager(),"My  Fragment");
-
-
-            }
-
-
-        });
         adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
-        personalAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         //concatAdapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
 
 
@@ -415,27 +330,33 @@ public class Home extends Fragment {
                                     }
 
 
-                                    personalPostsBundle.putInt(model.getId(),map.size());
-                                    personalPostsCommentCount.setValue(personalPostsBundle);
+                                    commentsCountBundle.putInt(model.getId(),map.size());
+                                    commentCount.setValue(commentsCountBundle);
 
                                 }
 
                             });
 
 
-                    /*
-                    List<HomeModel> tempList= new ArrayList<HomeModel>(followingUsersList);
-                    tempList.addAll(personalList);
-                    list = tempList;
-*/
                     //Deleting repetitive posts (refer to homemodel @override equals for details)
+
+                    List<HomeModel> tempList = new ArrayList<>(personalList);
                     Set<HomeModel> s= new HashSet<HomeModel>();
-                    s.addAll(personalList);
-                    personalList = new ArrayList<HomeModel>();
-                    personalList.addAll(s);
+                    s.addAll(tempList);
+                    tempList = new ArrayList<HomeModel>();
+                    tempList.addAll(s);
+
+                    personalList.clear();
+                    personalList.addAll(tempList);
+
+                    list.clear();
+                    tempList= new ArrayList<HomeModel>(personalList);
+                    tempList.addAll(followingUsersList);
+                    list.addAll(tempList);
+
 
                     //Sorting posts from latest to oldest
-                    Collections.sort(personalList, new Comparator<HomeModel>() {
+                    Collections.sort(list, new Comparator<HomeModel>() {
                         @Override
                         public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -449,7 +370,7 @@ public class Home extends Fragment {
                             }
                         }
                     });
-                    personalAdapter.addAll(personalList); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                    adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                     // therefore custom addAll() method of adapter fixes this
 
 
@@ -547,8 +468,8 @@ public class Home extends Fragment {
                                                                         }
 
 
-                                                                        followingPostsBundle.putInt(model.getId(),map.size());
-                                                                        followingPostsCommentCount.setValue(followingPostsBundle);
+                                                                        commentsCountBundle.putInt(model.getId(),map.size());
+                                                                        commentCount.setValue(commentsCountBundle);
 
                                                                     }
 
@@ -570,8 +491,14 @@ public class Home extends Fragment {
                                                         followingUsersList.clear();
                                                         followingUsersList.addAll(tempList);
 
+                                                        list.clear();
+                                                        tempList= new ArrayList<HomeModel>(followingUsersList);
+                                                        tempList.addAll(personalList);
+                                                        list.addAll(tempList);
+
+
                                                         //Sorting posts from latest to oldest
-                                                        Collections.sort(followingUsersList, new Comparator<HomeModel>() {
+                                                        Collections.sort(list, new Comparator<HomeModel>() {
                                                             @Override
                                                             public int compare(HomeModel homeModel, HomeModel t1) {
 
@@ -585,7 +512,7 @@ public class Home extends Fragment {
                                                                 }
                                                             }
                                                         });
-                                                        adapter.addAll(followingUsersList); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
+                                                        adapter.addAll(list); //Not using notifySetDataChange method call here because this line list=templist makes list point to a different instance,
                                                         // therefore custom addAll() method of adapter fixes this
 
 
