@@ -116,7 +116,9 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
 
-
+                ProgressBar progressBar = getView().findViewById(R.id.comment_progress_bar);
+                progressBar.setVisibility(View.VISIBLE);
+                sendBtn.setVisibility(View.GONE);
 
 
                 String comment = commentEt.getText().toString();
@@ -139,41 +141,40 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                 map.put("profileImageUrl", user.getPhotoUrl().toString());
                 map.put("timestamp", FieldValue.serverTimestamp());
 
-                ProgressBar progressBar = getView().findViewById(R.id.comment_progress_bar);
+
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         // yourMethod();
-                        progressBar.setVisibility(View.VISIBLE);
-                        sendBtn.setVisibility(View.GONE);
+                        reference.document(commentID)
+                                .set(map)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if (task.isSuccessful()) {
+                                            commentEt.setText("");
+                                            dismiss();
+                                            progressBar.setVisibility(View.GONE);
+                                            sendBtn.setVisibility(View.VISIBLE);
+                                            Toast.makeText(getContext(), "Comment added " ,
+                                                    Toast.LENGTH_SHORT).show();
+
+
+
+
+                                        } else {
+                                            commentEt.setText(comment);
+                                            Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    }
+                                });
                     }
                 }, 1000);
 
-                reference.document(commentID)
-                        .set(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
 
-                                if (task.isSuccessful()) {
-                                    commentEt.setText("");
-                                    dismiss();
-                                    progressBar.setVisibility(View.GONE);
-                                    sendBtn.setVisibility(View.VISIBLE);
-                                    Toast.makeText(getContext(), "Comment added " + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-
-
-
-
-                                } else {
-                                    commentEt.setText(comment);
-                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-
-                            }
-                        });
 
 
 
