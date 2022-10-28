@@ -5,15 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,21 +27,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.CommentAdapter;
@@ -150,11 +139,11 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                 map.put("profileImageUrl", user.getPhotoUrl().toString());
                 map.put("timestamp", FieldValue.serverTimestamp());
 
-                SpinKitView spinKitView = getView().findViewById(R.id.spin_kit);
+                ProgressBar progressBar = getView().findViewById(R.id.comment_progress_bar);
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         // yourMethod();
-                        spinKitView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
                         sendBtn.setVisibility(View.GONE);
                     }
                 }, 1000);
@@ -168,7 +157,7 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                                 if (task.isSuccessful()) {
                                     commentEt.setText("");
                                     dismiss();
-                                    spinKitView.setVisibility(View.GONE);
+                                    progressBar.setVisibility(View.GONE);
                                     sendBtn.setVisibility(View.VISIBLE);
                                     Toast.makeText(getContext(), "Comment added " + task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
