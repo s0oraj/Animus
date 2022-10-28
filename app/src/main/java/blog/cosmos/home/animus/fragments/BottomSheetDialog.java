@@ -115,6 +115,11 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 AddCommentDialog bottomSheet = new AddCommentDialog();
 
+                Bundle bundle = new Bundle();
+                bundle.putString("id", id);
+                bundle.putString("uid", uid);
+
+                bottomSheet.setArguments(bundle);
                 bottomSheet.show(getActivity().getSupportFragmentManager(),
                         "ModalBottomSheet");
             }
