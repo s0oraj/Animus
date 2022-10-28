@@ -372,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         super.onResume();
         IS_HOME_FRAGMENT = true;
         changeStatusBarColor();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
 
