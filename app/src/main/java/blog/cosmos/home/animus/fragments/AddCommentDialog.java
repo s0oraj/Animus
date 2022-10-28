@@ -142,40 +142,41 @@ public class AddCommentDialog extends BottomSheetDialogFragment {
                 map.put("timestamp", FieldValue.serverTimestamp());
 
 
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        // yourMethod();
-                        reference.document(commentID)
-                                .set(map)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                        if (task.isSuccessful()) {
+
+                // yourMethod();
+                reference.document(commentID)
+                        .set(map)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if (task.isSuccessful()) {
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        public void run() {
                                             commentEt.setText("");
                                             dismiss();
                                             progressBar.setVisibility(View.GONE);
                                             sendBtn.setVisibility(View.VISIBLE);
                                             Toast.makeText(getContext(), "Comment added " ,
                                                     Toast.LENGTH_SHORT).show();
-
-
-
-
-                                        } else {
-                                            commentEt.setText(comment);
-                                            Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
-                                                    Toast.LENGTH_SHORT).show();
                                         }
-
-
-                                    }
-                                });
-                    }
-                }, 1000);
+                                    }, 500);
 
 
 
+
+
+                                } else {
+                                    commentEt.setText(comment);
+                                    Toast.makeText(getContext(), "Failed to comment: " + task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
 
 
 
