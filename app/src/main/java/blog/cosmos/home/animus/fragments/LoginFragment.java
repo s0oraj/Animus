@@ -170,7 +170,7 @@ public class LoginFragment extends Fragment {
                                 if(task.isSuccessful()){
 
                                     FirebaseUser user = auth.getCurrentUser();
-                                    if(user.isEmailVerified()){
+                                    if(!user.isEmailVerified()){
                                         Toast.makeText(getContext(), "Please verify your email", Toast.LENGTH_SHORT).show();
                                     }
 
