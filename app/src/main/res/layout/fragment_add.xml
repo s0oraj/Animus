@@ -24,8 +24,7 @@
             android:elevation="3dp"
             android:foreground="?attr/selectableItemBackground"
             android:padding="4dp"
-            android:src="@drawable/ic_back"
-            tools:ignore="UnusedAttribute" />
+            android:src="@drawable/ic_back"/>
 
         <ImageButton
             android:id="@+id/nextBtn"
@@ -42,7 +41,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:padding="4dp"
             android:src="@drawable/ic_next"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </RelativeLayout>
