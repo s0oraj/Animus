@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="Online"
                 android:textSize="12sp"
-                android:textColor="@color/colorGreen"
+                android:textColor="#1c2764"
                 android:textStyle="bold" />
 
 
@@ -88,7 +88,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_circle"
-            android:backgroundTint="@color/colorGreen"
+            android:backgroundTint="#1c2764"
             android:padding="8dp"
             android:src="@drawable/ic_send_white"
             tools:ignore="UnusedAttribute" />
