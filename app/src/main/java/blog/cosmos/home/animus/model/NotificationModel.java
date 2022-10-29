@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class NotificationModel {
 
-    String id, notification;
+    String id, notification, userPhotoUrl;
 
     @ServerTimestamp
     Date time;
@@ -16,9 +16,10 @@ public class NotificationModel {
     }
 
 
-    public NotificationModel(String id, String notification, Date time) {
+    public NotificationModel(String id, String notification, String userPhotoUrl, Date time) {
         this.id = id;
         this.notification = notification;
+        this.userPhotoUrl = userPhotoUrl;
         this.time = time;
     }
 
@@ -36,6 +37,14 @@ public class NotificationModel {
 
     public void setNotification(String notification) {
         this.notification = notification;
+    }
+
+    public String getUserPhotoUrl() {
+        return userPhotoUrl;
+    }
+
+    public void setUserPhotoUrl(String userPhotoUrl) {
+        this.userPhotoUrl = userPhotoUrl;
     }
 
     public Date getTime() {

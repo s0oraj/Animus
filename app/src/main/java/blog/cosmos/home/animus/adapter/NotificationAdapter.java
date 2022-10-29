@@ -12,8 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.model.NotificationModel;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.Date;
 import java.util.List;
@@ -44,6 +47,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.notification.setText(list.get(position).getNotification());
         holder.time.setText(calculateTime(list.get(position).getTime()));
 
+        Glide.with(context)
+                .load(list.get(position).getUserPhotoUrl())
+                .into(holder.notifUserImage);
+
+
 
     }
 
@@ -62,12 +70,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     static class NotificationHolder extends RecyclerView.ViewHolder {
 
         TextView time, notification;
+        CircleImageView notifUserImage;
 
         public NotificationHolder(@NonNull View itemView) {
             super(itemView);
 
             time = itemView.findViewById(R.id.timeTv);
             notification = itemView.findViewById(R.id.notification);
+            notifUserImage = itemView.findViewById(R.id.notifUserImage);
+
 
         }
     }
