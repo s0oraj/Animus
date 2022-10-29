@@ -58,7 +58,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
                 @Override
                 public void onClick(View view) {
 
-                    activity.startActivity(new Intent());
+                    activity.startActivity(new Intent(activity, StoryAddActivity.class));
                 }
             });
 

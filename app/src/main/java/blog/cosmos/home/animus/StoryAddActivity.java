@@ -83,10 +83,13 @@ public class StoryAddActivity extends AppCompatActivity {
 
                  if(task.isSuccessful()){
 
+                     assert task.getResult() !=null;
+
                      task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                          @Override
                          public void onSuccess(Uri uri) {
 
+                             uploadVideoDataToFirestore(String.valueOf(uri));
 
 
                          }
