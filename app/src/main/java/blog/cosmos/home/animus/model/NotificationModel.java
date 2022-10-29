@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.model;
 
+
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;

@@ -1,5 +1,4 @@
 package blog.cosmos.home.animus.model;
-
 public class Users {
 
     private String email, name, profileImage, uid, status;

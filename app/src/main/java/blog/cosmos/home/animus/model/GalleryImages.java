@@ -1,16 +1,16 @@
 package blog.cosmos.home.animus.model;
 
+
 import android.net.Uri;
 
 public class GalleryImages {
+
     public Uri picUri;
 
-
-    public GalleryImages(){
-
+    public GalleryImages() {
     }
 
-    public GalleryImages(Uri picUri){
+    public GalleryImages(Uri picUri) {
         this.picUri = picUri;
 
     }
@@ -22,7 +22,5 @@ public class GalleryImages {
     public void setPicUri(Uri picUri) {
         this.picUri = picUri;
     }
-
-
 
 }
