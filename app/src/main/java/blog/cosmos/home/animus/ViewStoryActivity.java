@@ -1,28 +1,24 @@
 package blog.cosmos.home.animus;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.widget.Toast;
-import android.widget.Toolbar;
-import android.widget.VideoView;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.File;
-import java.io.IOException;
+import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 public class ViewStoryActivity extends AppCompatActivity {
 
-    VideoView videoView;
     public static final String VIDEO_URL_KEY = "videoURL";
-    public static final String VIDEO_NAME_KEY = "videoNAME";
+    public static final String FILE_TYPE = "file type";
 
+    PlayerView exoPlayer;
+
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,40 +28,48 @@ public class ViewStoryActivity extends AppCompatActivity {
         init();
 
         String url = getIntent().getStringExtra(VIDEO_URL_KEY);
-        String name = getIntent().getStringExtra(VIDEO_NAME_KEY);
 
-        if(url == null || url.isEmpty()){
+        String type = getIntent().getStringExtra(FILE_TYPE);
+
+        if (url == null || url.isEmpty()) {
             finish();
         }
 
-        StorageReference reference = FirebaseStorage.getInstance().getReference().child("Stories/"+ name);
+        if(type.contains("image")){
+            imageView.setVisibility(View.VISIBLE);
+            exoPlayer.setVisibility(View.GONE);
 
-        try {
-            File localFile = File.createTempFile("test",".mp4");
+            Glide.with(getApplicationContext()).load(url).into(imageView);
 
-            reference.getFile(localFile)
-                    .addOnSuccessListener(taskSnapshot -> {
+        }else{
 
-                        videoView.setVideoPath(localFile.getPath());
-                        videoView.start();
+            //video
 
-                    }).addOnFailureListener(e -> {
-                        e.printStackTrace();
-                        Toast.makeText(ViewStoryActivity.this, "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+            exoPlayer.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            MediaItem item = MediaItem.fromUri(url);
+
+            SimpleExoPlayer player = new SimpleExoPlayer.Builder(this).build();
+            player.setMediaItem(item);
+
+            exoPlayer.setPlayer(player);
+
+            player.play();
         }
 
 
+
+
     }
 
+    void init() {
 
+        exoPlayer = findViewById(R.id.videoView);
+        imageView = findViewById(R.id.imageView);
 
-    void init(){
-        videoView = findViewById(R.id.videoView);
     }
+
 
 }

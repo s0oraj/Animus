@@ -19,6 +19,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import blog.cosmos.home.animus.adapter.ViewPagerAdapter;
 import blog.cosmos.home.animus.fragments.Add;
@@ -53,11 +59,10 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     Profile profileFragment;
     MenuItem prevMenuItem;
 
+    FirebaseUser user;
 
     private ConstraintLayout mainScreenNavigationLayout;
     CoordinatorLayout activitymainlayout;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +77,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
          */
 
-
-
       //  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-
-
         init();
 
         //addTabs();
@@ -89,8 +89,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
         viewPager = findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setBackground(null);
@@ -143,9 +142,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
-
             }
 
             @Override
@@ -188,9 +184,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                         IS_HOME_FRAGMENT=false;
                         changeStatusBarColor();
                         break;
-
-
-
                 }
             }
 
@@ -208,13 +201,9 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
               viewPager.setCurrentItem(2);
                 IS_HOME_FRAGMENT=false;
                 changeStatusBarColor();
-
-
-
             }
         });
     }
-
 
 
     private void setupViewPager()
@@ -240,13 +229,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-
-
-
-
-
-
-
 
         fragmentTransaction.replace(frameLayout.getId(), fragment);
         fragmentTransaction.commit();
@@ -276,15 +258,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         }
         fragmentTransaction.replace(frameLayout.getId(), fragment);
 
-
       //  activitymainlayout.setVisibility(View.INVISIBLE);
       //  activitymainlayout.setForeground(getResources().getDrawable(R.color.white));
 
         fragmentTransaction.commit();
         IS_HOME_FRAGMENT=false;
         changeStatusBarColor();
-
-
     }
 
 
@@ -295,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         IS_SEARCHED_USER = true;
 
         // viewPager.setCurrentItem(4);
-
         Intent intent = new Intent(MainActivity.this, ReplacerActivity.class);
         intent.putExtra("DesiredFragment","otherUsersProfile");
         FROM_MAINACTIVITY_TO_PROFILEFRAGMENT= true;
@@ -306,15 +284,12 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     @Override
     public void onBackPressed() {
 
-
-
                if (viewPager.getCurrentItem() == 4) {
                   IS_SEARCHED_USER = false;
 
                   viewPager.setCurrentItem(0);
                   IS_HOME_FRAGMENT=true;
                    changeStatusBarColor();
-
 
                  }
                else if(viewPager.getCurrentItem() == 3 ||
@@ -328,13 +303,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
                 } else{
                    super.onBackPressed();
                     }
-
-
-
-
         }
-
-
 
 
     public void changeStatusBarColor() {
@@ -355,32 +324,42 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
         }
 
-
-
     }
 
-    /*
+
     @Override
     protected void onPause() {
+        updateStatus(false);
         super.onPause();
+        /*
         IS_HOME_FRAGMENT = false;
         changeStatusBarColor();
+
+         */
+
     }
-    */
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        updateStatus(true);
         IS_HOME_FRAGMENT = true;
         changeStatusBarColor();
        // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
 
+    void updateStatus(boolean status) {
 
+        Map<String, Object> map = new HashMap<>();
+        map.put("online", status);
 
-
-
+        FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(user.getUid())
+                .update(map);
+    }
 
 
 
