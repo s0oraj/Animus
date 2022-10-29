@@ -229,7 +229,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/startChatBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
