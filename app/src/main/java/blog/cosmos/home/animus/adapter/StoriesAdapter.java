@@ -1,5 +1,6 @@
 package blog.cosmos.home.animus.adapter;
 
+import static blog.cosmos.home.animus.ViewStoryActivity.VIDEO_NAME_KEY;
 import static blog.cosmos.home.animus.ViewStoryActivity.VIDEO_URL_KEY;
 
 import android.Manifest;
@@ -108,6 +109,8 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
 
                         Intent intent = new Intent(activity, ViewStoryActivity.class);
                         intent.putExtra(VIDEO_URL_KEY,list.get(position).getVideoUrl());
+                        intent.putExtra(VIDEO_NAME_KEY,list.get(position).getVideoName());
+
                         activity.startActivity(intent);
                     }
 

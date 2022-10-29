@@ -29,6 +29,8 @@ public class ViewStoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_story);
 
+        init();
+
         String url = getIntent().getStringExtra(VIDEO_URL_KEY);
         String name = getIntent().getStringExtra(VIDEO_NAME_KEY);
 
@@ -36,23 +38,20 @@ public class ViewStoryActivity extends AppCompatActivity {
             finish();
         }
 
-        StorageReference reference = FirebaseStorage.getInstance().getReference().child("Stories/");
+        StorageReference reference = FirebaseStorage.getInstance().getReference().child("Stories/"+ name);
 
         try {
             File localFile = File.createTempFile("test",".mp4");
 
             reference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    .addOnSuccessListener(taskSnapshot -> {
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(ViewStoryActivity.this, "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                        videoView.setVideoPath(localFile.getPath());
+                        videoView.start();
+
+                    }).addOnFailureListener(e -> {
+                        e.printStackTrace();
+                        Toast.makeText(ViewStoryActivity.this, "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
 
 

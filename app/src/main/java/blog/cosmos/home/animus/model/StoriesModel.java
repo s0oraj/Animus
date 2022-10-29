@@ -2,16 +2,26 @@ package blog.cosmos.home.animus.model;
 
 public class StoriesModel {
 
-    String videoUrl, id, name, uid;
+    String videoUrl, id, name, uid, videoName;
 
     public StoriesModel() {
     }
 
-    public StoriesModel(String videoUrl, String id, String name, String uid) {
+
+    public StoriesModel(String videoUrl, String id, String name, String uid, String videoName) {
         this.videoUrl = videoUrl;
         this.id = id;
         this.name = name;
         this.uid = uid;
+        this.videoName = videoName;
+    }
+
+    public String getVideoName() {
+        return videoName;
+    }
+
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
     }
 
     public String getVideoUrl() {
