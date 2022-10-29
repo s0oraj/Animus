@@ -715,6 +715,7 @@ public class Profile extends Fragment {
         map.put("notification", user.getDisplayName() + " followed you.");
         map.put("id", id);
         map.put("uid", userUID);
+        map.put("userPhotoUrl",user.getPhotoUrl());
 
 
         reference.document(id).set(map);
