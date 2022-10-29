@@ -26,6 +26,7 @@ import com.gowtham.library.utils.TrimType;
 import com.gowtham.library.utils.TrimVideo;
 import com.marsad.stylishdialogs.StylishAlertDialog;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +92,10 @@ public class StoryAddActivity extends AppCompatActivity {
 
         alertDialog.show();
 
+        File file = new File(uri.getPath());
+
+        String name = file.getName();
+
          StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Stories");
 
          StorageMetadata metadata = new StorageMetadata.Builder().setContentType("video/mp4")
@@ -103,7 +108,12 @@ public class StoryAddActivity extends AppCompatActivity {
 
                  assert task.getResult() !=null;
 
-                 task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(uri1 -> uploadVideoDataToFirestore(String.valueOf(uri1)));
+                 task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(uri1 -> {
+                             uploadVideoDataToFirestore(String.valueOf(uri1),name);
+
+                         }
+
+                 );
 
 
              } else{
@@ -116,7 +126,7 @@ public class StoryAddActivity extends AppCompatActivity {
          });
      }
 
-     void uploadVideoDataToFirestore(String url){
+     void uploadVideoDataToFirestore(String url, String name ){
          CollectionReference reference = FirebaseFirestore.getInstance().collection("Users").document(user.getUid())
                  .collection("Stories");
 
@@ -127,6 +137,7 @@ public class StoryAddActivity extends AppCompatActivity {
         map.put("id",id);
         map.put("uid",user.getUid());
         map.put("name",user.getDisplayName());
+         map.put("videoName",name);
 
         reference.document(id)
                 .set(map);

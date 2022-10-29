@@ -1,5 +1,7 @@
 package blog.cosmos.home.animus.adapter;
 
+import static blog.cosmos.home.animus.ViewStoryActivity.VIDEO_URL_KEY;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.StoryAddActivity;
+import blog.cosmos.home.animus.ViewStoryActivity;
 import blog.cosmos.home.animus.model.StoriesModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -103,6 +106,9 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
                     } else {
                         //open story
 
+                        Intent intent = new Intent(activity, ViewStoryActivity.class);
+                        intent.putExtra(VIDEO_URL_KEY,list.get(position).getVideoUrl());
+                        activity.startActivity(intent);
                     }
 
                 }
