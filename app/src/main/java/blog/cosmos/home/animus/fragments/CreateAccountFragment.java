@@ -175,8 +175,6 @@ public class CreateAccountFragment extends Fragment {
 
 
 
-
-
                             user.sendEmailVerification()
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override

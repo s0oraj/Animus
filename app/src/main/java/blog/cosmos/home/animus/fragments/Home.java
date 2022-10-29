@@ -51,6 +51,7 @@ import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
 import blog.cosmos.home.animus.adapter.StoriesAdapter;
+import blog.cosmos.home.animus.chat.ChatUsersActivity;
 import blog.cosmos.home.animus.model.HomeModel;
 import blog.cosmos.home.animus.model.StoriesModel;
 
@@ -73,6 +74,8 @@ public class Home extends Fragment {
     StoriesAdapter storiesAdapter;
     List<StoriesModel> storiesModelList;
 
+    Activity activity;
+
 
     public Home() {
         // Required empty public constructor
@@ -92,6 +95,7 @@ public class Home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        activity = getActivity();
 
         init(view);
         clickListener();
@@ -103,11 +107,9 @@ public class Home extends Fragment {
         list = new ArrayList<>();
         personalList = new ArrayList<>();
         followingUsersList = new ArrayList<>();
-
-
         adapter = new HomeAdapter(list, getActivity());
-
         recyclerView.setAdapter(adapter);
+
 
         loadDataFromFireStore();
 
@@ -210,6 +212,7 @@ public class Home extends Fragment {
 
     public void init(View view) {
 
+
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         if (getActivity() != null)
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -230,7 +233,7 @@ public class Home extends Fragment {
         storiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         storiesModelList = new ArrayList<>();
-        storiesModelList.add(new StoriesModel("","","",""));
+        storiesModelList.add(new StoriesModel("","","","",""));
         storiesAdapter = new StoriesAdapter(storiesModelList, getActivity());
         storiesRecyclerView.setAdapter(storiesAdapter);
 
@@ -261,7 +264,7 @@ public class Home extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GoogleSignInOptions gso;
+                /*GoogleSignInOptions gso;
                 GoogleSignInClient gsc;
 
                 gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
@@ -274,6 +277,12 @@ public class Home extends Fragment {
                         startActivity(new Intent(getActivity(),ReplacerActivity.class));
                     }
                 });
+
+                */
+
+                Intent intent = new Intent(getActivity(), ChatUsersActivity.class);
+                startActivity(intent);
+
             }
         });
 

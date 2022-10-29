@@ -216,8 +216,6 @@ public class Add extends Fragment {
         List<String> list = new ArrayList<>();
 
 
-
-
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("description", description);
