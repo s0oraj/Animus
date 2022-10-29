@@ -22,6 +22,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.util.List;
 
 import blog.cosmos.home.animus.R;
+import blog.cosmos.home.animus.StoryAddActivity;
 import blog.cosmos.home.animus.model.StoriesModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -82,6 +83,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
 
                                     if(multiplePermissionsReport.areAllPermissionsGranted()){
 
+                                        activity.startActivity(new Intent(activity, StoryAddActivity.class));
                                     } else{
                                         Toast.makeText(activity, "Please allow permission from settings.", Toast.LENGTH_SHORT).show();
                                     }
@@ -99,6 +101,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
 
 
                 } else{
+                    //open story
 
                 }
 
