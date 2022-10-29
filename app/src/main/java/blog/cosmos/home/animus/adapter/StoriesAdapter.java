@@ -75,7 +75,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
                 if(position == 0){
 
                     Dexter.withContext(activity)
-                            .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE,
+                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             .withListener(new MultiplePermissionsListener() {
                                 @Override
