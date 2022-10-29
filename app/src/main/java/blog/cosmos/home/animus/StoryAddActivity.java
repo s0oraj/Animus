@@ -2,7 +2,6 @@ package blog.cosmos.home.animus;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,13 +9,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,9 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.gowtham.library.utils.CompressOption;
-import com.gowtham.library.utils.LogMessage;
 import com.gowtham.library.utils.TrimType;
 import com.gowtham.library.utils.TrimVideo;
 import com.marsad.stylishdialogs.StylishAlertDialog;
@@ -42,6 +37,8 @@ public class StoryAddActivity extends AppCompatActivity {
 
     private static final int SELECT_VIDEO = 101;
 
+    ImageButton uploadButton;
+
     ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -52,7 +49,14 @@ public class StoryAddActivity extends AppCompatActivity {
                     videoView.setVideoURI(uri);
                     videoView.start();
 
-                    uploadVideoToStorage(uri);
+                    uploadButton.setVisibility(View.VISIBLE);
+                    uploadButton.setOnClickListener(view -> {
+                        uploadButton.setVisibility(View.GONE);
+                        uploadVideoToStorage(uri);
+                    });
+
+
+
 
                 } else{
                     //  LogMessage.v("videoTrimResultLauncher data is null");
@@ -135,6 +139,7 @@ public class StoryAddActivity extends AppCompatActivity {
 
     videoView = findViewById(R.id.videoView);
 
+    uploadButton = findViewById(R.id.uploadStoryBtn);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 

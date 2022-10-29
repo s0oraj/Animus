@@ -5,23 +5,12 @@
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent"
-    tools:context=".StoryAddActivity">
+    tools:context=".ViewStoryActivity">
 
     <VideoView
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/videoView"/>
-
-    <ImageButton
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:id="@+id/uploadStoryBtn"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/ic_circle"
-        android:layout_margin="22dp"
-        android:src="@drawable/ic_send"/>
 
 </RelativeLayout>
