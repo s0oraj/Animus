@@ -50,7 +50,9 @@ import java.util.Set;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.ReplacerActivity;
 import blog.cosmos.home.animus.adapter.HomeAdapter;
+import blog.cosmos.home.animus.adapter.StoriesAdapter;
 import blog.cosmos.home.animus.model.HomeModel;
+import blog.cosmos.home.animus.model.StoriesModel;
 
 public class Home extends Fragment {
 
@@ -67,7 +69,10 @@ public class Home extends Fragment {
     private ImageView searchButton;
     private ImageView sendButton;
 
-    private RecyclerView storiesRecyclerView;
+    RecyclerView storiesRecyclerView;
+    StoriesAdapter storiesAdapter;
+    List<StoriesModel> storiesModelList;
+
 
     public Home() {
         // Required empty public constructor
@@ -223,6 +228,10 @@ public class Home extends Fragment {
         storiesRecyclerView = view.findViewById(R.id.storiesRecyclerView);
         storiesRecyclerView.setHasFixedSize(true);
         storiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
+
+        storiesModelList = new ArrayList<>();
+        storiesAdapter = new StoriesAdapter(storiesModelList, getActivity());
+        storiesRecyclerView.setAdapter(storiesAdapter);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -418,9 +427,7 @@ public class Home extends Fragment {
                                 //  list.clear();
                                 followingUsersList.clear();
 
-
                                 for (QueryDocumentSnapshot snapshot : value) {
-
 
                                     snapshot.getReference().collection("Post Images")
                                             .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -434,7 +441,6 @@ public class Home extends Fragment {
                                                         return;
 
                                                     // we receive post data here
-
                                                     for (QueryDocumentSnapshot snapshot : value) {
 
 
@@ -519,6 +525,28 @@ public class Home extends Fragment {
 
 
                                                     }
+
+                                                }
+                                            });
+
+                                    snapshot.getReference().collection("Stories")
+                                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                                                    if (error != null) {
+                                                        Log.d("Error: ", error.getMessage());
+                                                    }
+
+                                                    if (value == null)
+                                                        return;
+
+                                                    for(QueryDocumentSnapshot snapshot : value){
+
+                                                        StoriesModel model = snapshot.toObject(StoriesModel.class);
+                                                        storiesModelList.add(model);
+                                                    }
+                                                    storiesAdapter.notifyDataSetChanged();
 
                                                 }
                                             });

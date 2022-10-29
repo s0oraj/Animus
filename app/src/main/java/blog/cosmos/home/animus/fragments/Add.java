@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -239,7 +240,13 @@ public class Add extends Fragment {
                             System.out.println();
                             Toast.makeText(getContext(),"Uploaded", Toast.LENGTH_SHORT).show();
                             descET.setText("");
-                            viewPager.setCurrentItem(0);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    viewPager.setCurrentItem(0);
+                                }
+                            },700);
+
 
                         } else {
                             Toast.makeText(getContext(), "Error: " + task.getException().getMessage(),
