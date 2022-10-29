@@ -541,7 +541,7 @@ public class Profile extends Fragment {
         File directory = contextWrapper.getDir("image_data", Context.MODE_PRIVATE);
 
         if(!directory.exists()){
-            directory.mkdirs();
+            boolean isMade = directory.mkdirs();
             Log.d("Directory", String.valueOf(isMade));
         }
 
