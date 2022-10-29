@@ -20,19 +20,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="12dp"
+                android:background="@drawable/back_button"
+                android:contentDescription="null"
+                android:id="@+id/profileBackBtn"
+                android:visibility="gone"/>
+
+
             <TextView
                 android:id="@+id/toolbarNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:text="username"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/sendBtn"
+            <ImageView
+                android:id="@+id/sendButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -43,19 +55,19 @@
                 android:contentDescription="@null" />
 
         </RelativeLayout>
-
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/linear_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@+id/toolbar"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="100dp">
+
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage"
@@ -63,7 +75,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="14dp"
                 android:src="@drawable/ic_person"
-                app:civ_border_color="#76D1FA"
+                app:civ_border_color="#88C3F8"
                 app:civ_border_width="1dp" />
 
             <ImageButton
@@ -94,7 +106,7 @@
                 android:maxLines="1"
                 android:padding="4dp"
                 android:text="Username"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -104,8 +116,8 @@
                 android:layout_height="wrap_content"
                 android:maxLines="3"
                 android:padding="4dp"
-                android:text="Love to travel around the world"
-                android:textColor="@android:color/black"
+                android:text="Loves to travel around the world"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
 
@@ -119,10 +131,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/linear_1">
 
+
         <LinearLayout
             android:id="@+id/countLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/linear_1"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -151,6 +165,7 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
+
             </LinearLayout>
 
             <LinearLayout
@@ -177,6 +192,7 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
+
 
             </LinearLayout>
 
@@ -205,48 +221,26 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
+
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/followBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/countLayout"
+            android:layout_below="@+id/countLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:background="@drawable/btn_bg2"
+            android:minWidth="160dp"
+            android:text="Follow"
+            android:textColor="@android:color/white"
+            android:visibility="visible"
 
-            <Button
-                android:id="@+id/startChatBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/btn_bg"
-                android:minWidth="160dp"
-                android:text="Say Hi !"
-                android:textColor="@android:color/white"
-                android:visibility="gone" />
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/followBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:background="@drawable/btn_bg2"
-                android:minWidth="160dp"
-                android:text="Follow"
-                android:textColor="@android:color/white"
-                android:visibility="visible"
-
-                />
-
-        </LinearLayout>
-
-
+            />
     </RelativeLayout>
 
     <View
