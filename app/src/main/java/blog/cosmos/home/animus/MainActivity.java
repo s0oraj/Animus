@@ -17,6 +17,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -198,9 +203,25 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
             @Override
             public void onClick(View view) {
 
+                /*
               viewPager.setCurrentItem(2);
                 IS_HOME_FRAGMENT=false;
                 changeStatusBarColor();
+                */
+
+                GoogleSignInOptions gso;
+                GoogleSignInClient gsc;
+
+                gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                gsc= GoogleSignIn.getClient(MainActivity.this,gso);
+
+                gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                      finish();
+                        startActivity(new Intent(MainActivity.this,ReplacerActivity.class));
+                    }
+                });
             }
         });
     }

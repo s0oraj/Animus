@@ -475,7 +475,7 @@ public class Profile extends Fragment {
 
                     try {
 
-                        assert getContext() != null;
+
                         Glide.with(getContext().getApplicationContext())
                                 .load(profileURL)
                                 .placeholder(R.drawable.ic_person)

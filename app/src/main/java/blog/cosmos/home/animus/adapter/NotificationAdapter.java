@@ -42,7 +42,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationHolder holder, int position) {
 
         holder.notification.setText(list.get(position).getNotification());
-        holder.notification.setText(calculateTime(list.get(position).getTime()));
+        holder.time.setText(calculateTime(list.get(position).getTime()));
 
 
     }
