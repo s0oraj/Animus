@@ -22,19 +22,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.gowtham.library.utils.CompressOption;
 import com.gowtham.library.utils.LogMessage;
 import com.gowtham.library.utils.TrimType;
 import com.gowtham.library.utils.TrimVideo;
+import com.marsad.stylishdialogs.StylishAlertDialog;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class StoryAddActivity extends AppCompatActivity {
 
-
+    StylishAlertDialog alertDialog;
     VideoView videoView;
     FirebaseUser user;
 
@@ -74,34 +76,39 @@ public class StoryAddActivity extends AppCompatActivity {
 
     }
 
+
+
      void uploadVideoToStorage(Uri uri){
 
+        alertDialog = new StylishAlertDialog(this, StylishAlertDialog.PROGRESS);
+
+        alertDialog.setTitleText("Uploading...")
+                .setCancelable(false);
+
+        alertDialog.show();
+
          StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Stories");
-         storageReference.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-             @Override
-             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
-                 if(task.isSuccessful()){
-
-                     assert task.getResult() !=null;
-
-                     task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                         @Override
-                         public void onSuccess(Uri uri) {
-
-                             uploadVideoDataToFirestore(String.valueOf(uri));
+         StorageMetadata metadata = new StorageMetadata.Builder().setContentType("video/mp4")
+                         .build();
 
 
-                         }
-                     });
+         storageReference.putFile(uri,metadata).addOnCompleteListener(task -> {
+
+             if(task.isSuccessful()){
+
+                 assert task.getResult() !=null;
+
+                 task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(uri1 -> uploadVideoDataToFirestore(String.valueOf(uri1)));
 
 
-                 } else{
-                     String error = task.getException().getMessage();
-                     Toast.makeText(StoryAddActivity.this, "Error: "+error, Toast.LENGTH_SHORT).show();
-                 }
-
+             } else{
+                 alertDialog.dismissWithAnimation();
+                 assert task.getException()!= null;
+                 String error = task.getException().getMessage();
+                 Toast.makeText(StoryAddActivity.this, "Error: "+error, Toast.LENGTH_SHORT).show();
              }
+
          });
      }
 
@@ -119,6 +126,8 @@ public class StoryAddActivity extends AppCompatActivity {
 
         reference.document(id)
                 .set(map);
+
+        alertDialog.dismissWithAnimation();
 
      }
 
