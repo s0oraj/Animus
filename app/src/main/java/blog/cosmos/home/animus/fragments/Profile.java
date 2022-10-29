@@ -1,7 +1,6 @@
 package blog.cosmos.home.animus.fragments;
 
 import static android.app.Activity.RESULT_OK;
-import static blog.cosmos.home.animus.MainActivity.FROM_MAINACTIVITY_TO_PROFILEFRAGMENT;
 import static blog.cosmos.home.animus.MainActivity.IS_SEARCHED_USER;
 import static blog.cosmos.home.animus.MainActivity.USER_ID;
 import static blog.cosmos.home.animus.utils.Constants.PREF_DIRECTORY;
@@ -9,9 +8,7 @@ import static blog.cosmos.home.animus.utils.Constants.PREF_NAME;
 import static blog.cosmos.home.animus.utils.Constants.PREF_STORED;
 import static blog.cosmos.home.animus.utils.Constants.PREF_URL;
 
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -37,7 +34,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,24 +45,21 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.marsad.catchy.R;
+import com.marsad.catchy.chat.ChatActivity;
+import com.marsad.catchy.model.PostImageModel;
 import com.marsad.stylishdialogs.StylishAlertDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -80,12 +73,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import blog.cosmos.home.animus.R;
-import blog.cosmos.home.animus.ReplacerActivity;
-import blog.cosmos.home.animus.chat.ChatActivity;
-import blog.cosmos.home.animus.model.PostImageModel;
 import de.hdodenhof.circleimageview.CircleImageView;
-import kotlin.jvm.internal.MagicApiIntrinsics;
 
 
 public class Profile extends Fragment {
@@ -210,7 +198,7 @@ public class Profile extends Fragment {
                 if (isFollowed) {
                     followersList.remove(user.getUid()); // opposite user
 
-                    followingList_2.remove(userUID); /us
+                    followingList_2.remove(userUID); //us
 
 
                     final Map<String, Object> map_2 = new HashMap<>();
@@ -281,6 +269,8 @@ public class Profile extends Fragment {
             }
         });
 
+        assert getContext() != null;
+
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -292,6 +282,11 @@ public class Profile extends Fragment {
 
             }
         });
+
+        startChatBtn.setOnClickListener(v -> {
+            queryChat();
+        });
+
 
         profileBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
