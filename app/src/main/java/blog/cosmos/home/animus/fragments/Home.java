@@ -227,9 +227,10 @@ public class Home extends Fragment {
 
         storiesRecyclerView = view.findViewById(R.id.storiesRecyclerView);
         storiesRecyclerView.setHasFixedSize(true);
-        storiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
+        storiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         storiesModelList = new ArrayList<>();
+        storiesModelList.add(new StoriesModel("","","",""));
         storiesAdapter = new StoriesAdapter(storiesModelList, getActivity());
         storiesRecyclerView.setAdapter(storiesAdapter);
 
@@ -543,8 +544,11 @@ public class Home extends Fragment {
 
                                                     for(QueryDocumentSnapshot snapshot : value){
 
-                                                        StoriesModel model = snapshot.toObject(StoriesModel.class);
-                                                        storiesModelList.add(model);
+                                                        if(!value.isEmpty()){
+                                                            StoriesModel model = snapshot.toObject(StoriesModel.class);
+                                                            storiesModelList.add(model);
+                                                        }
+
                                                     }
                                                     storiesAdapter.notifyDataSetChanged();
 

@@ -1,6 +1,7 @@
 package blog.cosmos.home.animus.adapter;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StoriesHolder holder, int position) {
+    public void onBindViewHolder(@NonNull StoriesHolder holder, @SuppressLint("RecyclerView") int position) {
 
         if(position == 0){
             Glide.with(activity)
@@ -61,52 +62,52 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.StoriesH
                 }
             });
 
-        }
+        } else {
 
-        Glide.with(activity)
-                .load(list.get(position).getVideoUrl())
-                .timeout(6500)
-                .into(holder.imageView);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            Glide.with(activity)
+                    .load(list.get(position).getVideoUrl())
+                    .timeout(6500)
+                    .into(holder.imageView);
 
-                if(position == 0){
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                    Dexter.withContext(activity)
-                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            .withListener(new MultiplePermissionsListener() {
-                                @Override
-                                public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                    if (position == 0) {
 
-                                    if(multiplePermissionsReport.areAllPermissionsGranted()){
+                        Dexter.withContext(activity)
+                                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                .withListener(new MultiplePermissionsListener() {
+                                    @Override
+                                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
 
-                                        activity.startActivity(new Intent(activity, StoryAddActivity.class));
-                                    } else{
-                                        Toast.makeText(activity, "Please allow permission from settings.", Toast.LENGTH_SHORT).show();
+                                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+
+                                            activity.startActivity(new Intent(activity, StoryAddActivity.class));
+                                        } else {
+                                            Toast.makeText(activity, "Please allow permission from settings.", Toast.LENGTH_SHORT).show();
+                                        }
+
                                     }
 
-                                }
+                                    @Override
+                                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
 
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
-
-                                    permissionToken.continuePermissionRequest();
-                                }
-                            }).check();
+                                        permissionToken.continuePermissionRequest();
+                                    }
+                                }).check();
 
 
+                    } else {
+                        //open story
 
-
-                } else{
-                    //open story
+                    }
 
                 }
-
-            }
-        });
+            });
+        }
 
     }
 
