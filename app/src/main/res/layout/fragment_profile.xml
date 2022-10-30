@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.Profile">
+    <!-- android:layout_marginTop="@android:dimen/status_bar_height" -->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
