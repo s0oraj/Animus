@@ -96,7 +96,7 @@ public class CommentModel {
         {
             CommentModel temp = (CommentModel) obj;
 
-            if(this.commentID.equals(temp.commentID)){
+            if(this.getCommentID().equals(temp.getComment())){
                 return true;
             }
         }
@@ -107,7 +107,7 @@ public class CommentModel {
     public int hashCode() {
         // TODO Auto-generated method stub
 
-        return (this.commentID.hashCode() );
+        return (this.getCommentID().hashCode() );
     }
 
 

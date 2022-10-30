@@ -106,7 +106,9 @@ public class HomeModel {
         if(obj instanceof HomeModel)
         {
             HomeModel temp = (HomeModel) obj;
-            if(this.name.equals(temp.name) && this.profileImage.equals(temp.profileImage) && this.imageUrl.equals(temp.imageUrl) && this.description.equals(temp.description) && this.uid.equals(temp.uid) && this.id.equals(temp.id))
+            if(this.getName().equals(temp.getName()) && this.getProfileImage().equals(temp.getProfileImage())
+                    && this.getImageUrl().equals(temp.getImageUrl()) && this.getDescription().equals(temp.getDescription())
+                    && this.getUid().equals(temp.getUid()) && this.getId().equals(temp.getId()))
                 return true;
         }
         return false;
@@ -116,6 +118,9 @@ public class HomeModel {
     public int hashCode() {
         // TODO Auto-generated method stub
 
-        return (this.name.hashCode() + this.profileImage.hashCode() + this.imageUrl.hashCode() + this.description.hashCode() + this.uid.hashCode() + this.id.hashCode());
+        return (this.getName().hashCode() + this.getProfileImage().hashCode()
+                + this.getImageUrl().hashCode()
+                + this.getDescription().hashCode()
+                + this.getUid().hashCode() + this.getId().hashCode());
     }
 }
