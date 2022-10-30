@@ -22,6 +22,7 @@ import blog.cosmos.home.animus.adapter.NotificationAdapter;
 import blog.cosmos.home.animus.model.NotificationModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -81,12 +82,47 @@ public class Notification extends Fragment {
 
 
                     list.clear();
-                    for (QueryDocumentSnapshot snapshot : value) {
+
+
+                    /*list.add(new NotificationModel("18 mins ago","Suraj Singh followed you", "https://lh3.googleusercontent.com/a/ALm5wu31ZmZCly7VGX9PePlIhni7ik9rHj-nZXP7H9xYPQ=s96-c",new Date()));
+
+
+                    list.add(new NotificationModel("3 hours ago","Zack liked your photo", "https://cdnb.artstation.com/p/assets/images/images/009/836/467/large/maria-bo-schatzis-stream-profilpicture.jpg?1521139318",new Date()));
+
+                    list.add(new NotificationModel("8 hours ago","Nick followed you", "https://i.pinimg.com/564x/0e/c8/27/0ec82719173a0ed176c6e66f7056d488.jpg",new Date()));
+
+                    list.add(new NotificationModel("Oct 29, 11:00 am","Sophia liked your photo", "https://avatarfiles.alphacoders.com/123/123888.png",new Date()));
+                    list.add(new NotificationModel("Oct 28, 12:45pm","Manish followed you", "https://i.pinimg.com/736x/a6/89/f7/a689f7de53d8a66c89c460893059bd52.jpg",new Date()));
+
+                    list.add(new NotificationModel("Oct 26, 06:00 pm","Jasmine commented on your photo", "https://www.stylevore.com/wp-content/uploads/2020/01/5a3cc6a963a50cd65b9f399452d66efb.jpg",new Date()));
+
+
+                    list.add(new NotificationModel("Oct 26, 03:00 am","Jules Smith liked your comment", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvpWY5rhiL5TBMi2BM8Xqd0VdA2smtkK3klrYB1Dc9pxD5-gbKfH8HVc7mkX6a0hu_mVM&usqp=CAU",new Date()));
+
+                    list.add(new NotificationModel("Oct 25, 11:00 am","Priyanka Singh followed you", "https://images2.alphacoders.com/702/thumb-350-702751.png",new Date()));
+
+                    list.add(new NotificationModel("Oct 22, 10:58 pm","Anuj Bandral liked your photo", "https://wallpapercave.com/wp/wp3875564.png",new Date()));
+
+                    list.add(new NotificationModel("Oct 19, 05:37 am","Nidhi commented on your photo", "https://avatarfiles.alphacoders.com/323/323377.jpg",new Date()));
+
+                    list.add(new NotificationModel("Oct 18, 8:20 pm","Manish followed you", "https://i.pinimg.com/736x/a6/89/f7/a689f7de53d8a66c89c460893059bd52.jpg",new Date()));
+
+*/
+
+
+
+                   for (QueryDocumentSnapshot snapshot : value) {
 
                         NotificationModel model = snapshot.toObject(NotificationModel.class);
                         list.add(model);
 
                     }
+
+
+
+
+
+
                     adapter.notifyDataSetChanged();
 
 
