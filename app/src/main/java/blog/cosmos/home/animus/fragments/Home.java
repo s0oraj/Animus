@@ -303,6 +303,8 @@ public class Home extends Fragment {
                 .document(user.getUid())
                 .collection("Post Images");
 
+        final DocumentReference storiesReference = FirebaseFirestore.getInstance().collection("Users")
+                .document(user.getUid());
 
 
         personalPostReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -571,8 +573,29 @@ public class Home extends Fragment {
                     });
 
 
-            loadStories(uidList);
 
+
+        });
+
+
+        storiesReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (error != null) {
+                    Log.d("Error: ", error.getMessage());
+                    return;
+                }
+                if (value == null)
+                    return;
+
+                List<String> uidList = (List<String>) value.get("following");
+
+                if (uidList == null || uidList.isEmpty())
+                    return;
+
+                loadStories(uidList);
+            }
         });
 
     }
@@ -587,10 +610,9 @@ public class Home extends Fragment {
                 Log.d("Error: ", error.getMessage());
             }
 
-            if (value == null && value.isEmpty())
+            if (value == null)
                 return;
 
-           // storiesModelList.clear();
             for (QueryDocumentSnapshot snapshot : value) {
 
                 if (!value.isEmpty()) {
@@ -599,18 +621,6 @@ public class Home extends Fragment {
                 }
 
             }
-
-
-            List<StoriesModel> tempList = new ArrayList<>(storiesModelList);
-            Set<StoriesModel> s= new HashSet<StoriesModel>();
-            s.addAll(tempList);
-            tempList = new ArrayList<StoriesModel>();
-            tempList.addAll(s);
-
-            storiesModelList.clear();
-            storiesModelList.addAll(tempList);
-
-
             storiesAdapter.notifyDataSetChanged();
 
         });
