@@ -234,7 +234,7 @@ public class Home extends Fragment {
         storiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         storiesModelList = new ArrayList<>();
-      //  storiesModelList.add(new StoriesModel("","","","",""));
+       // storiesModelList.add(new StoriesModel("","","","",""));
         storiesAdapter = new StoriesAdapter(storiesModelList, getActivity());
         storiesRecyclerView.setAdapter(storiesAdapter);
 
@@ -549,17 +549,15 @@ public class Home extends Fragment {
                                                     Log.d("Error: ", error.getMessage());
                                                 }
 
-                                                if (value == null && value.isEmpty())
+                                                if (value == null)
                                                     return;
 
                                                 for(QueryDocumentSnapshot snapshot : value){
 
-                                                   /* if(!value.isEmpty()){
+                                                    if(!value.isEmpty()){
                                                         StoriesModel model = snapshot.toObject(StoriesModel.class);
                                                         storiesModelList.add(model);
-                                                    } */
-                                                    StoriesModel model = snapshot.toObject(StoriesModel.class);
-                                                    storiesModelList.add(model);
+                                                    }
 
                                                 }
                                                 storiesAdapter.notifyDataSetChanged();
