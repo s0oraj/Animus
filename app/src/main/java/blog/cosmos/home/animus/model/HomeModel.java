@@ -94,4 +94,28 @@ public class HomeModel {
     public void setLikes(List<String> likes) {
         this.likes = likes;
     }
+
+
+    // Overriding of equals and hashcode so that we can eliminate duplicate items in a list.
+    // Source of code fix https://stackoverflow.com/questions/6680157/how-to-remove-duplicate-objects-in-a-listmyobject-without-equals-hashcode
+    //  answered Jul 13, 2011 at 14:53 Sandeep
+    //edited Apr 26, 2021 at 16:42 abby
+    @Override
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
+        if(obj instanceof HomeModel)
+        {
+            HomeModel temp = (HomeModel) obj;
+            if(this.name.equals(temp.name) && this.profileImage.equals(temp.profileImage) && this.imageUrl.equals(temp.imageUrl) && this.description.equals(temp.description) && this.uid.equals(temp.uid) && this.id.equals(temp.id))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+
+        return (this.name.hashCode() + this.profileImage.hashCode() + this.imageUrl.hashCode() + this.description.hashCode() + this.uid.hashCode() + this.id.hashCode());
+    }
 }

@@ -587,9 +587,10 @@ public class Home extends Fragment {
                 Log.d("Error: ", error.getMessage());
             }
 
-            if (value == null)
+            if (value == null && value.isEmpty())
                 return;
 
+           // storiesModelList.clear();
             for (QueryDocumentSnapshot snapshot : value) {
 
                 if (!value.isEmpty()) {
@@ -598,6 +599,18 @@ public class Home extends Fragment {
                 }
 
             }
+
+
+            List<StoriesModel> tempList = new ArrayList<>(storiesModelList);
+            Set<StoriesModel> s= new HashSet<StoriesModel>();
+            s.addAll(tempList);
+            tempList = new ArrayList<StoriesModel>();
+            tempList.addAll(s);
+
+            storiesModelList.clear();
+            storiesModelList.addAll(tempList);
+
+
             storiesAdapter.notifyDataSetChanged();
 
         });
