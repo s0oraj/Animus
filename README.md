@@ -1,4 +1,5 @@
-![Bannner](https://user-images.githubusercontent.com/42529024/198923615-197801af-4291-4621-a1ae-cadbdd71e627.png)
+![Banner](https://user-images.githubusercontent.com/42529024/198925399-8696a4eb-23b2-4c3e-8d8c-2ce549e3ee68.png)
+
 
  # Animus - The social media app
 
