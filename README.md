@@ -38,33 +38,15 @@
 
 
 
-https://github.com/bumptech/glide
  ## Features
 
- -  Users can set the number of recent post they want to see. For example, if a user sets his preference to three posts then the user is only shown three recent posts from the ScienceGlass blog
- -  Swapping and Deleting of Data: Users can tap on a post and swipe right or left to remove it from screen. Users can also tap on a post hold on it and change its location by moving it up or down the list of available posts. Refresh button will restore all data back to its original configuration.
- -  Change layout: Users can customize what layout they want to see their posts in. Two layouts are provided: LinearLayout and GridLayout.
+ -  Posts: Users can post their immages and their followers will be able to see that in the home screen of the app.
+ -  Instant-Messaging: Allows friends to message each other and recieive messages instantly
+ -  Status: Users can create a custom status which stays for 24 hours.
+ -  Search: Animus allows its users to explore new people and make friends, as well as find their old friends who have been using the platform.
+ -  Like & Comment: Users can like and comment on posts as well as see who has previously commented.
+ -  Notification: Users get notified whenever someone follows them, or likes their photos or comments on their posts.
  
  
-## API Reference
-
-#### Get a list of matching posts.
-
-```http
-  GET /sites/$site/posts/
-```
-
-| Method | URL    | Requires authentication?     |
-| :-------- | :------- | :------------------------- |
-| `GET` | `https://public-api.wordpress.com/rest/v1.1/sites/$site/posts/` | No |
-
-#### Method Parameters
-
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `$site`      | `(int string)` | Site ID or domain |
- 
- Our Website (to be replaced by $site) : https://cosmos.home.blog
 
 
