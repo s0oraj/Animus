@@ -3,15 +3,15 @@
 
  # Animus - The social media app
 
- A blogging application based on a WordPress Blog website called ScienceGlass.
+ A social media android application which stores users data in  [Firebase Database](https://firebase.google.com/docs/firestore).
 
- Install & try the app: [Download APK](https://drive.google.com/file/d/1Ysg01UcOXfticLrtStf2CNlqX8CaMk4P/view?usp=sharingg)
+ It uses native android java and xml as frontend and logic of the app.
 
- Blog's Official Website: https://cosmos.home.blog/
 
- * This app displays recent posts of the blog in its main ui screen.
- * It fetches JSON Data by using [Public API](https://developer.wordpress.com/docs/api/) of WordPress.
- * The JSON received is then extracted into relevant information and shown in the main user-interface of the app.
+
+ * Users can add posts, like other users posts and comment on posts, they can also find and follow others using the search button
+ * Users can also add new status which their followers can see. This status can be a video or image file which lasts for 24 hours.
+ * Messaging feature allows users to stay in touch with their friends!
 
 
  ## Screenshots
@@ -20,20 +20,25 @@
 ![Screenshot_2](https://user-images.githubusercontent.com/42529024/198926742-61272946-a468-42f8-bb3b-ae085d1bb005.png)
 
 
- ## How this app works
 
- - This android app displays recent posts of a WordPress Blog called ScienceGlass.
- - It fetches JSON Data from WordPress [Public API](https://developer.wordpress.com/docs/api/) by using [Volley](https://github.com/google/volley) library. Volley helps in fetching JSON data in a seperate background thread.
- - After this, the recieved JSON data is being parsed in the main ui thread. After JSON parsing the data is shown to the main user-interface of the app.
- - For displaying featured image of a post, [Picasso](https://github.com/square/picasso) library is used which takes image from url and loads it to the screen.
- - And finally, Androids [WebView](https://developer.android.com/reference/android/webkit/WebView) library is used to convert html content into relevant data to be loaded on the screen.
- 
  ## Libraries used
 
- * [Volley] (https://github.com/google/volley)
- * [Picasso] (https://github.com/square/picasso)
+
+ * [Glide](https://github.com/bumptech/glide)
+ * [Picasso](https://github.com/square/picasso)
+ * [ExoPlayer](https://github.com/google/ExoPlayer)
+ * [Video-Trimmer](https://github.com/a914-gowtham/android-video-trimmer)
+ * [Edmodo-image-cropper] https://github.com/ArthurHub/Android-Image-Cropper
+ * [Butter-Knife] https://github.com/JakeWharton/butterknife
+ * [hdodenhof:circleimageview] https://github.com/hdodenhof/CircleImageView
+ * [karumi:dexter] https://github.com/Karumi/Dexter
+ * [Android-SpinKit] https://github.com/ybq/Android-SpinKit
+  * [Slidableactivity] https://github.com/r0adkll/Slidr
 
 
+
+
+https://github.com/bumptech/glide
  ## Features
 
  -  Users can set the number of recent post they want to see. For example, if a user sets his preference to three posts then the user is only shown three recent posts from the ScienceGlass blog
@@ -61,6 +66,5 @@
 | `$site`      | `(int string)` | Site ID or domain |
  
  Our Website (to be replaced by $site) : https://cosmos.home.blog
-
 
 
