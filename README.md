@@ -16,8 +16,8 @@
 
  ## Screenshots
 
-![Screenshot_1](https://user-images.githubusercontent.com/42529024/198923654-92beb6e5-94f6-4a53-a8a4-50ee35f7cc30.png)
-![Screenshot_2](https://user-images.githubusercontent.com/42529024/198923658-5744b5a1-3787-445b-abdc-79f19a01b24b.png)
+![Screeshot_1](https://user-images.githubusercontent.com/42529024/198926752-693c765d-e8a0-4322-8a05-bb8b274cc602.png)
+![Screenshot_2](https://user-images.githubusercontent.com/42529024/198926742-61272946-a468-42f8-bb3b-ae085d1bb005.png)
 
 
  ## How this app works
