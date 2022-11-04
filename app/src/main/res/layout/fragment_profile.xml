@@ -73,7 +73,10 @@
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="14dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="14dp"
                 android:src="@drawable/ic_person"
                 app:civ_border_color="#76D1FA"
                 app:civ_border_width="1dp" />

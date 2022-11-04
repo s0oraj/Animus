@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.opencv.android.OpenCVLoader;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,10 +71,22 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
     private ConstraintLayout mainScreenNavigationLayout;
     CoordinatorLayout activitymainlayout;
 
+    public MainActivity()
+    {
+        if (!OpenCVLoader.initDebug())
+        {
+         //   System.Console.WriteLine("GG");
+            System.console().writer().write("GG");
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        OpenCVLoader.initDebug(); // if this isnt called then this error shows  java.lang.UnsatisfiedLinkError:   No implementation found for long org.opencv.core.Mat.n_Mat()
+
 
         /*
        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

@@ -7,8 +7,11 @@ import static blog.cosmos.home.animus.MainActivity.viewPager;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,13 +24,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +41,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.primitives.Bytes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -43,6 +50,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.protobuf.ByteOutput;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -51,12 +59,16 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import blog.cosmos.home.animus.AvatarMaker;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.adapter.GalleryAdapter;
 import blog.cosmos.home.animus.model.GalleryImages;
@@ -75,6 +87,8 @@ public class Add extends Fragment {
     private GalleryAdapter adapter;
 
     private FirebaseUser user;
+    Button animate, removeBg;
+    LinearLayout avatarll;
 
     Uri imageUri;
 
@@ -138,6 +152,9 @@ public class Add extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         backBtn = view.findViewById(R.id.backBtn);
         nextBtn = view.findViewById(R.id.nextBtn);
+        animate = view.findViewById(R.id.animate);
+        removeBg = view.findViewById(R.id.removeBg);
+        avatarll = view.findViewById(R.id.avtarll);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -198,6 +215,41 @@ public class Add extends Fragment {
                         });
 
 
+            }
+        });
+
+        removeBg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                    AvatarMaker avatarMaker = new AvatarMaker(bitmap,imageView,getActivity());
+                    avatarMaker.removeBackground();
+                  //  bitmap=((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    bitmap =  avatarMaker.changeImageBackground();
+                    imageUri= getImageUri(getActivity(),bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+        });
+
+        animate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                    AvatarMaker avatarMaker = new AvatarMaker(bitmap,imageView,getActivity());
+                    avatarMaker.animateImage();
+                    bitmap=((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    imageUri= getImageUri(getActivity(),bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -320,11 +372,30 @@ public class Add extends Fragment {
                         .into(imageView);
 
                 imageView.setVisibility(View.VISIBLE);
-
+                avatarll.setVisibility(View.VISIBLE);
                 nextBtn.setVisibility(View.VISIBLE);
             }
 
         }
 
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) throws IOException {
+        /*
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);*/
+        File tempfile = File.createTempFile("temprentpk",".png");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.PNG,100,bytes);
+        byte[] bitmapData = bytes.toByteArray();
+
+
+        FileOutputStream fileOutputStream = new FileOutputStream(tempfile);
+        fileOutputStream.write(bitmapData);
+        fileOutputStream.flush();
+        fileOutputStream.close();
+        return Uri.fromFile(tempfile);
     }
 }

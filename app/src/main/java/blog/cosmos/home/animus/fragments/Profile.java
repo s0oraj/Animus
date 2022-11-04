@@ -14,6 +14,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -62,6 +63,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import blog.cosmos.home.animus.AvatarMaker;
 import blog.cosmos.home.animus.R;
 import blog.cosmos.home.animus.chat.ChatActivity;
 import blog.cosmos.home.animus.model.PostImageModel;
@@ -71,10 +74,14 @@ import com.marsad.stylishdialogs.StylishAlertDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.opencv.android.OpenCVLoader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -105,6 +112,8 @@ public class Profile extends Fragment {
     private Context mContext;
     int count;
 
+    Bitmap userPhoto;
+
 
 
 
@@ -126,6 +135,8 @@ public class Profile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init(view);
+
+        OpenCVLoader.initDebug(); // if this isnt called then this error shows  java.lang.UnsatisfiedLinkError:   No implementation found for long org.opencv.core.Mat.n_Mat()
 
 
 
@@ -285,11 +296,22 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                CropImage.activity()
+             CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1, 1)
                         .start(getContext(), Profile.this);
 
+
+
+                /*Bitmap bitmap =  userPhoto;
+
+
+
+                AvatarMaker avatarMaker = new AvatarMaker(bitmap, profileImage
+                        ,getActivity());
+               profileImage.setImageBitmap(avatarMaker.getBitmap());
+
+                 */
             }
         });
 
@@ -490,6 +512,7 @@ public class Profile extends Fragment {
                                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
 
                                        Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                                       userPhoto = bitmap;
                                        storeProfileImage(bitmap, profileURL);
 
                                         return false;
