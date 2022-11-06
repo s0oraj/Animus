@@ -3,6 +3,7 @@ package blog.cosmos.home.animus;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,6 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+/*
+import com.alan.alansdk.AlanCallback;
+import com.alan.alansdk.AlanConfig;
+import com.alan.alansdk.button.AlanButton;
+import com.alan.alansdk.events.EventCommand;
+*/
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -28,6 +36,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.opencv.android.OpenCVLoader;
 
 import java.util.HashMap;
@@ -47,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     public static ViewPager viewPager;
 
+   // private AlanButton alanButton;
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
     public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
@@ -99,11 +110,40 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
       //  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         init();
 
+    //    alanAiConfig();
+
         //addTabs();
         clickListener();
         setupViewPager();
 
     }
+
+  /*
+   private void alanAiConfig() {
+        AlanConfig config = AlanConfig.builder().setProjectId("71728597873c05a4aa1c8279b12b57632e956eca572e1d8b807a3e2338fdd0dc/stage").build();
+        alanButton = findViewById(R.id.alan_button);
+        alanButton.initWithConfig(config);
+
+        AlanCallback alanCallback = new AlanCallback() {
+            /// Handle commands from Alan Studio
+            @Override
+            public void onCommand(final EventCommand eventCommand) {
+                try {
+                    JSONObject command = eventCommand.getData();
+                    String commandName = command.getJSONObject("data").getString("command");
+                    Log.d("AlanButton", "onCommand: commandName: " + commandName);
+                } catch (JSONException e) {
+                    Log.e("AlanButton", e.getMessage());
+                }
+            }
+        };
+
+        /// Register callbacks
+        alanButton.registerCallback(alanCallback);
+    }
+
+    */
+
     private void init() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
