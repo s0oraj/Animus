@@ -75,18 +75,19 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <!-- comment out this code to see visuals in design view
+    <!-- comment out this code to see visuals in design view -->
     <com.alan.alansdk.button.AlanButton
         android:id="@+id/alan_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="visible"
+        android:layout_marginBottom="?actionBarSize"
         app:button_horizontal_align="right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
--->
+
 
 
 

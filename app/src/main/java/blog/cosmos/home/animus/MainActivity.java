@@ -25,6 +25,10 @@ import com.alan.alansdk.button.AlanButton;
 import com.alan.alansdk.events.EventCommand;
 */
 
+import com.alan.alansdk.AlanCallback;
+import com.alan.alansdk.AlanConfig;
+import com.alan.alansdk.button.AlanButton;
+import com.alan.alansdk.events.EventCommand;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     public static ViewPager viewPager;
 
-   // private AlanButton alanButton;
+    private AlanButton alanButton;
     public static String USER_ID;
     public static boolean IS_SEARCHED_USER = false;
     public static boolean FROM_MAINACTIVITY_TO_PROFILEFRAGMENT=false;
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
 
     }
 
-  /*
+
    private void alanAiConfig() {
         AlanConfig config = AlanConfig.builder().setProjectId("71728597873c05a4aa1c8279b12b57632e956eca572e1d8b807a3e2338fdd0dc/stage").build();
         alanButton = findViewById(R.id.alan_button);
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements Search.OndataPass
         alanButton.registerCallback(alanCallback);
     }
 
-    */
+
 
     private void init() {
         Toolbar toolbar = findViewById(R.id.toolbar);
