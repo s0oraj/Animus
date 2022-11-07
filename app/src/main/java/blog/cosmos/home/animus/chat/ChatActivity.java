@@ -67,6 +67,31 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+
+        try{
+
+            try {
+                cipher = Cipher.getInstance("AES");
+                decipher = Cipher.getInstance("AES");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (NoSuchPaddingException e) {
+                e.printStackTrace();
+            }
+
+            secretKeySpec = new SecretKeySpec(encryptionKey, "AES");
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        Log.d("TAG", AESEncryptionMethod("Hello world!"));
+        try {
+            Log.d("TAG", AESDecryptionMethod(AESEncryptionMethod("Hello world!")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         init();
 
         loadUserData();
@@ -75,7 +100,8 @@ public class ChatActivity extends AppCompatActivity {
 
         sendBtn.setOnClickListener(v -> {
 
-            String message = chatET.getText().toString().trim();
+            // Encrypting of data which is taken from chat edit text as input.
+            String message = AESEncryptionMethod(chatET.getText().toString().trim());
 
             if (message.isEmpty()) {
                 return;
@@ -116,32 +142,6 @@ public class ChatActivity extends AppCompatActivity {
 
         });
 
-        try{
-
-            try {
-                cipher = Cipher.getInstance("AES");
-                decipher = Cipher.getInstance("AES");
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            }
-
-            secretKeySpec = new SecretKeySpec(encryptionKey, "AES");
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        Log.d("TAG", AESEncryptionMethod("Hello world!"));
-        try {
-            Log.d("TAG", AESDecryptionMethod(AESEncryptionMethod("Hello world!")));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     void init() {
@@ -158,7 +158,7 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         list = new ArrayList<>();
-        adapter = new ChatAdapter(this, list);
+        adapter = new ChatAdapter(this, list, cipher, decipher,secretKeySpec);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
