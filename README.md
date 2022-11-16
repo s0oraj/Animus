@@ -13,6 +13,13 @@
  * Users can also add new status which their followers can see. This status can be a video or image file which lasts for 24 hours.
  * Messaging feature allows users to stay in touch with their friends!
 
+ ## Algorithms and Special Features
+
+1)	Create Avatar images via Cartoon Effect Image Processing using **Open Computer Vision** ([OpenCV](https://opencv.org/)) and smart background removal using Machine Learning Models of [Google ML Kit](https://developers.google.com/ml-kit).
+2)	In-app **Artificial Intelligence Voice Assistant** allowing users to control and navigate the app using voice commands, along with human-like conversation feature using [Alan-AI](https://github.com/alan-ai).
+3)	**Advanced Encryption Standard (AES)** cryptography algorithm to make chats **End to End Encrypted(E2EE)**. It prevents message interception or communication network attacks.
+
+
 
  ## Screenshots
 
