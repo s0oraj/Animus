@@ -7,7 +7,7 @@
 
  It uses native android java and xml as frontend and logic of the app.
 
-
+ Install & try the app(Beta Version): [Download APK](https://drive.google.com/file/d/1uaQrCY0T1KIsdH7QdKkypd8PgIqXlwTy/view?usp=drivesdk)
 
  * Users can add posts, like other users posts and comment on posts, they can also find and follow others using the search button
  * Users can also add new status which their followers can see. This status can be a video or image file which lasts for 24 hours.
