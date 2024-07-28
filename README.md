@@ -3,7 +3,10 @@
 
  # Animus - The social media app
 
- A social media android application which stores users data in  [Firebase Database](https://firebase.google.com/docs/firestore).
+ A Crptography Based social media react (web) and android (mobile) application.
+ Deployed website url: https://animuswebclient.vercel.app/login
+ Web Version Repository: https://github.com/s0oraj/animuswebclient
+ [Apk Download Link](https://drive.google.com/file/d/1uaQrCY0T1KIsdH7QdKkypd8PgIqXlwTy/view?usp=drivesdk)
 
  It uses native android java and xml as frontend and logic of the app.
 
